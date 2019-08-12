@@ -1,0 +1,77 @@
+{
+    "name": "shlinkio/shlink-ip-geolocation",
+    "type": "library",
+    "homepage": "https://shlink.io",
+    "description": "Shlink module with tools to geolocate an IP address using different strategies.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alejandro Celaya Alastrué",
+            "homepage": "https://www.alejandrocelaya.com",
+            "email": "alejandro@alejandrocelaya.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "geoip2/geoip2": "^2.9",
+        "shlinkio/shlink-common": "^1.0"
+    },
+    "require-dev": {
+        "infection/infection": "^0.13.4",
+        "phpstan/phpstan": "^0.11.12",
+        "phpunit/phpunit": "^8.3",
+        "roave/security-advisories": "dev-master",
+        "shlinkio/php-coding-standard": "~1.2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Shlinkio\\Shlink\\IpGeolocation\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ShlinkioTest\\Shlink\\IpGeolocation\\": "test"
+        }
+    },
+    "scripts": {
+        "ci": [
+            "@cs",
+            "@stan",
+            "@test:ci",
+            "@infect:ci"
+        ],
+
+        "cs": "phpcs",
+        "cs:fix": "phpcbf",
+        "stan": "phpstan analyse src config --level=5",
+
+        "test": "phpdbg -qrr vendor/bin/phpunit --order-by=random --testdox",
+        "test:ci": "phpdbg -qrr vendor/bin/phpunit --order-by=random --coverage-clover=build/clover.xml --coverage-xml=build/coverage-xml --log-junit=build/phpunit.junit.xml --testdox",
+        "test:pretty": "phpdbg -qrr vendor/bin/phpunit --order-by=random --coverage-html build/coverage-html --testdox",
+
+        "infect": "infection --threads=4 --min-msi=60 --log-verbosity=default --only-covered",
+        "infect:ci": "infection --threads=4 --min-msi=60 --log-verbosity=default --only-covered --coverage=build",
+        "infect:show": "infection --threads=4 --min-msi=60 --log-verbosity=default --only-covered --show-mutations",
+        "infect:show:ci": "infection --threads=4 --min-msi=60 --log-verbosity=default --only-covered --show-mutations --coverage=build",
+
+        "test:infect": [
+            "@test:ci",
+            "@infect:show:ci"
+        ]
+    },
+    "scripts-descriptions": {
+        "ci": "<fg=blue;options=bold>Alias for \"cs\", \"stan\", \"test:ci\" and \"infect:ci\"</>",
+        "cs": "<fg=blue;options=bold>Checks coding styles</>",
+        "cs:fix": "<fg=blue;options=bold>Fixes coding styles, when possible</>",
+        "stan": "<fg=blue;options=bold>Inspects code with phpstan</>",
+        "test": "<fg=blue;options=bold>Runs unit tests with no coverage reports</>",
+        "test:ci": "<fg=blue;options=bold>Runs unit tests generating coverage reports and logs</>",
+        "test:pretty": "<fg=blue;options=bold>Runs unit tests generating coverage reports in html</>",
+        "infect": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing</>",
+        "infect:ci": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing with existing reports and logs</>",
+        "infect:show": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing and shows applied mutators</>"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

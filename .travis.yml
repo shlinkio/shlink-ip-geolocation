@@ -1,0 +1,29 @@
+language: php
+
+branches:
+  only:
+    - /.*/
+
+php:
+  - '7.2'
+  - '7.3'
+  - '7.4'
+
+matrix:
+  allow_failures:
+    - php: '7.4'
+
+before_install:
+  - phpenv config-rm xdebug.ini || return 0
+
+install:
+  - composer self-update
+  - composer install --no-interaction
+
+script:
+  - mkdir build
+  - composer ci
+
+after_success:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover build/clover.xml

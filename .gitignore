@@ -1,0 +1,7 @@
+.idea
+build
+composer.lock
+vendor/
+docker-compose.override.yml
+.phpunit.result.cache
+config/*.local.php

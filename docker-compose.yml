@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  shlink_ip_geolocation_php:
+    container_name: shlink_ip_geolocation_php
+    build:
+      context: .
+    volumes:
+      - ./:/app
