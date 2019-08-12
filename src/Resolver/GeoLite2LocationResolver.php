@@ -48,8 +48,8 @@ class GeoLite2LocationResolver implements IpLocationResolverInterface
             $city->country->name ?? '',
             $region->name ?? '',
             $city->city->name ?? '',
-            (float) ($city->location->latitude ?? ''),
-            (float) ($city->location->longitude ?? ''),
+            (float) ($city->location->latitude ?? 0.0),
+            (float) ($city->location->longitude ?? 0.0),
             $city->location->timeZone ?? ''
         );
     }

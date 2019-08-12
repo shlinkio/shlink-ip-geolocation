@@ -43,7 +43,7 @@
 
         "cs": "phpcs",
         "cs:fix": "phpcbf",
-        "stan": "phpstan analyse src config --level=5",
+        "stan": "phpstan analyse src config --level=6",
 
         "test": "phpdbg -qrr vendor/bin/phpunit --order-by=random --testdox",
         "test:ci": "phpdbg -qrr vendor/bin/phpunit --order-by=random --coverage-clover=build/clover.xml --coverage-xml=build/coverage-xml --log-junit=build/phpunit.junit.xml --testdox",
