@@ -19,7 +19,53 @@ Install this library using composer:
 
 > This library is also an expressive module which provides its own `ConfigProvider`. Add it to your configuration to get everything automatically set up.
 
-## *TODO*
+## Resolving IP locations
+
+This module provides a few different ways to resolve the location of an IP address, all of them implementing `Shlinkio\Shlink\IpGeolocation\Resolver\IpLocationResolverInterface`.
+
+This interface basically exposes this method:
+
+```php
+/**
+ * @throws WrongIpException
+ */
+public function resolveIpLocation(string $ipAddress): Model\Location;
+```
+
+These are the strategies provided implementing this interface:
+
+* `GeoLite2LocationResolver`: It makes use of a [GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/) database to resolve IP address locations.
+* `IpApiLocationResolver`: It calls [IP API]() in order to resolve IP address locations (this API is a little bit fragile and easily ends up blocking callers).
+* `EmptyIpLocationResolver`: This one is a dummy resolver which always returns an empty location as if it was not capable of resolving the address location.
+* `CainIpLocationResolver`: It wraps a list of IP resolvers and calls them sequentially until one of them is capable of resolving the address location.
+
+The first one is the most reliable, but requires an up-to-date GeoLite2 database (which handling is explained in next section).
+
+However, the chain resolver encapsulates the other three in the order they are listed here, and is the one recommended to use.
+
+It is aliased to the service with name `Shlinkio\Shlink\IpGeolocation\Resolver\IpLocationResolverInterface`.
+
+## Handling GeoLite2 DB file
+
+In order to resolve IP address locations with the `GeoLite2LocationResolver`, an up-to-date local GeoLite2 database file.
+
+To ease the management of this file, a `Shlinkio\Shlink\IpGeolocation\GeoLite2\DbUpdater` service is provided.
+
+It exposes two public methods:
+
+```php
+public function databaseFileExists(): bool;
+
+/**
+ * @throws RuntimeException
+ */
+public function downloadFreshCopy(?callable $handleProgress = null): void;
+```
+
+* `databaseFileExists`: Just tells if the database file exists already (either in an outdated or up to date form).
+* `downloadFreshCopy`: Forces a new copy of the GeoLite2 database to be downloaded from MaxMind repos. It allows to optionally handle the progress of the download.
+
+To get both the resolver and the database updater to work, this configuration has to be defined:
 
 ```php
 <?php
@@ -35,3 +81,9 @@ return [
 
 ];
 ```
+
+* `db_location`: It's the config option used to tell where in the local filesystem the database file is located (or should be located once the `DbUpdater` downloads it).
+* `temp_dir`: A temporary location where new versions of the database are located while downloading. Once a download succeeds, the new DB will be moved to the location defined in previous config option.
+* `download_from`: The repository from which new GeoLite2 db files are downloaded. This option has a default value which is usually ok, but just in case you need to change it for some reason, you can do it here.
+
+> This project includes GeoLite2 data created by MaxMind, available from [https://www.maxmind.com](https://www.maxmind.com)
