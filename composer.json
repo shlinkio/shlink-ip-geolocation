@@ -14,14 +14,14 @@
     "require": {
         "php": "^7.2",
         "geoip2/geoip2": "^2.9",
-        "shlinkio/shlink-common": "^1.0 || ^2.0"
+        "shlinkio/shlink-common": "^2.0"
     },
     "require-dev": {
-        "infection/infection": "^0.13.4",
+        "infection/infection": "^0.14.1",
         "phpstan/phpstan": "^0.11.12",
         "phpunit/phpunit": "^8.3",
         "roave/security-advisories": "dev-master",
-        "shlinkio/php-coding-standard": "~1.2.2"
+        "shlinkio/php-coding-standard": "~2.0.0"
     },
     "autoload": {
         "psr-4": {
