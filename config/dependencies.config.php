@@ -14,7 +14,6 @@ return [
 
     'dependencies' => [
         'factories' => [
-            Resolver\IpApiLocationResolver::class => ConfigAbstractFactory::class,
             Resolver\GeoLite2LocationResolver::class => ConfigAbstractFactory::class,
             Resolver\EmptyIpLocationResolver::class => InvokableFactory::class,
             Resolver\ChainIpLocationResolver::class => ConfigAbstractFactory::class,
@@ -28,11 +27,9 @@ return [
     ],
 
     ConfigAbstractFactory::class => [
-        Resolver\IpApiLocationResolver::class => [GuzzleClient::class],
         Resolver\GeoLite2LocationResolver::class => [Reader::class],
         Resolver\ChainIpLocationResolver::class => [
             Resolver\GeoLite2LocationResolver::class,
-            Resolver\IpApiLocationResolver::class,
             Resolver\EmptyIpLocationResolver::class,
         ],
 
