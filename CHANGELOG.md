@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## 1.1.0 - 2019-10-25
 
 #### Added
 
@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 #### Changed
 
 * [#7](https://github.com/shlinkio/shlink-ip-geolocation/issues/7) Updated dependencies, including shlink-common, coding-standard and infection.
+* [#1](https://github.com/shlinkio/shlink-ip-geolocation/issues/1) Increased minimum required mutation score to 70%.
 
 #### Deprecated
 
@@ -20,7 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 #### Removed
 
-* *Nothing*
+* [#9](https://github.com/shlinkio/shlink-ip-geolocation/issues/9) Deleted `IpApiLocationResolver`.
 
 #### Fixed
 

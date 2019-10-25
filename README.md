@@ -35,13 +35,12 @@ public function resolveIpLocation(string $ipAddress): Model\Location;
 These are the strategies provided implementing this interface:
 
 * `GeoLite2LocationResolver`: It makes use of a [GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/) database to resolve IP address locations.
-* `IpApiLocationResolver`: It calls [IP API](http://ip-api.com) in order to resolve IP address locations (this API is a little bit fragile and easily ends up blocking callers).
 * `EmptyIpLocationResolver`: This one is a dummy resolver which always returns an empty location as if it was not capable of resolving the address location.
 * `CainIpLocationResolver`: It wraps a list of IP resolvers and calls them sequentially until one of them is capable of resolving the address location.
 
 The first one is the most reliable, but requires an up-to-date GeoLite2 database (which handling is explained in next section).
 
-However, the chain resolver encapsulates the other three in the order they are listed here, and is the one recommended to use.
+However, the chain resolver encapsulates the other two in the order they are listed here, and is the one recommended to use.
 
 It is aliased to the service with name `Shlinkio\Shlink\IpGeolocation\Resolver\IpLocationResolverInterface`.
 
