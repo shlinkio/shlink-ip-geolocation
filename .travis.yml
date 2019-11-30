@@ -9,10 +9,6 @@ php:
   - '7.3'
   - '7.4snapshot'
 
-matrix:
-  allow_failures:
-    - php: '7.4snapshot'
-
 before_install:
   - phpenv config-rm xdebug.ini || return 0
 
