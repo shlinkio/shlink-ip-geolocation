@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
+## 1.2.0 - 2019-11-30
+
+#### Added
+
+* *Nothing*
+
+#### Changed
+
+* Updated dependencies, including the requirement of Symfony 5 components.
+
+#### Deprecated
+
+* *Nothing*
+
+#### Removed
+
+* *Nothing*
+
+#### Fixed
+
+* *Nothing*
+
+
 ## 1.1.0 - 2019-10-25
 
 #### Added
