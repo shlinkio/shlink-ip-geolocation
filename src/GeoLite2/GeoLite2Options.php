@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\IpGeolocation\GeoLite2;
 
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 class GeoLite2Options extends AbstractOptions
 {

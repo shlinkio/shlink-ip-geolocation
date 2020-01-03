@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\IpGeolocation;
 
 use GeoIp2\Database\Reader;
-use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
-use Zend\ServiceManager\Proxy\LazyServiceFactory;
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
+use Laminas\ServiceManager\Proxy\LazyServiceFactory;
 
 return [
 

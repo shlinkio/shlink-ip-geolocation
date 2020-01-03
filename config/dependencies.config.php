@@ -6,9 +6,9 @@ namespace Shlinkio\Shlink\IpGeolocation;
 
 use GeoIp2\Database\Reader;
 use GuzzleHttp\Client as GuzzleClient;
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 use Symfony\Component\Filesystem\Filesystem;
-use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
 

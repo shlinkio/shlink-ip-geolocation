@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## 1.3.0 - 2020-01-03
 
 #### Added
 
@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 #### Changed
 
 * [#15](https://github.com/shlinkio/shlink-ip-geolocation/issues/15) Updated coding-standard (v2.1) and phpstan (0.12) dependencies.
+* [#16](https://github.com/shlinkio/shlink-ip-geolocation/issues/16) Migrated from Zend Framework components to [Laminas](https://getlaminas.org/).
 
 #### Deprecated
 
