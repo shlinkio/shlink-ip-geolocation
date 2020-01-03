@@ -44,7 +44,7 @@ class DbUpdaterTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionCode(0);
         $this->expectExceptionMessage(
-            'An error occurred while trying to download a fresh copy of the GeoLite2 database'
+            'An error occurred while trying to download a fresh copy of the GeoLite2 database',
         );
         $request->shouldBeCalledOnce();
 
@@ -61,7 +61,7 @@ class DbUpdaterTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionCode(0);
         $this->expectExceptionMessage(
-            'An error occurred while trying to extract the GeoLite2 database from __invalid__/GeoLite2-City.tar.gz'
+            'An error occurred while trying to extract the GeoLite2 database from __invalid__/GeoLite2-City.tar.gz',
         );
         $request->shouldBeCalledOnce();
 
@@ -96,9 +96,9 @@ class DbUpdaterTest extends TestCase
     public function noExceptionsAreThrownIfEverythingWorksFine(): void
     {
         $request = $this->httpClient->request(Argument::cetera())->willReturn(new Response());
-        $copy = $this->filesystem->copy(Argument::cetera())->will(function () {
+        $copy = $this->filesystem->copy(Argument::cetera())->will(function (): void {
         });
-        $remove = $this->filesystem->remove(Argument::cetera())->will(function () {
+        $remove = $this->filesystem->remove(Argument::cetera())->will(function (): void {
         });
 
         $this->dbUpdater->downloadFreshCopy();

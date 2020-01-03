@@ -57,7 +57,7 @@ class DbUpdater implements DbUpdaterInterface
             throw new RuntimeException(
                 'An error occurred while trying to download a fresh copy of the GeoLite2 database',
                 0,
-                $e
+                $e,
             );
         }
     }
@@ -74,7 +74,7 @@ class DbUpdater implements DbUpdaterInterface
             throw new RuntimeException(
                 sprintf('An error occurred while trying to extract the GeoLite2 database from %s', $compressedFile),
                 0,
-                $e
+                $e,
             );
         }
     }

@@ -24,12 +24,12 @@ class ChainIpLocationResolverTest extends TestCase
 
         $this->resolver = new ChainIpLocationResolver(
             $this->firstInnerResolver->reveal(),
-            $this->secondInnerResolver->reveal()
+            $this->secondInnerResolver->reveal(),
         );
     }
 
     /** @test */
-    public function throwsExceptionWhenNoInnerResolverCanHandleTheResolution()
+    public function throwsExceptionWhenNoInnerResolverCanHandleTheResolution(): void
     {
         $ipAddress = '1.2.3.4';
 
@@ -64,7 +64,7 @@ class ChainIpLocationResolverTest extends TestCase
 
         $firstResolve = $this->firstInnerResolver->resolveIpLocation($ipAddress)->willThrow(WrongIpException::class);
         $secondResolve = $this->secondInnerResolver->resolveIpLocation($ipAddress)->willReturn(
-            Location::emptyInstance()
+            Location::emptyInstance(),
         );
 
         $this->resolver->resolveIpLocation($ipAddress);
