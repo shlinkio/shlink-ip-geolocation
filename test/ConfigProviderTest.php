@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\IpGeolocation;
 
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\IpGeolocation\ConfigProvider;
-use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 
 class ConfigProviderTest extends TestCase
 {

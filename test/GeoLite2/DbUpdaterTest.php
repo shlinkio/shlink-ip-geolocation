@@ -6,6 +6,7 @@ namespace ShlinkioTest\Shlink\IpGeolocation\GeoLite2;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
+use Laminas\Diactoros\Response;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -14,7 +15,6 @@ use Shlinkio\Shlink\IpGeolocation\GeoLite2\DbUpdater;
 use Shlinkio\Shlink\IpGeolocation\GeoLite2\GeoLite2Options;
 use Symfony\Component\Filesystem\Exception as FilesystemException;
 use Symfony\Component\Filesystem\Filesystem;
-use Zend\Diactoros\Response;
 
 class DbUpdaterTest extends TestCase
 {
