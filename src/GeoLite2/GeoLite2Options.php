@@ -8,9 +8,9 @@ use Zend\Stdlib\AbstractOptions;
 
 class GeoLite2Options extends AbstractOptions
 {
-    private $dbLocation = '';
-    private $tempDir = '';
-    private $downloadFrom = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz';
+    private string $dbLocation = '';
+    private string $tempDir = '';
+    private string $downloadFrom = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz';
 
     public function getDbLocation(): string
     {
