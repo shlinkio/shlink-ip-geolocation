@@ -10,8 +10,7 @@ use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 
 class ConfigProviderTest extends TestCase
 {
-    /** @var ConfigProvider */
-    private $configProvider;
+    private ConfigProvider $configProvider;
 
     public function setUp(): void
     {

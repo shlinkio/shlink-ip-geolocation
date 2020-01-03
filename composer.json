@@ -12,9 +12,9 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "geoip2/geoip2": "^2.9",
-        "shlinkio/shlink-common": "^2.4",
+        "shlinkio/shlink-common": "^2.5",
         "symfony/filesystem": "^5.0"
     },
     "require-dev": {
@@ -41,20 +41,16 @@
             "@test:ci",
             "@infect:ci"
         ],
-
         "cs": "phpcs",
         "cs:fix": "phpcbf",
         "stan": "phpstan analyse src config --level=6",
-
         "test": "phpdbg -qrr vendor/bin/phpunit --order-by=random --testdox --colors=always",
-        "test:ci": "phpdbg -qrr vendor/bin/phpunit --order-by=random --coverage-clover=build/clover.xml --coverage-xml=build/coverage-xml --log-junit=build/junit.xml --testdox --colors=always",
-        "test:pretty": "phpdbg -qrr vendor/bin/phpunit --order-by=random --coverage-html build/coverage-html --testdox --colors=always",
-
+        "test:ci": "@test --coverage-clover=build/clover.xml --coverage-xml=build/coverage-xml --log-junit=build/junit.xml",
+        "test:pretty": "@test --coverage-html build/coverage-html",
         "infect": "infection --threads=4 --min-msi=70 --log-verbosity=default --only-covered",
-        "infect:ci": "infection --threads=4 --min-msi=70 --log-verbosity=default --only-covered --coverage=build",
-        "infect:show": "infection --threads=4 --min-msi=70 --log-verbosity=default --only-covered --show-mutations",
-        "infect:show:ci": "infection --threads=4 --min-msi=70 --log-verbosity=default --only-covered --show-mutations --coverage=build",
-
+        "infect:ci": "@infect --coverage=build",
+        "infect:show": "@infect --show-mutations",
+        "infect:show:ci": "@infect --show-mutations --coverage=build",
         "test:infect": [
             "@test:ci",
             "@infect:show:ci"

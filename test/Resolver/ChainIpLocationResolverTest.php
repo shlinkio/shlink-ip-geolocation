@@ -13,12 +13,9 @@ use Shlinkio\Shlink\IpGeolocation\Resolver\IpLocationResolverInterface;
 
 class ChainIpLocationResolverTest extends TestCase
 {
-    /** @var ChainIpLocationResolver */
-    private $resolver;
-    /** @var ObjectProphecy */
-    private $firstInnerResolver;
-    /** @var ObjectProphecy */
-    private $secondInnerResolver;
+    private ChainIpLocationResolver $resolver;
+    private ObjectProphecy $firstInnerResolver;
+    private ObjectProphecy $secondInnerResolver;
 
     public function setUp(): void
     {

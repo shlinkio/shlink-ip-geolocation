@@ -16,8 +16,7 @@ class EmptyIpLocationResolverTest extends TestCase
 {
     use StringUtilsTrait;
 
-    /** @var EmptyIpLocationResolver */
-    private $resolver;
+    private EmptyIpLocationResolver $resolver;
 
     public function setUp(): void
     {
@@ -35,8 +34,6 @@ class EmptyIpLocationResolverTest extends TestCase
 
     public function provideEmptyResponses(): array
     {
-        return map(range(0, 5), function () {
-            return [$this->generateRandomString(15)];
-        });
+        return map(range(0, 5), fn () => [$this->generateRandomString(15)]);
     }
 }

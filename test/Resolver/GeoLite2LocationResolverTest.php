@@ -16,10 +16,8 @@ use Shlinkio\Shlink\IpGeolocation\Resolver\GeoLite2LocationResolver;
 
 class GeoLite2LocationResolverTest extends TestCase
 {
-    /** @var GeoLite2LocationResolver */
-    private $resolver;
-    /** @var ObjectProphecy */
-    private $reader;
+    private GeoLite2LocationResolver $resolver;
+    private ObjectProphecy $reader;
 
     public function setUp(): void
     {
