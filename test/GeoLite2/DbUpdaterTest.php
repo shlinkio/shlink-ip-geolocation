@@ -18,14 +18,10 @@ use Zend\Diactoros\Response;
 
 class DbUpdaterTest extends TestCase
 {
-    /** @var DbUpdater */
-    private $dbUpdater;
-    /** @var ObjectProphecy */
-    private $httpClient;
-    /** @var ObjectProphecy */
-    private $filesystem;
-    /** @var GeoLite2Options */
-    private $options;
+    private DbUpdater $dbUpdater;
+    private ObjectProphecy $httpClient;
+    private ObjectProphecy $filesystem;
+    private GeoLite2Options $options;
 
     public function setUp(): void
     {

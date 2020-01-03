@@ -6,20 +6,13 @@ namespace Shlinkio\Shlink\IpGeolocation\Model;
 
 final class Location
 {
-    /** @var string */
-    private $countryCode;
-    /** @var string */
-    private $countryName;
-    /** @var string */
-    private $regionName;
-    /** @var string */
-    private $city;
-    /** @var float */
-    private $latitude;
-    /** @var float */
-    private $longitude;
-    /** @var string */
-    private $timeZone;
+    private string $countryCode;
+    private string $countryName;
+    private string $regionName;
+    private string $city;
+    private float $latitude;
+    private float $longitude;
+    private string $timeZone;
 
     public function __construct(
         string $countryCode,
