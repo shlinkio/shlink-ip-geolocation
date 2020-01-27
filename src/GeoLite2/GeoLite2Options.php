@@ -6,11 +6,15 @@ namespace Shlinkio\Shlink\IpGeolocation\GeoLite2;
 
 use Laminas\Stdlib\AbstractOptions;
 
+use function str_replace;
+
 class GeoLite2Options extends AbstractOptions
 {
     private string $dbLocation = '';
     private string $tempDir = '';
-    private string $downloadFrom = 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz';
+    private string $licenseKey = 'G4Lm0C60yJsnkdPi';
+    private string $downloadFrom = 'https://download.maxmind.com/app/geoip_download'
+        . '?edition_id=GeoLite2-City&license_key={license_key}&suffix=tar.gz';
 
     public function getDbLocation(): string
     {
@@ -36,12 +40,18 @@ class GeoLite2Options extends AbstractOptions
 
     public function getDownloadFrom(): string
     {
-        return $this->downloadFrom;
+        return str_replace('{license_key}', $this->licenseKey, $this->downloadFrom);
     }
 
     protected function setDownloadFrom(string $downloadFrom): self
     {
         $this->downloadFrom = $downloadFrom;
+        return $this;
+    }
+
+    protected function setLicenseKey(string $licenseKey): self
+    {
+        $this->licenseKey = $licenseKey;
         return $this;
     }
 }

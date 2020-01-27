@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
+## 1.3.1 - 2020-01-27
+
+#### Added
+
+* *Nothing*
+
+#### Changed
+
+* *Nothing*
+
+#### Deprecated
+
+* *Nothing*
+
+#### Removed
+
+* *Nothing*
+
+#### Fixed
+
+* [#17](https://github.com/shlinkio/shlink-ip-geolocation/issues/17) Allowed the library to receive the geolite license key via config.
+
+
 ## 1.3.0 - 2020-01-03
 
 #### Added
