@@ -64,6 +64,8 @@ public function downloadFreshCopy(?callable $handleProgress = null): void;
 * `databaseFileExists`: Just tells if the database file exists already (either in an outdated or up to date form).
 * `downloadFreshCopy`: Forces a new copy of the GeoLite2 database to be downloaded from MaxMind repos. It allows to optionally handle the progress of the download.
 
+## GeoLite2 config
+
 To get both the resolver and the database updater to work, this configuration has to be defined:
 
 ```php
@@ -73,16 +75,21 @@ declare(strict_types=1);
 return [
 
     'geolite2' => [
+        // Mandatory options
         'db_location' => __DIR__ . '/../../data/GeoLite2-City.mmdb',
         'temp_dir' => sys_get_temp_dir(),
-        // 'download_from' => 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz',
+
+        // Optional options
+        'license_key' => 'kjhk45hkj34fdwe5',
+        'download_from' => 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key={license_key}&suffix=tar.gz',
     ],
 
 ];
 ```
 
-* `db_location`: It's the config option used to tell where in the local filesystem the database file is located (or should be located once the `DbUpdater` downloads it).
+* `db_location`: Tells where in the local filesystem the database file is located (or should be located once the `DbUpdater` downloads it).
 * `temp_dir`: A temporary location where new versions of the database are located while downloading. Once a download succeeds, the new DB will be moved to the location defined in previous config option.
-* `download_from`: The repository from which new GeoLite2 db files are downloaded. This option has a default value which is usually ok, but just in case you need to change it for some reason, you can do it here.
+* `license_key`: The GeoLite license key used to download the database. It has a default value, but it is recommended to [generate your own](https://support.maxmind.com/account-faq/account-related/how-do-i-generate-a-license-key/).
+* `download_from`: The repository from which new GeoLite2 db files are downloaded. This option has a default value which is usually ok. It can contain a `{license_key}` placeholder which will be replaced with the value provided in previous config option, but it can also be a hardcoded URL which will make the license key option to be ignored.
 
 > This project includes GeoLite2 data created by MaxMind, available from [https://www.maxmind.com](https://www.maxmind.com)
