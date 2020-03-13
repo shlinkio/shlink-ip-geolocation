@@ -9,6 +9,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use PharData;
+use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
 use Shlinkio\Shlink\IpGeolocation\Exception\RuntimeException;
 use Symfony\Component\Filesystem\Exception as FilesystemException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -54,11 +55,7 @@ class DbUpdater implements DbUpdaterInterface
                 RequestOptions::PROGRESS => $handleProgress,
             ]);
         } catch (Throwable | GuzzleException $e) {
-            throw new RuntimeException(
-                'An error occurred while trying to download a fresh copy of the GeoLite2 database',
-                0,
-                $e,
-            );
+            throw DbUpdateException::forFailedDownload($e);
         }
     }
 
@@ -71,20 +68,18 @@ class DbUpdater implements DbUpdaterInterface
 
             return sprintf('%s/%s', $tempDir, $internalPathToDb);
         } catch (Throwable $e) {
-            throw new RuntimeException(
-                sprintf('An error occurred while trying to extract the GeoLite2 database from %s', $compressedFile),
-                0,
-                $e,
-            );
+            throw DbUpdateException::forFailedExtraction($compressedFile, $e);
         }
     }
 
     private function copyNewDbFile(string $from): void
     {
+        $destination = $this->options->getDbLocation();
+
         try {
-            $this->filesystem->copy($from, $this->options->getDbLocation(), true);
+            $this->filesystem->copy($from, $destination, true);
         } catch (FilesystemException\FileNotFoundException | FilesystemException\IOException $e) {
-            throw new RuntimeException('An error occurred while trying to copy GeoLite2 db file to destination', 0, $e);
+            throw DbUpdateException::forFailedCopyToDestination($destination, $e);
         }
     }
 
