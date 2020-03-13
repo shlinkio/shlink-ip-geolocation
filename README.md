@@ -9,7 +9,7 @@ Most of the elements it provides require a [PSR-11](https://www.php-fig.org/psr/
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/shlinkio/shlink-ip-geolocation.svg?style=flat-square)](https://scrutinizer-ci.com/g/shlinkio/shlink-ip-geolocation/?branch=master)
 [![Latest Stable Version](https://img.shields.io/github/release/shlinkio/shlink-ip-geolocation.svg?style=flat-square)](https://packagist.org/packages/shlinkio/shlink-ip-geolocation)
 [![License](https://img.shields.io/github/license/shlinkio/shlink-ip-geolocation.svg?style=flat-square)](https://github.com/shlinkio/shlink-ip-geolocation/blob/master/LICENSE)
-[![Paypal donate](https://img.shields.io/badge/Donate-paypal-blue.svg?style=flat-square&logo=paypal&colorA=aaaaaa)](https://acel.me/donate)
+[![Paypal donate](https://img.shields.io/badge/Donate-paypal-blue.svg?style=flat-square&logo=paypal&colorA=aaaaaa)](https://slnk.to/donate)
 
 ## Install
 
