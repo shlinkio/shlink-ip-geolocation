@@ -81,7 +81,7 @@ class DbUpdaterTest extends TestCase
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionCode(0);
-        $this->expectExceptionMessage('An error occurred while trying to copy GeoLite2 db file to destination');
+        $this->expectExceptionMessage('An error occurred while trying to copy GeoLite2 db file to db_location folder');
         $request->shouldBeCalledOnce();
         $copy->shouldBeCalledOnce();
 
