@@ -6,10 +6,10 @@ namespace ShlinkioTest\Shlink\IpGeolocation\GeoLite2;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
-use Laminas\Diactoros\Response;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
+use Psr\Http\Message\ResponseInterface;
 use Shlinkio\Shlink\IpGeolocation\Exception\RuntimeException;
 use Shlinkio\Shlink\IpGeolocation\GeoLite2\DbUpdater;
 use Shlinkio\Shlink\IpGeolocation\GeoLite2\GeoLite2Options;
@@ -22,6 +22,7 @@ class DbUpdaterTest extends TestCase
     private ObjectProphecy $httpClient;
     private ObjectProphecy $filesystem;
     private GeoLite2Options $options;
+    private ResponseInterface $response;
 
     public function setUp(): void
     {
@@ -32,6 +33,7 @@ class DbUpdaterTest extends TestCase
             'db_location' => 'db_location',
             'download_from' => '',
         ]);
+        $this->response = $this->prophesize(ResponseInterface::class)->reveal();
 
         $this->dbUpdater = new DbUpdater($this->httpClient->reveal(), $this->filesystem->reveal(), $this->options);
     }
@@ -56,7 +58,7 @@ class DbUpdaterTest extends TestCase
     {
         $this->options->tempDir = '__invalid__';
 
-        $request = $this->httpClient->request(Argument::cetera())->willReturn(new Response());
+        $request = $this->httpClient->request(Argument::cetera())->willReturn($this->response);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionCode(0);
@@ -74,7 +76,7 @@ class DbUpdaterTest extends TestCase
      */
     public function anExceptionIsThrownIfFreshDbCannotBeCopiedToDestination(string $e): void
     {
-        $request = $this->httpClient->request(Argument::cetera())->willReturn(new Response());
+        $request = $this->httpClient->request(Argument::cetera())->willReturn($this->response);
         $copy = $this->filesystem->copy(Argument::cetera())->willThrow($e);
 
         $this->expectException(RuntimeException::class);
@@ -95,7 +97,7 @@ class DbUpdaterTest extends TestCase
     /** @test */
     public function noExceptionsAreThrownIfEverythingWorksFine(): void
     {
-        $request = $this->httpClient->request(Argument::cetera())->willReturn(new Response());
+        $request = $this->httpClient->request(Argument::cetera())->willReturn($this->response);
         $copy = $this->filesystem->copy(Argument::cetera())->will(function (): void {
         });
         $remove = $this->filesystem->remove(Argument::cetera())->will(function (): void {

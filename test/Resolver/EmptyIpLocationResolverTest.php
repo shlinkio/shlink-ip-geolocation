@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ShlinkioTest\Shlink\IpGeolocation\Resolver;
 
 use PHPUnit\Framework\TestCase;
-use Shlinkio\Shlink\Common\Util\StringUtilsTrait;
 use Shlinkio\Shlink\IpGeolocation\Model\Location;
 use Shlinkio\Shlink\IpGeolocation\Resolver\EmptyIpLocationResolver;
 
@@ -14,8 +13,6 @@ use function range;
 
 class EmptyIpLocationResolverTest extends TestCase
 {
-    use StringUtilsTrait;
-
     private EmptyIpLocationResolver $resolver;
 
     public function setUp(): void
@@ -34,6 +31,6 @@ class EmptyIpLocationResolverTest extends TestCase
 
     public function provideEmptyResponses(): array
     {
-        return map(range(0, 5), fn () => [$this->generateRandomString(15)]);
+        return map(range(0, 5), fn () => ['foobar']);
     }
 }
