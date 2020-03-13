@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 #### Added
 
-* *Nothing*
+* [#22](https://github.com/shlinkio/shlink-ip-geolocation/issues/22) Added `DbUpdateException` which is thrown by the `DbUpdater` when something fails. It extends from the previous exception, making it backwards compatible.
 
 #### Changed
 
