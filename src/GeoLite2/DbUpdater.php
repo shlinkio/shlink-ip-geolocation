@@ -10,7 +10,6 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use PharData;
 use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
-use Shlinkio\Shlink\IpGeolocation\Exception\RuntimeException;
 use Symfony\Component\Filesystem\Exception as FilesystemException;
 use Symfony\Component\Filesystem\Filesystem;
 use Throwable;
@@ -34,7 +33,7 @@ class DbUpdater implements DbUpdaterInterface
     }
 
     /**
-     * @throws RuntimeException
+     * @throws DbUpdateException
      */
     public function downloadFreshCopy(?callable $handleProgress = null): void
     {
