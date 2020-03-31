@@ -21,9 +21,9 @@
         "symfony/filesystem": "^5.0"
     },
     "require-dev": {
-        "infection/infection": "^0.15.0",
+        "infection/infection": "^0.16.1",
         "phpstan/phpstan": "^0.12.3",
-        "phpunit/phpunit": "^8.3",
+        "phpunit/phpunit": "^9.0.2",
         "roave/security-advisories": "dev-master",
         "shlinkio/php-coding-standard": "~2.1.0",
         "symfony/var-dumper": "^5.0"
@@ -47,12 +47,12 @@
         ],
         "cs": "phpcs",
         "cs:fix": "phpcbf",
-        "stan": "phpstan analyse src config --level=6",
+        "stan": "phpstan analyse src config --level=7",
         "test": "phpdbg -qrr vendor/bin/phpunit --order-by=random --testdox --colors=always",
         "test:ci": "@test --coverage-clover=build/clover.xml --coverage-xml=build/coverage-xml --log-junit=build/junit.xml",
         "test:pretty": "@test --coverage-html build/coverage-html",
         "infect": "infection --threads=4 --min-msi=70 --log-verbosity=default --only-covered",
-        "infect:ci": "@infect --coverage=build",
+        "infect:ci": "@infect --coverage=build --skip-initial-tests",
         "infect:show": "@infect --show-mutations",
         "infect:show:ci": "@infect --show-mutations --coverage=build",
         "test:infect": [
