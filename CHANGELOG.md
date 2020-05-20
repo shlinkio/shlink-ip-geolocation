@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## 1.4.1 - 2020-05-20
 
 #### Added
 
@@ -24,7 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 #### Fixed
 
-* *Nothing*
+* [#29](https://github.com/shlinkio/shlink-ip-geolocation/issues/29) Fixed timeout connections when downloading GeoLite databases leaving connection stuck forever.
 
 
 ## 1.4.0 - 2020-03-13

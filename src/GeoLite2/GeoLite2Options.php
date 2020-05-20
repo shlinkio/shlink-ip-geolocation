@@ -15,6 +15,7 @@ class GeoLite2Options extends AbstractOptions
     private string $licenseKey = 'G4Lm0C60yJsnkdPi';
     private string $downloadFrom = 'https://download.maxmind.com/app/geoip_download'
         . '?edition_id=GeoLite2-City&license_key={license_key}&suffix=tar.gz';
+    private float $connectionTimeout = 15.0;
 
     public function getDbLocation(): string
     {
@@ -53,5 +54,16 @@ class GeoLite2Options extends AbstractOptions
     {
         $this->licenseKey = $licenseKey;
         return $this;
+    }
+
+    protected function setConnectionTimeout(float $connectionTimeout): self
+    {
+        $this->connectionTimeout = $connectionTimeout;
+        return $this;
+    }
+
+    public function getConnectionTimeout(): float
+    {
+        return $this->connectionTimeout;
     }
 }
