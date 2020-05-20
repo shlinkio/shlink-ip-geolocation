@@ -52,6 +52,7 @@ class DbUpdater implements DbUpdaterInterface
             $this->httpClient->request(RequestMethod::METHOD_GET, $this->options->getDownloadFrom(), [
                 RequestOptions::SINK => $dest,
                 RequestOptions::PROGRESS => $handleProgress,
+                RequestOptions::CONNECT_TIMEOUT => $this->options->getConnectionTimeout(),
             ]);
         } catch (Throwable | GuzzleException $e) {
             throw DbUpdateException::forFailedDownload($e);
