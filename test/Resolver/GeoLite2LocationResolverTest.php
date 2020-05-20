@@ -9,6 +9,7 @@ use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\City;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Shlinkio\Shlink\IpGeolocation\Exception\WrongIpException;
 use Shlinkio\Shlink\IpGeolocation\Model\Location;
@@ -16,6 +17,8 @@ use Shlinkio\Shlink\IpGeolocation\Resolver\GeoLite2LocationResolver;
 
 class GeoLite2LocationResolverTest extends TestCase
 {
+    use ProphecyTrait;
+
     private GeoLite2LocationResolver $resolver;
     private ObjectProphecy $reader;
 

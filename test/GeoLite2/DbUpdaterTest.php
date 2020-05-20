@@ -8,6 +8,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ResponseInterface;
 use Shlinkio\Shlink\IpGeolocation\Exception\RuntimeException;
@@ -18,6 +19,8 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class DbUpdaterTest extends TestCase
 {
+    use ProphecyTrait;
+
     private DbUpdater $dbUpdater;
     private ObjectProphecy $httpClient;
     private ObjectProphecy $filesystem;

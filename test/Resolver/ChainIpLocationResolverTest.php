@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ShlinkioTest\Shlink\IpGeolocation\Resolver;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Shlinkio\Shlink\IpGeolocation\Exception\WrongIpException;
 use Shlinkio\Shlink\IpGeolocation\Model\Location;
@@ -13,6 +14,8 @@ use Shlinkio\Shlink\IpGeolocation\Resolver\IpLocationResolverInterface;
 
 class ChainIpLocationResolverTest extends TestCase
 {
+    use ProphecyTrait;
+
     private ChainIpLocationResolver $resolver;
     private ObjectProphecy $firstInnerResolver;
     private ObjectProphecy $secondInnerResolver;
