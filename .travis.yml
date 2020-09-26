@@ -4,15 +4,30 @@ branches:
   only:
     - /.*/
 
-php:
-  - '7.4'
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+jobs:
+  fast_finish: true
+  allow_failures:
+    - php: 'nightly'
+  include:
+    - name: "CI - 8.0"
+      php: 'nightly'
+      env:
+        - COMPOSER_FLAGS='--ignore-platform-reqs'
+    - name: "CI - 7.4"
+      php: '7.4'
+      env:
+        - COMPOSER_FLAGS=''
 
 before_install:
   - phpenv config-rm xdebug.ini || return 0
 
 install:
   - composer self-update
-  - composer install --no-interaction
+  - composer install --no-interaction --prefer-dist $COMPOSER_FLAGS
 
 script:
   - mkdir build
