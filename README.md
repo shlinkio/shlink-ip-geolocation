@@ -4,7 +4,7 @@ Shlink module with tools to geolocate an IP address using different strategies.
 
 Most of the elements it provides require a [PSR-11](https://www.php-fig.org/psr/psr-11/) container, and it's easy to integrate on [mezzio](https://github.com/mezzio/mezzio) applications thanks to the `ConfigProvider` it includes.
 
-[![Build Status](https://img.shields.io/travis/shlinkio/shlink-ip-geolocation.svg?style=flat-square)](https://travis-ci.org/shlinkio/shlink-ip-geolocation)
+[![Build Status](https://img.shields.io/travis/com/shlinkio/shlink-ip-geolocation.svg?style=flat-square)](https://travis-ci.com/shlinkio/shlink-ip-geolocation)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/shlinkio/shlink-ip-geolocation.svg?style=flat-square)](https://scrutinizer-ci.com/g/shlinkio/shlink-ip-geolocation/)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/shlinkio/shlink-ip-geolocation.svg?style=flat-square)](https://scrutinizer-ci.com/g/shlinkio/shlink-ip-geolocation/)
 [![Latest Stable Version](https://img.shields.io/github/release/shlinkio/shlink-ip-geolocation.svg?style=flat-square)](https://packagist.org/packages/shlinkio/shlink-ip-geolocation)
