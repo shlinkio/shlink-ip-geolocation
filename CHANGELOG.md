@@ -4,12 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [1.6.0] - 2020-11-01
 ### Added
-* *Nothing*
+* Added explicit support for PHP 8
 
 ### Changed
 * Added PHP 8 to the build matrix, allowing failures on it.
+* Updated to infection 0.20
 
 ### Deprecated
 * *Nothing*
