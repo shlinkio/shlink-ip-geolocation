@@ -14,20 +14,20 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "fig/http-message-util": "^1.1",
-        "geoip2/geoip2": "^2.9",
-        "guzzlehttp/guzzle": "^7.0 || ^6.5.1",
-        "lstrojny/functional-php": "^1.11",
-        "shlinkio/shlink-config": "^1.0",
-        "symfony/filesystem": "^5.0"
+        "geoip2/geoip2": "^2.11",
+        "guzzlehttp/guzzle": "^7.3",
+        "lstrojny/functional-php": "^1.17",
+        "shlinkio/shlink-config": "^1.2",
+        "symfony/filesystem": "^5.2"
     },
     "require-dev": {
-        "infection/infection": "^0.20.0",
+        "infection/infection": "^0.23.0",
         "phpspec/prophecy-phpunit": "^2.0",
-        "phpstan/phpstan": "^0.12.52",
-        "phpunit/phpunit": "^9.4",
+        "phpstan/phpstan": "^0.12.88",
+        "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-master",
         "shlinkio/php-coding-standard": "~2.1.1",
-        "symfony/var-dumper": "^5.1"
+        "symfony/var-dumper": "^5.2"
     },
     "autoload": {
         "psr-4": {

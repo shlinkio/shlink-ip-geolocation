@@ -10,11 +10,12 @@ use function str_replace;
 
 class GeoLite2Options extends AbstractOptions
 {
+    private const DOWNLOAD_FROM_PATTERN = 'https://download.maxmind.com/app/geoip_download'
+        . '?edition_id=GeoLite2-City&license_key={license_key}&suffix=tar.gz';
+
     private string $dbLocation = '';
     private string $tempDir = '';
-    private string $licenseKey = 'G4Lm0C60yJsnkdPi';
-    private string $downloadFrom = 'https://download.maxmind.com/app/geoip_download'
-        . '?edition_id=GeoLite2-City&license_key={license_key}&suffix=tar.gz';
+    private ?string $licenseKey = null;
     private float $connectionTimeout = 15.0;
 
     public function getDbLocation(): string
@@ -41,13 +42,7 @@ class GeoLite2Options extends AbstractOptions
 
     public function getDownloadFrom(): string
     {
-        return str_replace('{license_key}', $this->licenseKey, $this->downloadFrom);
-    }
-
-    protected function setDownloadFrom(string $downloadFrom): self
-    {
-        $this->downloadFrom = $downloadFrom;
-        return $this;
+        return str_replace('{license_key}', $this->licenseKey ?? '', self::DOWNLOAD_FROM_PATTERN);
     }
 
     protected function setLicenseKey(string $licenseKey): self

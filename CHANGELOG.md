@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ### Changed
 * Migrated build to Github Actions.
+* Updated to latest infection-php.
 
 ### Deprecated
 * *Nothing*
