@@ -22,7 +22,7 @@ class ConfigProviderTest extends TestCase
     {
         $config = $this->configProvider->__invoke();
 
-        $this->assertArrayHasKey('dependencies', $config);
-        $this->assertArrayHasKey(ConfigAbstractFactory::class, $config);
+        self::assertArrayHasKey('dependencies', $config);
+        self::assertArrayHasKey(ConfigAbstractFactory::class, $config);
     }
 }

@@ -15,9 +15,9 @@ class WrongIpExceptionTest extends TestCase
     {
         $e = WrongIpException::fromIpAddress('1.2.3.4');
 
-        $this->assertEquals('Provided IP "1.2.3.4" is invalid', $e->getMessage());
-        $this->assertEquals(0, $e->getCode());
-        $this->assertNull($e->getPrevious());
+        self::assertEquals('Provided IP "1.2.3.4" is invalid', $e->getMessage());
+        self::assertEquals(0, $e->getCode());
+        self::assertNull($e->getPrevious());
     }
 
     /** @test */
@@ -26,8 +26,8 @@ class WrongIpExceptionTest extends TestCase
         $prev = new Exception('Previous error');
         $e = WrongIpException::fromIpAddress('1.2.3.4', $prev);
 
-        $this->assertEquals('Provided IP "1.2.3.4" is invalid', $e->getMessage());
-        $this->assertEquals(0, $e->getCode());
-        $this->assertSame($prev, $e->getPrevious());
+        self::assertEquals('Provided IP "1.2.3.4" is invalid', $e->getMessage());
+        self::assertEquals(0, $e->getCode());
+        self::assertSame($prev, $e->getPrevious());
     }
 }

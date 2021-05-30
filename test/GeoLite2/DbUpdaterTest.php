@@ -146,7 +146,7 @@ class DbUpdaterTest extends TestCase
 
         $result = $this->dbUpdater->databaseFileExists();
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
         $exists->shouldHaveBeenCalledOnce();
     }
 
