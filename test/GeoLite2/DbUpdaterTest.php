@@ -34,7 +34,6 @@ class DbUpdaterTest extends TestCase
         $this->options = new GeoLite2Options([
             'temp_dir' => __DIR__ . '/../../test-resources',
             'db_location' => 'db_location',
-            'download_from' => '',
         ]);
         $this->response = $this->prophesize(ResponseInterface::class)->reveal();
 

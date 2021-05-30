@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 * *Nothing*
 
 ### Removed
-* *Nothing*
+* [#38](https://github.com/shlinkio/shlink-ip-geolocation/issues/38) Removed option to override GeoLite2 db file download source.
 
 ### Fixed
 * *Nothing*
