@@ -6,7 +6,6 @@ namespace Shlinkio\Shlink\IpGeolocation\GeoLite2;
 
 use Fig\Http\Message\RequestMethodInterface as RequestMethod;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use PharData;
 use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
@@ -37,6 +36,10 @@ class DbUpdater implements DbUpdaterInterface
      */
     public function downloadFreshCopy(?callable $handleProgress = null): void
     {
+        if (! $this->options->hasLicenseKey()) {
+            return;
+        }
+
         $tempDir = $this->options->getTempDir();
         $compressedFile = sprintf('%s/%s', $tempDir, self::DB_COMPRESSED_FILE);
 
@@ -54,7 +57,7 @@ class DbUpdater implements DbUpdaterInterface
                 RequestOptions::PROGRESS => $handleProgress,
                 RequestOptions::CONNECT_TIMEOUT => $this->options->getConnectionTimeout(),
             ]);
-        } catch (Throwable | GuzzleException $e) {
+        } catch (Throwable $e) {
             throw DbUpdateException::forFailedDownload($e);
         }
     }

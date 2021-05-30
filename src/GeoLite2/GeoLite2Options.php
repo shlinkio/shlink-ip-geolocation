@@ -45,10 +45,15 @@ class GeoLite2Options extends AbstractOptions
         return str_replace('{license_key}', $this->licenseKey ?? '', self::DOWNLOAD_FROM_PATTERN);
     }
 
-    protected function setLicenseKey(string $licenseKey): self
+    protected function setLicenseKey(?string $licenseKey): self
     {
         $this->licenseKey = $licenseKey;
         return $this;
+    }
+
+    public function hasLicenseKey(): bool
+    {
+        return $this->licenseKey !== null;
     }
 
     protected function setConnectionTimeout(float $connectionTimeout): self

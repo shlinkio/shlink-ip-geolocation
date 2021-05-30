@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ## [Unreleased]
 ### Added
-* *Nothing*
+* [#37](https://github.com/shlinkio/shlink-ip-geolocation/issues/37) Made license key optional, skipping its update if the key is not set.
 
 ### Changed
 * Migrated build to Github Actions.
