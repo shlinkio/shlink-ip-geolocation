@@ -34,7 +34,7 @@ class DbUpdaterTest extends TestCase
         $this->options = new GeoLite2Options([
             'temp_dir' => __DIR__ . '/../../test-resources',
             'db_location' => 'db_location',
-            'download_from' => '',
+            'license_key' => 'foobar',
         ]);
         $this->response = $this->prophesize(ResponseInterface::class)->reveal();
 
@@ -130,5 +130,17 @@ class DbUpdaterTest extends TestCase
     public function provideExists(): iterable
     {
         return [[true], [false]];
+    }
+
+    /** @test */
+    public function databaseUpdateIsSkippedIfNoLicenseKeyIsProvided(): void
+    {
+        $this->options->licenseKey = null;
+
+        $this->dbUpdater->downloadFreshCopy();
+
+        $this->httpClient->request(Argument::cetera())->shouldNotHaveBeenCalled();
+        $this->filesystem->copy(Argument::cetera())->shouldNotHaveBeenCalled();
+        $this->filesystem->remove(Argument::cetera())->shouldNotHaveBeenCalled();
     }
 }

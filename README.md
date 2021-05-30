@@ -79,8 +79,7 @@ return [
         'temp_dir' => sys_get_temp_dir(),
 
         // Optional options
-        'license_key' => 'kjhk45hkj34fdwe5',
-        'download_from' => 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key={license_key}&suffix=tar.gz',
+        'license_key' => 'kjhk45hkj34fdwe5', // If not set, no attempts to download the file will happen
     ],
 
 ];
@@ -89,6 +88,5 @@ return [
 * `db_location`: Tells where in the local filesystem the database file is located (or should be located once the `DbUpdater` downloads it).
 * `temp_dir`: A temporary location where new versions of the database are located while downloading. Once a download succeeds, the new DB will be moved to the location defined in previous config option.
 * `license_key`: The GeoLite license key used to download the database. It has a default value, but it is recommended to [generate your own](https://support.maxmind.com/account-faq/account-related/how-do-i-generate-a-license-key/).
-* `download_from`: The repository from which new GeoLite2 db files are downloaded. This option has a default value which is usually ok. It can contain a `{license_key}` placeholder which will be replaced with the value provided in previous config option, but it can also be a hardcoded URL which will make the license key option to be ignored.
 
 > This project includes GeoLite2 data created by MaxMind, available from [https://www.maxmind.com](https://www.maxmind.com)
