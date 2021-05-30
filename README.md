@@ -79,7 +79,7 @@ return [
         'temp_dir' => sys_get_temp_dir(),
 
         // Optional options
-        'license_key' => 'kjhk45hkj34fdwe5', // If not set, the no attempts to download the file will happen
+        'license_key' => 'kjhk45hkj34fdwe5', // If not set, no attempts to download the file will happen
     ],
 
 ];
