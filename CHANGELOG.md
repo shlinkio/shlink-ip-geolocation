@@ -4,11 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [2.0.0] - 2021-05-30
 ### Added
 * [#37](https://github.com/shlinkio/shlink-ip-geolocation/issues/37) Made license key optional, skipping its update if the key is not set.
 
 ### Changed
+* [#32](https://github.com/shlinkio/shlink-ip-geolocation/issues/32) Ensured downloaded GeoLite2 db file is set with `0666` mode.
 * Migrated build to Github Actions.
 * Updated to latest infection-php.
 
