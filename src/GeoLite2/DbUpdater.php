@@ -81,6 +81,7 @@ class DbUpdater implements DbUpdaterInterface
 
         try {
             $this->filesystem->copy($from, $destination, true);
+            $this->filesystem->chmod([$destination], 0666);
         } catch (FilesystemException\FileNotFoundException | FilesystemException\IOException $e) {
             throw DbUpdateException::forFailedCopyToDestination($destination, $e);
         }

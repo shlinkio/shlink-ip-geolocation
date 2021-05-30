@@ -77,24 +77,44 @@ class DbUpdaterTest extends TestCase
      * @test
      * @dataProvider provideFilesystemExceptions
      */
-    public function anExceptionIsThrownIfFreshDbCannotBeCopiedToDestination(string $e): void
+    public function anExceptionIsThrownIfFreshDbCannotBeCopiedToDestination(callable $prepareFs): void
     {
         $request = $this->httpClient->request(Argument::cetera())->willReturn($this->response);
-        $copy = $this->filesystem->copy(Argument::cetera())->willThrow($e);
+        $prepareFs($this->filesystem);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionCode(0);
         $this->expectExceptionMessage('An error occurred while trying to copy GeoLite2 db file to db_location folder');
         $request->shouldBeCalledOnce();
-        $copy->shouldBeCalledOnce();
 
         $this->dbUpdater->downloadFreshCopy();
     }
 
     public function provideFilesystemExceptions(): iterable
     {
-        yield 'file not found' => [FilesystemException\FileNotFoundException::class];
-        yield 'IO error' => [FilesystemException\IOException::class];
+        $onCopy = static function ($fs, string $e): void {
+            /** @var ObjectProphecy|Filesystem $fs */
+            $copy = $fs->copy(Argument::cetera())->willThrow($e);
+            $chmod = $fs->chmod(Argument::cetera());
+
+            $copy->shouldBeCalledOnce();
+            $chmod->shouldNotBeCalled();
+        };
+        $onChmod = static function ($fs, string $e): void {
+            /** @var ObjectProphecy|Filesystem $fs */
+            $copy = $fs->copy(Argument::cetera());
+            $chmod = $fs->chmod(Argument::cetera())->willThrow($e);
+
+            $copy->shouldBeCalledOnce();
+            $chmod->shouldBeCalledOnce();
+        };
+
+        yield 'file not found on copy' => [fn ($fs) => $onCopy($fs, FilesystemException\FileNotFoundException::class)];
+        yield 'IO error on copy' => [fn ($fs) => $onCopy($fs, FilesystemException\IOException::class)];
+        yield 'file not found on chmod' => [
+            fn ($fs) => $onChmod($fs, FilesystemException\FileNotFoundException::class),
+        ];
+        yield 'IO error on chmod' => [fn ($fs) => $onChmod($fs, FilesystemException\IOException::class)];
     }
 
     /** @test */
@@ -103,6 +123,8 @@ class DbUpdaterTest extends TestCase
         $request = $this->httpClient->request(Argument::cetera())->willReturn($this->response);
         $copy = $this->filesystem->copy(Argument::cetera())->will(function (): void {
         });
+        $chmod = $this->filesystem->chmod(Argument::type('array'), 0666)->will(function (): void {
+        });
         $remove = $this->filesystem->remove(Argument::cetera())->will(function (): void {
         });
 
@@ -110,6 +132,7 @@ class DbUpdaterTest extends TestCase
 
         $request->shouldHaveBeenCalledOnce();
         $copy->shouldHaveBeenCalledOnce();
+        $chmod->shouldHaveBeenCalledOnce();
         $remove->shouldHaveBeenCalledOnce();
     }
 
@@ -123,7 +146,7 @@ class DbUpdaterTest extends TestCase
 
         $result = $this->dbUpdater->databaseFileExists();
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
         $exists->shouldHaveBeenCalledOnce();
     }
 
@@ -141,6 +164,7 @@ class DbUpdaterTest extends TestCase
 
         $this->httpClient->request(Argument::cetera())->shouldNotHaveBeenCalled();
         $this->filesystem->copy(Argument::cetera())->shouldNotHaveBeenCalled();
+        $this->filesystem->chmod(Argument::cetera())->shouldNotHaveBeenCalled();
         $this->filesystem->remove(Argument::cetera())->shouldNotHaveBeenCalled();
     }
 }

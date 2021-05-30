@@ -26,12 +26,12 @@ class DbUpdateExceptionTest extends TestCase
     {
         $e = DbUpdateException::forFailedDownload($this->prev);
 
-        $this->assertEquals(
+        self::assertEquals(
             'An error occurred while trying to download a fresh copy of the GeoLite2 database',
             $e->getMessage(),
         );
-        $this->assertEquals($this->prev, $e->getPrevious());
-        $this->assertEquals(0, $e->getCode());
+        self::assertEquals($this->prev, $e->getPrevious());
+        self::assertEquals(0, $e->getCode());
     }
 
     /** @test */
@@ -39,12 +39,12 @@ class DbUpdateExceptionTest extends TestCase
     {
         $e = DbUpdateException::forFailedExtraction($this->theFile, $this->prev);
 
-        $this->assertEquals(
+        self::assertEquals(
             sprintf('An error occurred while trying to extract the GeoLite2 database from %s', $this->theFile),
             $e->getMessage(),
         );
-        $this->assertEquals($this->prev, $e->getPrevious());
-        $this->assertEquals(0, $e->getCode());
+        self::assertEquals($this->prev, $e->getPrevious());
+        self::assertEquals(0, $e->getCode());
     }
 
     /** @test */
@@ -52,11 +52,11 @@ class DbUpdateExceptionTest extends TestCase
     {
         $e = DbUpdateException::forFailedCopyToDestination($this->theFile, $this->prev);
 
-        $this->assertEquals(
+        self::assertEquals(
             sprintf('An error occurred while trying to copy GeoLite2 db file to %s folder', $this->theFile),
             $e->getMessage(),
         );
-        $this->assertEquals($this->prev, $e->getPrevious());
-        $this->assertEquals(0, $e->getCode());
+        self::assertEquals($this->prev, $e->getPrevious());
+        self::assertEquals(0, $e->getCode());
     }
 }
