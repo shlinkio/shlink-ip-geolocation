@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Unreleased]
+### Added
+* *Nothing*
+
+### Changed
+* Updated required phpstan level to 8.
+* Added experimental builds under PHP 8.1.
+
+### Deprecated
+* *Nothing*
+
+### Removed
+* Dropped support for PHP 7.4
+
+### Fixed
+* *Nothing*
+
+
 ## [2.0.0] - 2021-05-30
 ### Added
 * [#37](https://github.com/shlinkio/shlink-ip-geolocation/issues/37) Made license key optional, skipping its update if the key is not set.

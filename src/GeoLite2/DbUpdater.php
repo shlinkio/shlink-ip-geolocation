@@ -20,15 +20,11 @@ class DbUpdater implements DbUpdaterInterface
     private const DB_COMPRESSED_FILE = 'GeoLite2-City.tar.gz';
     private const DB_DECOMPRESSED_FILE = 'GeoLite2-City.mmdb';
 
-    private ClientInterface $httpClient;
-    private Filesystem $filesystem;
-    private GeoLite2Options $options;
-
-    public function __construct(ClientInterface $httpClient, Filesystem $filesystem, GeoLite2Options $options)
-    {
-        $this->httpClient = $httpClient;
-        $this->filesystem = $filesystem;
-        $this->options = $options;
+    public function __construct(
+        private ClientInterface $httpClient,
+        private Filesystem $filesystem,
+        private GeoLite2Options $options,
+    ) {
     }
 
     /**
@@ -91,7 +87,7 @@ class DbUpdater implements DbUpdaterInterface
     {
         try {
             $this->filesystem->remove($files);
-        } catch (FilesystemException\IOException $e) {
+        } catch (FilesystemException\IOException) {
             // Ignore any error produced when trying to delete temp files
         }
     }
