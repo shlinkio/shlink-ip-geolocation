@@ -6,30 +6,15 @@ namespace Shlinkio\Shlink\IpGeolocation\Model;
 
 final class Location
 {
-    private string $countryCode;
-    private string $countryName;
-    private string $regionName;
-    private string $city;
-    private float $latitude;
-    private float $longitude;
-    private string $timeZone;
-
     public function __construct(
-        string $countryCode,
-        string $countryName,
-        string $regionName,
-        string $city,
-        float $latitude,
-        float $longitude,
-        string $timeZone
+        private string $countryCode,
+        private string $countryName,
+        private string $regionName,
+        private string $city,
+        private float $latitude,
+        private float $longitude,
+        private string $timeZone,
     ) {
-        $this->countryCode = $countryCode;
-        $this->countryName = $countryName;
-        $this->regionName = $regionName;
-        $this->city = $city;
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
-        $this->timeZone = $timeZone;
     }
 
     public static function emptyInstance(): self

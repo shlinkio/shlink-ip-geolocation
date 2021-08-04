@@ -16,11 +16,8 @@ use function Functional\first;
 
 class GeoLite2LocationResolver implements IpLocationResolverInterface
 {
-    private Reader $geoLiteDbReader;
-
-    public function __construct(Reader $geoLiteDbReader)
+    public function __construct(private Reader $geoLiteDbReader)
     {
-        $this->geoLiteDbReader = $geoLiteDbReader;
     }
 
     /**
