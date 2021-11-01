@@ -21,9 +21,9 @@
         "symfony/filesystem": "^5.3"
     },
     "require-dev": {
-        "infection/infection": "^0.24.0",
+        "infection/infection": "^0.25.3",
         "phpspec/prophecy-phpunit": "^2.0",
-        "phpstan/phpstan": "^0.12.94",
+        "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-master",
         "shlinkio/php-coding-standard": "~2.2.0",
@@ -48,7 +48,7 @@
         ],
         "cs": "phpcs",
         "cs:fix": "phpcbf",
-        "stan": "phpstan analyse src config --level=8",
+        "stan": "phpstan analyse src config --level=9",
         "test": "phpdbg -qrr vendor/bin/phpunit --order-by=random --testdox --colors=always",
         "test:ci": "@test --coverage-clover=build/clover.xml --coverage-xml=build/coverage-xml --log-junit=build/junit.xml",
         "test:pretty": "@test --coverage-html build/coverage-html",

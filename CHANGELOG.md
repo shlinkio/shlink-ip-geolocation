@@ -4,12 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [2.1.0] - 2021-11-01
 ### Added
 * *Nothing*
 
 ### Changed
-* Updated required phpstan level to 8.
+* Updated to infection-php 0.25
+* Updated to phpstan 1.0
+* Updated required phpstan level to 9.
 * Added experimental builds under PHP 8.1.
 * Moved ci workflow to external repo and reused
 
