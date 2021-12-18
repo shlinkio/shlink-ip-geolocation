@@ -88,6 +88,6 @@ return [
 
 * `db_location`: Tells where in the local filesystem the database file is located (or should be located once the `DbUpdater` downloads it).
 * `temp_dir`: A temporary location where new versions of the database are located while downloading. Once a download succeeds, the new DB will be moved to the location defined in previous config option.
-* `license_key`: The GeoLite license key used to download the database. It has a default value, but it is recommended to [generate your own](https://support.maxmind.com/account-faq/account-related/how-do-i-generate-a-license-key/).
+* `license_key`: The GeoLite license key used to download the database. Know how to [generate your own](https://support.maxmind.com/account-faq/account-related/how-do-i-generate-a-license-key/).
 
 > This project includes GeoLite2 data created by MaxMind, available from [https://www.maxmind.com](https://www.maxmind.com)
