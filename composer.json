@@ -21,7 +21,7 @@
         "symfony/filesystem": "^6.0 || ^5.4"
     },
     "require-dev": {
-        "infection/infection": "^0.25.3",
+        "infection/infection": "^0.26",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/phpstan": "^1.2",
         "phpunit/phpunit": "^9.5",
@@ -74,6 +74,10 @@
         "infect:show": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing and shows applied mutators</>"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "infection/extension-installer": true
+        }
     }
 }
