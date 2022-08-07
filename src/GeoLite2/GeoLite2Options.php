@@ -23,10 +23,9 @@ class GeoLite2Options extends AbstractOptions
         return $this->dbLocation;
     }
 
-    protected function setDbLocation(string $dbLocation): self
+    protected function setDbLocation(string $dbLocation): void
     {
         $this->dbLocation = $dbLocation;
-        return $this;
     }
 
     public function getTempDir(): string
@@ -34,10 +33,9 @@ class GeoLite2Options extends AbstractOptions
         return $this->tempDir;
     }
 
-    protected function setTempDir(string $tempDir): self
+    protected function setTempDir(string $tempDir): void
     {
         $this->tempDir = $tempDir;
-        return $this;
     }
 
     public function getDownloadFrom(): string
@@ -45,10 +43,9 @@ class GeoLite2Options extends AbstractOptions
         return str_replace('{license_key}', $this->licenseKey ?? '', self::DOWNLOAD_FROM_PATTERN);
     }
 
-    protected function setLicenseKey(?string $licenseKey): self
+    protected function setLicenseKey(?string $licenseKey): void
     {
         $this->licenseKey = $licenseKey;
-        return $this;
     }
 
     public function hasLicenseKey(): bool
@@ -56,10 +53,9 @@ class GeoLite2Options extends AbstractOptions
         return $this->licenseKey !== null;
     }
 
-    protected function setConnectionTimeout(float $connectionTimeout): self
+    protected function setConnectionTimeout(float $connectionTimeout): void
     {
         $this->connectionTimeout = $connectionTimeout;
-        return $this;
     }
 
     public function getConnectionTimeout(): float
