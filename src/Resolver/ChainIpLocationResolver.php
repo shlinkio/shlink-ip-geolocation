@@ -10,7 +10,7 @@ use Shlinkio\Shlink\IpGeolocation\Model;
 class ChainIpLocationResolver implements IpLocationResolverInterface
 {
     /** @var IpLocationResolverInterface[] */
-    private array $resolvers;
+    private readonly array $resolvers;
 
     public function __construct(IpLocationResolverInterface ...$resolvers)
     {

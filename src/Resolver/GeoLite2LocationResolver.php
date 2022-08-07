@@ -16,7 +16,7 @@ use function Functional\first;
 
 class GeoLite2LocationResolver implements IpLocationResolverInterface
 {
-    public function __construct(private Reader $geoLiteDbReader)
+    public function __construct(private readonly Reader $geoLiteDbReader)
     {
     }
 
