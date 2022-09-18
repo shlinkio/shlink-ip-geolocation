@@ -9,6 +9,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
 use PharData;
 use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
+use Shlinkio\Shlink\IpGeolocation\Exception\MissingLicenseException;
 use Symfony\Component\Filesystem\Exception as FilesystemException;
 use Symfony\Component\Filesystem\Filesystem;
 use Throwable;
@@ -29,11 +30,12 @@ class DbUpdater implements DbUpdaterInterface
 
     /**
      * @throws DbUpdateException
+     * @throws MissingLicenseException
      */
     public function downloadFreshCopy(?callable $handleProgress = null): void
     {
         if (! $this->options->hasLicenseKey()) {
-            throw DbUpdateException::forMissingLicense();
+            throw MissingLicenseException::forMissingLicense();
         }
 
         $tempDir = $this->options->getTempDir();

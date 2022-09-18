@@ -11,7 +11,7 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ResponseInterface;
-use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
+use Shlinkio\Shlink\IpGeolocation\Exception\MissingLicenseException;
 use Shlinkio\Shlink\IpGeolocation\Exception\RuntimeException;
 use Shlinkio\Shlink\IpGeolocation\GeoLite2\DbUpdater;
 use Shlinkio\Shlink\IpGeolocation\GeoLite2\GeoLite2Options;
@@ -164,7 +164,7 @@ class DbUpdaterTest extends TestCase
     {
         $this->options->licenseKey = $license;
 
-        $this->expectException(DbUpdateException::class);
+        $this->expectException(MissingLicenseException::class);
         $this->expectExceptionMessage('Impossible to download GeoLite2 db file. A license key was not provided.');
 
         $this->dbUpdater->downloadFreshCopy();
