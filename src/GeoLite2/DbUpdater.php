@@ -33,7 +33,7 @@ class DbUpdater implements DbUpdaterInterface
     public function downloadFreshCopy(?callable $handleProgress = null): void
     {
         if (! $this->options->hasLicenseKey()) {
-            return;
+            throw DbUpdateException::forMissingLicense();
         }
 
         $tempDir = $this->options->getTempDir();

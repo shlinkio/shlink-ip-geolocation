@@ -50,7 +50,7 @@ class GeoLite2Options extends AbstractOptions
 
     public function hasLicenseKey(): bool
     {
-        return $this->licenseKey !== null;
+        return ! empty($this->licenseKey);
     }
 
     protected function setConnectionTimeout(float $connectionTimeout): void
