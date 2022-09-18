@@ -10,6 +10,11 @@ use function sprintf;
 
 class DbUpdateException extends RuntimeException
 {
+    public static function forMissingLicense(): self
+    {
+        return new self('Impossible to download GeoLite2 db file. A license key was not provided.');
+    }
+
     public static function forFailedDownload(Throwable $prev): self
     {
         return self::build('An error occurred while trying to download a fresh copy of the GeoLite2 database', $prev);
