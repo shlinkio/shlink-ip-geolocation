@@ -38,7 +38,7 @@ class DbUpdater implements DbUpdaterInterface
             throw MissingLicenseException::forMissingLicense();
         }
 
-        $tempDir = $this->options->getTempDir();
+        $tempDir = $this->options->tempDir;
         $compressedFile = sprintf('%s/%s', $tempDir, self::DB_COMPRESSED_FILE);
 
         $this->downloadDbFile($compressedFile, $handleProgress);
@@ -50,10 +50,10 @@ class DbUpdater implements DbUpdaterInterface
     private function downloadDbFile(string $dest, ?callable $handleProgress = null): void
     {
         try {
-            $this->httpClient->request(RequestMethod::METHOD_GET, $this->options->getDownloadFrom(), [
+            $this->httpClient->request(RequestMethod::METHOD_GET, $this->options->downloadFrom, [
                 RequestOptions::SINK => $dest,
                 RequestOptions::PROGRESS => $handleProgress,
-                RequestOptions::CONNECT_TIMEOUT => $this->options->getConnectionTimeout(),
+                RequestOptions::CONNECT_TIMEOUT => $this->options->connectionTimeout,
             ]);
         } catch (Throwable $e) {
             throw DbUpdateException::forFailedDownload($e);
@@ -75,7 +75,7 @@ class DbUpdater implements DbUpdaterInterface
 
     private function copyNewDbFile(string $from): void
     {
-        $destination = $this->options->getDbLocation();
+        $destination = $this->options->dbLocation;
 
         try {
             $this->filesystem->copy($from, $destination, true);
@@ -96,6 +96,6 @@ class DbUpdater implements DbUpdaterInterface
 
     public function databaseFileExists(): bool
     {
-        return $this->filesystem->exists($this->options->getDbLocation());
+        return $this->filesystem->exists($this->options->dbLocation);
     }
 }
