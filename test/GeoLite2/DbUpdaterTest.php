@@ -22,24 +22,15 @@ class DbUpdaterTest extends TestCase
 {
     use ProphecyTrait;
 
-    private DbUpdater $dbUpdater;
     private ObjectProphecy $httpClient;
     private ObjectProphecy $filesystem;
-    private GeoLite2Options $options;
     private ResponseInterface $response;
 
     public function setUp(): void
     {
         $this->httpClient = $this->prophesize(ClientInterface::class);
         $this->filesystem = $this->prophesize(Filesystem::class);
-        $this->options = new GeoLite2Options([
-            'temp_dir' => __DIR__ . '/../../test-resources',
-            'db_location' => 'db_location',
-            'license_key' => 'foobar',
-        ]);
         $this->response = $this->prophesize(ResponseInterface::class)->reveal();
-
-        $this->dbUpdater = new DbUpdater($this->httpClient->reveal(), $this->filesystem->reveal(), $this->options);
     }
 
     /** @test */
@@ -54,14 +45,12 @@ class DbUpdaterTest extends TestCase
         );
         $request->shouldBeCalledOnce();
 
-        $this->dbUpdater->downloadFreshCopy();
+        $this->dbUpdater()->downloadFreshCopy();
     }
 
     /** @test */
     public function anExceptionIsThrownIfFreshDbCannotBeExtracted(): void
     {
-        $this->options->tempDir = '__invalid__';
-
         $request = $this->httpClient->request(Argument::cetera())->willReturn($this->response);
 
         $this->expectException(RuntimeException::class);
@@ -71,7 +60,7 @@ class DbUpdaterTest extends TestCase
         );
         $request->shouldBeCalledOnce();
 
-        $this->dbUpdater->downloadFreshCopy();
+        $this->dbUpdater('__invalid__')->downloadFreshCopy();
     }
 
     /**
@@ -88,7 +77,7 @@ class DbUpdaterTest extends TestCase
         $this->expectExceptionMessage('An error occurred while trying to copy GeoLite2 db file to db_location folder');
         $request->shouldBeCalledOnce();
 
-        $this->dbUpdater->downloadFreshCopy();
+        $this->dbUpdater()->downloadFreshCopy();
     }
 
     public function provideFilesystemExceptions(): iterable
@@ -129,7 +118,7 @@ class DbUpdaterTest extends TestCase
         $remove = $this->filesystem->remove(Argument::cetera())->will(function (): void {
         });
 
-        $this->dbUpdater->downloadFreshCopy();
+        $this->dbUpdater()->downloadFreshCopy();
 
         $request->shouldHaveBeenCalledOnce();
         $copy->shouldHaveBeenCalledOnce();
@@ -145,7 +134,7 @@ class DbUpdaterTest extends TestCase
     {
         $exists = $this->filesystem->exists('db_location')->willReturn($expected);
 
-        $result = $this->dbUpdater->databaseFileExists();
+        $result = $this->dbUpdater()->databaseFileExists();
 
         self::assertEquals($expected, $result);
         $exists->shouldHaveBeenCalledOnce();
@@ -162,17 +151,25 @@ class DbUpdaterTest extends TestCase
      */
     public function anExceptionIsThrownIfNoLicenseKeyIsProvided(?string $license): void
     {
-        $this->options->licenseKey = $license;
-
         $this->expectException(MissingLicenseException::class);
         $this->expectExceptionMessage('Impossible to download GeoLite2 db file. A license key was not provided.');
 
-        $this->dbUpdater->downloadFreshCopy();
+        $this->dbUpdater(null, $license)->downloadFreshCopy();
     }
 
     public function provideInvalidLicenses(): iterable
     {
         yield 'null license' => [null];
         yield 'empty license' => [''];
+    }
+
+    private function dbUpdater(?string $tempDir = null, ?string $licenseKey = 'foobar'): DbUpdater
+    {
+        $options = new GeoLite2Options(
+            licenseKey: $licenseKey,
+            dbLocation: 'db_location',
+            tempDir: $tempDir ?? __DIR__ . '/../../test-resources',
+        );
+        return new DbUpdater($this->httpClient->reveal(), $this->filesystem->reveal(), $options);
     }
 }
