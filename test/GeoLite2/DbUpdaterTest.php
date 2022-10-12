@@ -21,8 +21,8 @@ use Throwable;
 
 class DbUpdaterTest extends TestCase
 {
-    private MockObject $httpClient;
-    private MockObject $filesystem;
+    private MockObject & ClientInterface $httpClient;
+    private MockObject & Filesystem $filesystem;
     private ResponseInterface $response;
 
     public function setUp(): void
