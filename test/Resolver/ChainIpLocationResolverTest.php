@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\IpGeolocation\Resolver;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Shlinkio\Shlink\IpGeolocation\Exception\WrongIpException;
 use Shlinkio\Shlink\IpGeolocation\Model\Location;
 use Shlinkio\Shlink\IpGeolocation\Resolver\ChainIpLocationResolver;
@@ -14,21 +13,16 @@ use Shlinkio\Shlink\IpGeolocation\Resolver\IpLocationResolverInterface;
 
 class ChainIpLocationResolverTest extends TestCase
 {
-    use ProphecyTrait;
-
     private ChainIpLocationResolver $resolver;
-    private ObjectProphecy $firstInnerResolver;
-    private ObjectProphecy $secondInnerResolver;
+    private MockObject $firstInnerResolver;
+    private MockObject $secondInnerResolver;
 
     public function setUp(): void
     {
-        $this->firstInnerResolver = $this->prophesize(IpLocationResolverInterface::class);
-        $this->secondInnerResolver = $this->prophesize(IpLocationResolverInterface::class);
+        $this->firstInnerResolver = $this->createMock(IpLocationResolverInterface::class);
+        $this->secondInnerResolver = $this->createMock(IpLocationResolverInterface::class);
 
-        $this->resolver = new ChainIpLocationResolver(
-            $this->firstInnerResolver->reveal(),
-            $this->secondInnerResolver->reveal(),
-        );
+        $this->resolver = new ChainIpLocationResolver($this->firstInnerResolver, $this->secondInnerResolver);
     }
 
     /** @test */
@@ -36,12 +30,18 @@ class ChainIpLocationResolverTest extends TestCase
     {
         $ipAddress = '1.2.3.4';
 
-        $firstResolve = $this->firstInnerResolver->resolveIpLocation($ipAddress)->willThrow(WrongIpException::class);
-        $secondResolve = $this->secondInnerResolver->resolveIpLocation($ipAddress)->willThrow(WrongIpException::class);
+        $this->firstInnerResolver
+            ->expects($this->once())
+            ->method('resolveIpLocation')
+            ->with($this->equalTo($ipAddress))
+            ->willThrowException(WrongIpException::fromIpAddress(''));
+        $this->secondInnerResolver
+            ->expects($this->once())
+            ->method('resolveIpLocation')
+            ->with($this->equalTo($ipAddress))
+            ->willThrowException(WrongIpException::fromIpAddress(''));
 
         $this->expectException(WrongIpException::class);
-        $firstResolve->shouldBeCalledOnce();
-        $secondResolve->shouldBeCalledOnce();
 
         $this->resolver->resolveIpLocation($ipAddress);
     }
@@ -51,13 +51,14 @@ class ChainIpLocationResolverTest extends TestCase
     {
         $ipAddress = '1.2.3.4';
 
-        $firstResolve = $this->firstInnerResolver->resolveIpLocation($ipAddress)->willReturn(Location::emptyInstance());
-        $secondResolve = $this->secondInnerResolver->resolveIpLocation($ipAddress)->willThrow(WrongIpException::class);
+        $this->firstInnerResolver
+            ->expects($this->once())
+            ->method('resolveIpLocation')
+            ->with($this->equalTo($ipAddress))
+            ->willReturn(Location::emptyInstance());
+        $this->secondInnerResolver->expects($this->never())->method('resolveIpLocation');
 
         $this->resolver->resolveIpLocation($ipAddress);
-
-        $firstResolve->shouldHaveBeenCalledOnce();
-        $secondResolve->shouldNotHaveBeenCalled();
     }
 
     /** @test */
@@ -65,14 +66,17 @@ class ChainIpLocationResolverTest extends TestCase
     {
         $ipAddress = '1.2.3.4';
 
-        $firstResolve = $this->firstInnerResolver->resolveIpLocation($ipAddress)->willThrow(WrongIpException::class);
-        $secondResolve = $this->secondInnerResolver->resolveIpLocation($ipAddress)->willReturn(
-            Location::emptyInstance(),
-        );
+        $this->firstInnerResolver
+            ->expects($this->once())
+            ->method('resolveIpLocation')
+            ->with($this->equalTo($ipAddress))
+            ->willThrowException(WrongIpException::fromIpAddress(''));
+        $this->secondInnerResolver
+            ->expects($this->once())
+            ->method('resolveIpLocation')
+            ->with($this->equalTo($ipAddress))
+            ->willReturn(Location::emptyInstance());
 
         $this->resolver->resolveIpLocation($ipAddress);
-
-        $firstResolve->shouldHaveBeenCalledOnce();
-        $secondResolve->shouldHaveBeenCalledOnce();
     }
 }

@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 ### Changed
 * Migrated GeoLite2Options to ValinorConfigFactory.
 * Migrated infection config to json5
+* Migrated from phpspec/prophecy to PHPUnit mocks
 
 ### Deprecated
 * *Nothing*

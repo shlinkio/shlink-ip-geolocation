@@ -6,10 +6,10 @@ namespace ShlinkioTest\Shlink\IpGeolocation\GeoLite2;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ResponseInterface;
 use Shlinkio\Shlink\IpGeolocation\Exception\MissingLicenseException;
 use Shlinkio\Shlink\IpGeolocation\Exception\RuntimeException;
@@ -17,33 +17,35 @@ use Shlinkio\Shlink\IpGeolocation\GeoLite2\DbUpdater;
 use Shlinkio\Shlink\IpGeolocation\GeoLite2\GeoLite2Options;
 use Symfony\Component\Filesystem\Exception as FilesystemException;
 use Symfony\Component\Filesystem\Filesystem;
+use Throwable;
 
 class DbUpdaterTest extends TestCase
 {
-    use ProphecyTrait;
-
-    private ObjectProphecy $httpClient;
-    private ObjectProphecy $filesystem;
+    private MockObject & ClientInterface $httpClient;
+    private MockObject & Filesystem $filesystem;
     private ResponseInterface $response;
 
     public function setUp(): void
     {
-        $this->httpClient = $this->prophesize(ClientInterface::class);
-        $this->filesystem = $this->prophesize(Filesystem::class);
-        $this->response = $this->prophesize(ResponseInterface::class)->reveal();
+        $this->httpClient = $this->createMock(ClientInterface::class);
+        $this->filesystem = $this->createMock(Filesystem::class);
+        $this->response = new Response();
     }
 
     /** @test */
     public function anExceptionIsThrownIfFreshDbCannotBeDownloaded(): void
     {
-        $request = $this->httpClient->request(Argument::cetera())->willThrow(ClientException::class);
+        $this->httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->withAnyParameters()
+            ->willThrowException(new ClientException('', new Request('GET', ''), $this->response));
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionCode(0);
         $this->expectExceptionMessage(
             'An error occurred while trying to download a fresh copy of the GeoLite2 database',
         );
-        $request->shouldBeCalledOnce();
 
         $this->dbUpdater()->downloadFreshCopy();
     }
@@ -51,14 +53,13 @@ class DbUpdaterTest extends TestCase
     /** @test */
     public function anExceptionIsThrownIfFreshDbCannotBeExtracted(): void
     {
-        $request = $this->httpClient->request(Argument::cetera())->willReturn($this->response);
+        $this->setUpHttpClient();
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionCode(0);
         $this->expectExceptionMessage(
             'An error occurred while trying to extract the GeoLite2 database from __invalid__/GeoLite2-City.tar.gz',
         );
-        $request->shouldBeCalledOnce();
 
         $this->dbUpdater('__invalid__')->downloadFreshCopy();
     }
@@ -69,61 +70,44 @@ class DbUpdaterTest extends TestCase
      */
     public function anExceptionIsThrownIfFreshDbCannotBeCopiedToDestination(callable $prepareFs): void
     {
-        $request = $this->httpClient->request(Argument::cetera())->willReturn($this->response);
+        $this->setUpHttpClient();
         $prepareFs($this->filesystem);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionCode(0);
         $this->expectExceptionMessage('An error occurred while trying to copy GeoLite2 db file to db_location folder');
-        $request->shouldBeCalledOnce();
 
         $this->dbUpdater()->downloadFreshCopy();
     }
 
     public function provideFilesystemExceptions(): iterable
     {
-        $onCopy = static function ($fs, string $e): void {
-            /** @var ObjectProphecy|Filesystem $fs */
-            $copy = $fs->copy(Argument::cetera())->willThrow($e);
-            $chmod = $fs->chmod(Argument::cetera());
-
-            $copy->shouldBeCalledOnce();
-            $chmod->shouldNotBeCalled();
+        $onCopy = function (MockObject $fs, Throwable $e): void {
+            $fs->expects($this->once())->method('copy')->withAnyParameters()->willThrowException($e);
+            $fs->expects($this->never())->method('chmod');
         };
-        $onChmod = static function ($fs, string $e): void {
-            /** @var ObjectProphecy|Filesystem $fs */
-            $copy = $fs->copy(Argument::cetera());
-            $chmod = $fs->chmod(Argument::cetera())->willThrow($e);
-
-            $copy->shouldBeCalledOnce();
-            $chmod->shouldBeCalledOnce();
+        $onChmod = function (MockObject $fs, Throwable $e): void {
+            $fs->expects($this->once())->method('copy')->withAnyParameters();
+            $fs->expects($this->once())->method('chmod')->withAnyParameters()->willThrowException($e);
         };
 
-        yield 'file not found on copy' => [fn ($fs) => $onCopy($fs, FilesystemException\FileNotFoundException::class)];
-        yield 'IO error on copy' => [fn ($fs) => $onCopy($fs, FilesystemException\IOException::class)];
+        yield 'file not found on copy' => [fn ($fs) => $onCopy($fs, new FilesystemException\FileNotFoundException())];
+        yield 'IO error on copy' => [fn ($fs) => $onCopy($fs, new FilesystemException\IOException(''))];
         yield 'file not found on chmod' => [
-            fn ($fs) => $onChmod($fs, FilesystemException\FileNotFoundException::class),
+            fn ($fs) => $onChmod($fs, new FilesystemException\FileNotFoundException()),
         ];
-        yield 'IO error on chmod' => [fn ($fs) => $onChmod($fs, FilesystemException\IOException::class)];
+        yield 'IO error on chmod' => [fn ($fs) => $onChmod($fs, new FilesystemException\IOException(''))];
     }
 
     /** @test */
     public function noExceptionsAreThrownIfEverythingWorksFine(): void
     {
-        $request = $this->httpClient->request(Argument::cetera())->willReturn($this->response);
-        $copy = $this->filesystem->copy(Argument::cetera())->will(function (): void {
-        });
-        $chmod = $this->filesystem->chmod(Argument::type('array'), 0666)->will(function (): void {
-        });
-        $remove = $this->filesystem->remove(Argument::cetera())->will(function (): void {
-        });
+        $this->setUpHttpClient();
+        $this->filesystem->expects($this->once())->method('copy')->withAnyParameters();
+        $this->filesystem->expects($this->once())->method('chmod')->withAnyParameters();
+        $this->filesystem->expects($this->once())->method('remove')->withAnyParameters();
 
         $this->dbUpdater()->downloadFreshCopy();
-
-        $request->shouldHaveBeenCalledOnce();
-        $copy->shouldHaveBeenCalledOnce();
-        $chmod->shouldHaveBeenCalledOnce();
-        $remove->shouldHaveBeenCalledOnce();
     }
 
     /**
@@ -132,12 +116,15 @@ class DbUpdaterTest extends TestCase
      */
     public function databaseFileExistsChecksIfTheFilesExistsInTheFilesystem(bool $expected): void
     {
-        $exists = $this->filesystem->exists('db_location')->willReturn($expected);
+        $this->filesystem
+            ->expects($this->once())
+            ->method('exists')
+            ->with($this->equalTo('db_location'))
+            ->willReturn($expected);
 
         $result = $this->dbUpdater()->databaseFileExists();
 
         self::assertEquals($expected, $result);
-        $exists->shouldHaveBeenCalledOnce();
     }
 
     public function provideExists(): iterable
@@ -170,6 +157,15 @@ class DbUpdaterTest extends TestCase
             dbLocation: 'db_location',
             tempDir: $tempDir ?? __DIR__ . '/../../test-resources',
         );
-        return new DbUpdater($this->httpClient->reveal(), $this->filesystem->reveal(), $options);
+        return new DbUpdater($this->httpClient, $this->filesystem, $options);
+    }
+
+    private function setUpHttpClient(): void
+    {
+        $this->httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->withAnyParameters()
+            ->willReturn($this->response);
     }
 }
