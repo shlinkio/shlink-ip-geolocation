@@ -8,48 +8,49 @@ use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\City;
 use MaxMind\Db\Reader\InvalidDatabaseException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Shlinkio\Shlink\IpGeolocation\Exception\WrongIpException;
 use Shlinkio\Shlink\IpGeolocation\Model\Location;
 use Shlinkio\Shlink\IpGeolocation\Resolver\GeoLite2LocationResolver;
+use Throwable;
 
 class GeoLite2LocationResolverTest extends TestCase
 {
-    use ProphecyTrait;
-
     private GeoLite2LocationResolver $resolver;
-    private ObjectProphecy $reader;
+    private MockObject $reader;
 
     public function setUp(): void
     {
-        $this->reader = $this->prophesize(Reader::class);
-        $this->resolver = new GeoLite2LocationResolver($this->reader->reveal());
+        $this->reader = $this->createMock(Reader::class);
+        $this->resolver = new GeoLite2LocationResolver($this->reader);
     }
 
     /**
      * @test
      * @dataProvider provideReaderExceptions
      */
-    public function exceptionIsThrownIfReaderThrowsException(string $e, string $message): void
+    public function exceptionIsThrownIfReaderThrowsException(Throwable $e, string $message): void
     {
         $ipAddress = '1.2.3.4';
 
-        $cityMethod = $this->reader->city($ipAddress)->willThrow($e);
+        $this->reader
+            ->expects($this->once())
+            ->method('city')
+            ->with($this->equalTo($ipAddress))
+            ->willThrowException($e);
 
         $this->expectException(WrongIpException::class);
         $this->expectExceptionMessage($message);
         $this->expectExceptionCode(0);
-        $cityMethod->shouldBeCalledOnce();
 
         $this->resolver->resolveIpLocation($ipAddress);
     }
 
     public function provideReaderExceptions(): iterable
     {
-        yield 'invalid IP address' => [AddressNotFoundException::class, 'Provided IP "1.2.3.4" is invalid'];
-        yield 'invalid geolite DB' => [InvalidDatabaseException::class, 'Provided GeoLite2 db file is invalid'];
+        yield 'invalid IP address' => [new AddressNotFoundException(), 'Provided IP "1.2.3.4" is invalid'];
+        yield 'invalid geolite DB' => [new InvalidDatabaseException(), 'Provided GeoLite2 db file is invalid'];
     }
 
     /** @test */
@@ -58,11 +59,10 @@ class GeoLite2LocationResolverTest extends TestCase
         $ipAddress = '1.2.3.4';
         $city = new City([]);
 
-        $cityMethod = $this->reader->city($ipAddress)->willReturn($city);
+        $this->reader->expects($this->once())->method('city')->with($this->equalTo($ipAddress))->willReturn($city);
 
         $result = $this->resolver->resolveIpLocation($ipAddress);
 
         self::assertEquals(Location::emptyInstance(), $result);
-        $cityMethod->shouldHaveBeenCalledOnce();
     }
 }
