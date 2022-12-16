@@ -17,7 +17,7 @@
         "geoip2/geoip2": "^2.13",
         "guzzlehttp/guzzle": "^7.5",
         "lstrojny/functional-php": "^1.17",
-        "shlinkio/shlink-config": "^2.1",
+        "shlinkio/shlink-config": "^2.3",
         "symfony/filesystem": "^6.1"
     },
     "require-dev": {
