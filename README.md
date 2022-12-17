@@ -4,7 +4,7 @@ Shlink module with tools to geolocate an IP address using different strategies.
 
 Most of the elements it provides require a [PSR-11](https://www.php-fig.org/psr/psr-11/) container, and it's easy to integrate on [mezzio](https://github.com/mezzio/mezzio) applications thanks to the `ConfigProvider` it includes.
 
-[![Build Status](https://img.shields.io/github/workflow/status/shlinkio/shlink-ip-geolocation/Continuous%20integration/main?logo=github&style=flat-square)](https://github.com/shlinkio/shlink-ip-geolocation/actions?query=workflow%3A%22Continuous+integration%22)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/shlinkio/shlink-ip-geolocation/ci.yml?branch=main&logo=github&style=flat-square)](https://github.com/shlinkio/shlink-ip-geolocation/actions/workflows/ci.yml?query=workflow%3A%22Continuous+integration%22)
 [![Code Coverage](https://img.shields.io/codecov/c/gh/shlinkio/shlink-ip-geolocation/main?style=flat-square)](https://app.codecov.io/gh/shlinkio/shlink-ip-geolocation)
 [![Infection MSI](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fshlinkio%2Fshlink-ip-geolocation%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/shlinkio/shlink-ip-geolocation/main)
 [![Latest Stable Version](https://img.shields.io/github/release/shlinkio/shlink-ip-geolocation.svg?style=flat-square)](https://packagist.org/packages/shlinkio/shlink-ip-geolocation)
