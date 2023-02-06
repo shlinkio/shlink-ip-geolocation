@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace ShlinkioTest\Shlink\IpGeolocation\Exception;
 
 use Exception;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\IpGeolocation\Exception\WrongIpException;
 
 class WrongIpExceptionTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function fromIpAddressProperlyCreatesExceptionWithoutPrev(): void
     {
         $e = WrongIpException::fromIpAddress('1.2.3.4');
@@ -20,7 +21,7 @@ class WrongIpExceptionTest extends TestCase
         self::assertNull($e->getPrevious());
     }
 
-    /** @test */
+    #[Test]
     public function fromIpAddressProperlyCreatesExceptionWithPrev(): void
     {
         $prev = new Exception('Previous error');

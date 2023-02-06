@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\IpGeolocation\Exception;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
@@ -21,7 +22,7 @@ class DbUpdateExceptionTest extends TestCase
         $this->prev = new RuntimeException('Error');
     }
 
-    /** @test */
+    #[Test]
     public function forFailedDownloadReturnsExpectedException(): void
     {
         $e = DbUpdateException::forFailedDownload($this->prev);
@@ -34,7 +35,7 @@ class DbUpdateExceptionTest extends TestCase
         self::assertEquals(0, $e->getCode());
     }
 
-    /** @test */
+    #[Test]
     public function forFailedExtractionReturnsExpectedException(): void
     {
         $e = DbUpdateException::forFailedExtraction($this->theFile, $this->prev);
@@ -47,7 +48,7 @@ class DbUpdateExceptionTest extends TestCase
         self::assertEquals(0, $e->getCode());
     }
 
-    /** @test */
+    #[Test]
     public function forFailedCopyToDestinationReturnsExpectedException(): void
     {
         $e = DbUpdateException::forFailedCopyToDestination($this->theFile, $this->prev);

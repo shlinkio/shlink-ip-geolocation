@@ -8,6 +8,8 @@ use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\City;
 use MaxMind\Db\Reader\InvalidDatabaseException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\IpGeolocation\Exception\WrongIpException;
@@ -26,10 +28,7 @@ class GeoLite2LocationResolverTest extends TestCase
         $this->resolver = new GeoLite2LocationResolver($this->reader);
     }
 
-    /**
-     * @test
-     * @dataProvider provideReaderExceptions
-     */
+    #[Test, DataProvider('provideReaderExceptions')]
     public function exceptionIsThrownIfReaderThrowsException(Throwable $e, string $message): void
     {
         $ipAddress = '1.2.3.4';
@@ -53,7 +52,7 @@ class GeoLite2LocationResolverTest extends TestCase
         yield 'invalid geolite DB' => [new InvalidDatabaseException(), 'Provided GeoLite2 db file is invalid'];
     }
 
-    /** @test */
+    #[Test]
     public function resolvedCityIsProperlyMapped(): void
     {
         $ipAddress = '1.2.3.4';

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\IpGeolocation\Resolver;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\IpGeolocation\Model\Location;
 use Shlinkio\Shlink\IpGeolocation\Resolver\EmptyIpLocationResolver;
@@ -20,10 +22,7 @@ class EmptyIpLocationResolverTest extends TestCase
         $this->resolver = new EmptyIpLocationResolver();
     }
 
-    /**
-     * @test
-     * @dataProvider provideEmptyResponses
-     */
+    #[Test, DataProvider('provideEmptyResponses')]
     public function alwaysReturnsAnEmptyLocation(string $ipAddress): void
     {
         self::assertEquals(Location::emptyInstance(), $this->resolver->resolveIpLocation($ipAddress));

@@ -8,6 +8,8 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +35,7 @@ class DbUpdaterTest extends TestCase
         $this->response = new Response();
     }
 
-    /** @test */
+    #[Test]
     public function anExceptionIsThrownIfFreshDbCannotBeDownloaded(): void
     {
         $this->httpClient
@@ -51,7 +53,7 @@ class DbUpdaterTest extends TestCase
         $this->dbUpdater()->downloadFreshCopy();
     }
 
-    /** @test */
+    #[Test]
     public function anExceptionIsThrownIfFreshDbCannotBeExtracted(): void
     {
         $this->setUpHttpClient();
@@ -65,10 +67,7 @@ class DbUpdaterTest extends TestCase
         $this->dbUpdater('__invalid__')->downloadFreshCopy();
     }
 
-    /**
-     * @test
-     * @dataProvider provideFilesystemExceptions
-     */
+    #[Test, DataProvider('provideFilesystemExceptions')]
     public function anExceptionIsThrownIfFreshDbCannotBeCopiedToDestination(callable $prepareFs): void
     {
         $this->setUpHttpClient();
@@ -100,7 +99,7 @@ class DbUpdaterTest extends TestCase
         yield 'IO error on chmod' => [fn ($fs) => $onChmod($fs, new FilesystemException\IOException(''))];
     }
 
-    /** @test */
+    #[Test]
     public function noExceptionsAreThrownIfEverythingWorksFine(): void
     {
         $this->setUpHttpClient();
@@ -111,10 +110,7 @@ class DbUpdaterTest extends TestCase
         $this->dbUpdater()->downloadFreshCopy();
     }
 
-    /**
-     * @test
-     * @dataProvider provideExists
-     */
+    #[Test, DataProvider('provideExists')]
     public function databaseFileExistsChecksIfTheFilesExistsInTheFilesystem(bool $expected): void
     {
         $this->filesystem
@@ -133,10 +129,7 @@ class DbUpdaterTest extends TestCase
         return [[true], [false]];
     }
 
-    /**
-     * @test
-     * @dataProvider provideInvalidLicenses
-     */
+    #[Test, DataProvider('provideInvalidLicenses')]
     public function anExceptionIsThrownIfNoLicenseKeyIsProvided(?string $license): void
     {
         $this->expectException(MissingLicenseException::class);
