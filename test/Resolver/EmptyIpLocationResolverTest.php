@@ -29,7 +29,7 @@ class EmptyIpLocationResolverTest extends TestCase
         self::assertEquals(Location::emptyInstance(), $this->resolver->resolveIpLocation($ipAddress));
     }
 
-    public function provideEmptyResponses(): array
+    public static function provideEmptyResponses(): array
     {
         return map(range(0, 5), fn () => ['foobar']);
     }

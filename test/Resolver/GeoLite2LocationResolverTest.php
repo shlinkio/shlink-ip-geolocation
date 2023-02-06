@@ -47,7 +47,7 @@ class GeoLite2LocationResolverTest extends TestCase
         $this->resolver->resolveIpLocation($ipAddress);
     }
 
-    public function provideReaderExceptions(): iterable
+    public static function provideReaderExceptions(): iterable
     {
         yield 'invalid IP address' => [new AddressNotFoundException(), 'Provided IP "1.2.3.4" is invalid'];
         yield 'invalid geolite DB' => [new InvalidDatabaseException(), 'Provided GeoLite2 db file is invalid'];

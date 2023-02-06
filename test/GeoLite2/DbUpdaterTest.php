@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Shlinkio\Shlink\IpGeolocation\Exception\MissingLicenseException;
@@ -80,15 +81,15 @@ class DbUpdaterTest extends TestCase
         $this->dbUpdater()->downloadFreshCopy();
     }
 
-    public function provideFilesystemExceptions(): iterable
+    public static function provideFilesystemExceptions(): iterable
     {
         $onCopy = function (MockObject $fs, Throwable $e): void {
-            $fs->expects($this->once())->method('copy')->withAnyParameters()->willThrowException($e);
-            $fs->expects($this->never())->method('chmod');
+            $fs->expects(new InvokedCount(1))->method('copy')->withAnyParameters()->willThrowException($e);
+            $fs->expects(new InvokedCount(0))->method('chmod');
         };
         $onChmod = function (MockObject $fs, Throwable $e): void {
-            $fs->expects($this->once())->method('copy')->withAnyParameters();
-            $fs->expects($this->once())->method('chmod')->withAnyParameters()->willThrowException($e);
+            $fs->expects(new InvokedCount(1))->method('copy')->withAnyParameters();
+            $fs->expects(new InvokedCount(1))->method('chmod')->withAnyParameters()->willThrowException($e);
         };
 
         yield 'file not found on copy' => [fn ($fs) => $onCopy($fs, new FilesystemException\FileNotFoundException())];
@@ -127,7 +128,7 @@ class DbUpdaterTest extends TestCase
         self::assertEquals($expected, $result);
     }
 
-    public function provideExists(): iterable
+    public static function provideExists(): iterable
     {
         return [[true], [false]];
     }
@@ -144,7 +145,7 @@ class DbUpdaterTest extends TestCase
         $this->dbUpdater(null, $license)->downloadFreshCopy();
     }
 
-    public function provideInvalidLicenses(): iterable
+    public static function provideInvalidLicenses(): iterable
     {
         yield 'null license' => [null];
         yield 'empty license' => [''];
