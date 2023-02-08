@@ -52,7 +52,7 @@
         "test": "phpunit --order-by=random --testdox --colors=always",
         "test:ci": "@test --coverage-clover=build/clover.xml --coverage-xml=build/coverage-xml --log-junit=build/junit.xml",
         "test:pretty": "@test --coverage-html build/coverage-html",
-        "infect": "infection --threads=max --min-msi=65 --log-verbosity=default --only-covered --only-covering-test-cases",
+        "infect": "infection --threads=max --min-msi=65 --log-verbosity=default --only-covered",
         "infect:ci": "@infect --coverage=build --skip-initial-tests",
         "infect:show": "@infect --show-mutations",
         "infect:show:ci": "@infect --show-mutations --coverage=build",
