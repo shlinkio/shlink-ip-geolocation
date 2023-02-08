@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\IpGeolocation\Resolver;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\IpGeolocation\Exception\WrongIpException;
@@ -25,7 +26,7 @@ class ChainIpLocationResolverTest extends TestCase
         $this->resolver = new ChainIpLocationResolver($this->firstInnerResolver, $this->secondInnerResolver);
     }
 
-    /** @test */
+    #[Test]
     public function throwsExceptionWhenNoInnerResolverCanHandleTheResolution(): void
     {
         $ipAddress = '1.2.3.4';
@@ -46,7 +47,7 @@ class ChainIpLocationResolverTest extends TestCase
         $this->resolver->resolveIpLocation($ipAddress);
     }
 
-    /** @test */
+    #[Test]
     public function returnsResultOfFirstInnerResolver(): void
     {
         $ipAddress = '1.2.3.4';
@@ -61,7 +62,7 @@ class ChainIpLocationResolverTest extends TestCase
         $this->resolver->resolveIpLocation($ipAddress);
     }
 
-    /** @test */
+    #[Test]
     public function returnsResultOfSecondInnerResolver(): void
     {
         $ipAddress = '1.2.3.4';

@@ -17,17 +17,17 @@
         "geoip2/geoip2": "^2.13",
         "guzzlehttp/guzzle": "^7.5",
         "lstrojny/functional-php": "^1.17",
-        "shlinkio/shlink-config": "^2.3",
-        "symfony/filesystem": "^6.1"
+        "shlinkio/shlink-config": "^2.4",
+        "symfony/filesystem": "^6.2"
     },
     "require-dev": {
-        "infection/infection": "^0.26.15",
-        "phpstan/phpstan": "^1.8",
-        "phpstan/phpstan-phpunit": "^1.1",
-        "phpunit/phpunit": "^9.5",
+        "infection/infection": "^0.26.19",
+        "phpstan/phpstan": "^1.9",
+        "phpstan/phpstan-phpunit": "^1.3",
+        "phpunit/phpunit": "^10.0",
         "roave/security-advisories": "dev-master",
         "shlinkio/php-coding-standard": "~2.3.0",
-        "symfony/var-dumper": "^6.1"
+        "symfony/var-dumper": "^6.2"
     },
     "autoload": {
         "psr-4": {
@@ -49,10 +49,10 @@
         "cs": "phpcs",
         "cs:fix": "phpcbf",
         "stan": "phpstan analyse src test config --level=9",
-        "test": "phpdbg -qrr vendor/bin/phpunit --order-by=random --testdox --colors=always",
+        "test": "phpunit --order-by=random --testdox --colors=always",
         "test:ci": "@test --coverage-clover=build/clover.xml --coverage-xml=build/coverage-xml --log-junit=build/junit.xml",
         "test:pretty": "@test --coverage-html build/coverage-html",
-        "infect": "infection --threads=max --min-msi=65 --log-verbosity=default --only-covered --only-covering-test-cases",
+        "infect": "infection --threads=max --min-msi=65 --log-verbosity=default --only-covered",
         "infect:ci": "@infect --coverage=build --skip-initial-tests",
         "infect:show": "@infect --show-mutations",
         "infect:show:ci": "@infect --show-mutations --coverage=build",

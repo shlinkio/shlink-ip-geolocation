@@ -8,7 +8,10 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Shlinkio\Shlink\IpGeolocation\Exception\MissingLicenseException;
@@ -32,7 +35,7 @@ class DbUpdaterTest extends TestCase
         $this->response = new Response();
     }
 
-    /** @test */
+    #[Test]
     public function anExceptionIsThrownIfFreshDbCannotBeDownloaded(): void
     {
         $this->httpClient
@@ -50,7 +53,7 @@ class DbUpdaterTest extends TestCase
         $this->dbUpdater()->downloadFreshCopy();
     }
 
-    /** @test */
+    #[Test]
     public function anExceptionIsThrownIfFreshDbCannotBeExtracted(): void
     {
         $this->setUpHttpClient();
@@ -64,10 +67,7 @@ class DbUpdaterTest extends TestCase
         $this->dbUpdater('__invalid__')->downloadFreshCopy();
     }
 
-    /**
-     * @test
-     * @dataProvider provideFilesystemExceptions
-     */
+    #[Test, DataProvider('provideFilesystemExceptions')]
     public function anExceptionIsThrownIfFreshDbCannotBeCopiedToDestination(callable $prepareFs): void
     {
         $this->setUpHttpClient();
@@ -80,15 +80,15 @@ class DbUpdaterTest extends TestCase
         $this->dbUpdater()->downloadFreshCopy();
     }
 
-    public function provideFilesystemExceptions(): iterable
+    public static function provideFilesystemExceptions(): iterable
     {
         $onCopy = function (MockObject $fs, Throwable $e): void {
-            $fs->expects($this->once())->method('copy')->withAnyParameters()->willThrowException($e);
-            $fs->expects($this->never())->method('chmod');
+            $fs->expects(new InvokedCount(1))->method('copy')->withAnyParameters()->willThrowException($e);
+            $fs->expects(new InvokedCount(0))->method('chmod');
         };
         $onChmod = function (MockObject $fs, Throwable $e): void {
-            $fs->expects($this->once())->method('copy')->withAnyParameters();
-            $fs->expects($this->once())->method('chmod')->withAnyParameters()->willThrowException($e);
+            $fs->expects(new InvokedCount(1))->method('copy')->withAnyParameters();
+            $fs->expects(new InvokedCount(1))->method('chmod')->withAnyParameters()->willThrowException($e);
         };
 
         yield 'file not found on copy' => [fn ($fs) => $onCopy($fs, new FilesystemException\FileNotFoundException())];
@@ -99,7 +99,7 @@ class DbUpdaterTest extends TestCase
         yield 'IO error on chmod' => [fn ($fs) => $onChmod($fs, new FilesystemException\IOException(''))];
     }
 
-    /** @test */
+    #[Test]
     public function noExceptionsAreThrownIfEverythingWorksFine(): void
     {
         $this->setUpHttpClient();
@@ -110,10 +110,7 @@ class DbUpdaterTest extends TestCase
         $this->dbUpdater()->downloadFreshCopy();
     }
 
-    /**
-     * @test
-     * @dataProvider provideExists
-     */
+    #[Test, DataProvider('provideExists')]
     public function databaseFileExistsChecksIfTheFilesExistsInTheFilesystem(bool $expected): void
     {
         $this->filesystem
@@ -127,15 +124,12 @@ class DbUpdaterTest extends TestCase
         self::assertEquals($expected, $result);
     }
 
-    public function provideExists(): iterable
+    public static function provideExists(): iterable
     {
         return [[true], [false]];
     }
 
-    /**
-     * @test
-     * @dataProvider provideInvalidLicenses
-     */
+    #[Test, DataProvider('provideInvalidLicenses')]
     public function anExceptionIsThrownIfNoLicenseKeyIsProvided(?string $license): void
     {
         $this->expectException(MissingLicenseException::class);
@@ -144,7 +138,7 @@ class DbUpdaterTest extends TestCase
         $this->dbUpdater(null, $license)->downloadFreshCopy();
     }
 
-    public function provideInvalidLicenses(): iterable
+    public static function provideInvalidLicenses(): iterable
     {
         yield 'null license' => [null];
         yield 'empty license' => [''];
