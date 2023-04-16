@@ -4,7 +4,7 @@
     xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
     bootstrap="./vendor/autoload.php"
     colors="true"
-    cacheDirectory=".phpunit.cache"
+    cacheDirectory="build/.phpunit.cache"
 >
     <testsuites>
         <testsuite name="IpGeolocation">
@@ -12,9 +12,9 @@
         </testsuite>
     </testsuites>
 
-    <coverage>
+    <source>
         <include>
-            <directory suffix=".php">./src</directory>
+            <directory>./src</directory>
         </include>
-    </coverage>
+    </source>
 </phpunit>
