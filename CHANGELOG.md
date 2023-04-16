@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 * *Nothing*
 
 ### Changed
-* Migrated to PHPUnit 10.
+* Update to PHPUnit 10 and migrate to PHPUnit 10.1 config format.
 
 ### Deprecated
 * *Nothing*
