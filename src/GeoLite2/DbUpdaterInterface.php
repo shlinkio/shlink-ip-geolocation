@@ -12,6 +12,7 @@ interface DbUpdaterInterface
     public function databaseFileExists(): bool;
 
     /**
+     * @param (callable(int $total, int $downloaded): void) | null $handleProgress
      * @throws DbUpdateException
      * @throws MissingLicenseException
      */

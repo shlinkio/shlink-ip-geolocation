@@ -29,6 +29,7 @@ class DbUpdater implements DbUpdaterInterface
     }
 
     /**
+     * @param (callable(int $total, int $downloaded): void) | null $handleProgress
      * @throws DbUpdateException
      * @throws MissingLicenseException
      */
@@ -47,6 +48,9 @@ class DbUpdater implements DbUpdaterInterface
         $this->deleteTempFiles([$compressedFile, $tempFullPath]);
     }
 
+    /**
+     * @param (callable(int $total, int $downloaded): void) | null $handleProgress
+     */
     private function downloadDbFile(string $dest, ?callable $handleProgress = null): void
     {
         try {
