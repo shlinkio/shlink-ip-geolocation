@@ -5,6 +5,7 @@
     bootstrap="./vendor/autoload.php"
     colors="true"
     cacheDirectory="build/.phpunit.cache"
+    displayDetailsOnTestsThatTriggerWarnings="true"
 >
     <testsuites>
         <testsuite name="IpGeolocation">
