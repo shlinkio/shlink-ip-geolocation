@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\IpGeolocation\Model\Location;
 use Shlinkio\Shlink\IpGeolocation\Resolver\EmptyIpLocationResolver;
 
-use function Functional\map;
+use function array_map;
 use function range;
 
 class EmptyIpLocationResolverTest extends TestCase
@@ -30,6 +30,6 @@ class EmptyIpLocationResolverTest extends TestCase
 
     public static function provideEmptyResponses(): array
     {
-        return map(range(0, 5), fn () => ['foobar']);
+        return array_map(fn () => ['foobar'], range(0, 5));
     }
 }

@@ -16,7 +16,6 @@
         "fig/http-message-util": "^1.1",
         "geoip2/geoip2": "^2.13",
         "guzzlehttp/guzzle": "^7.8",
-        "lstrojny/functional-php": "^1.17",
         "shlinkio/shlink-config": "^2.4",
         "symfony/filesystem": "^6.3"
     },
