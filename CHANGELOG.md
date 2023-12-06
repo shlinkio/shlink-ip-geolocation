@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ## [Unreleased]
 ### Added
-* *Nothing*
+* Add support for `geoip2/geoip2` 3.0
 
 ### Changed
 * Remove dependency on functional-php.

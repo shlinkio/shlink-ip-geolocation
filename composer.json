@@ -14,7 +14,7 @@
     "require": {
         "php": "^8.2",
         "fig/http-message-util": "^1.1",
-        "geoip2/geoip2": "^2.13",
+        "geoip2/geoip2": "^3.0 || ^2.13",
         "guzzlehttp/guzzle": "^7.8",
         "shlinkio/shlink-config": "^2.4",
         "symfony/filesystem": "^6.3"
