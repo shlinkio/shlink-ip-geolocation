@@ -9,5 +9,7 @@ on:
 jobs:
   ci:
     uses: shlinkio/github-actions/.github/workflows/php-lib-ci.yml@main
+    with:
+      extra-extensions: :php-psr # Workaround for https://github.com/shivammathur/setup-php/issues/799
     secrets:
       INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
