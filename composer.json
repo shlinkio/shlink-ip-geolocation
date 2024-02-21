@@ -20,10 +20,9 @@
         "symfony/filesystem": "^7.0 || ^6.4"
     },
     "require-dev": {
-        "infection/infection": "^0.27.9",
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-phpunit": "^1.3",
-        "phpunit/phpunit": "^10.5",
+        "phpunit/phpunit": "^11.0",
         "roave/security-advisories": "dev-master",
         "shlinkio/php-coding-standard": "~2.3.0",
         "symfony/var-dumper": "^7.0 || ^6.4"
@@ -42,41 +41,28 @@
         "ci": [
             "@cs",
             "@stan",
-            "@test:ci",
-            "@infect:ci"
+            "@test:ci"
         ],
         "cs": "phpcs",
         "cs:fix": "phpcbf",
         "stan": "phpstan analyse src test config --level=9",
         "test": "phpunit --order-by=random --testdox --colors=always",
-        "test:ci": "@test --coverage-clover=build/clover.xml --coverage-xml=build/coverage-xml --log-junit=build/junit.xml",
-        "test:pretty": "@test --coverage-html build/coverage-html",
-        "infect": "infection --threads=max --min-msi=65 --log-verbosity=default --only-covered",
-        "infect:ci": "@infect --coverage=build --skip-initial-tests",
-        "infect:show": "@infect --show-mutations",
-        "infect:show:ci": "@infect --show-mutations --coverage=build",
-        "test:infect": [
-            "@test:ci",
-            "@infect:show:ci"
-        ]
+        "test:ci": "@test --coverage-clover=build/clover.xml",
+        "test:pretty": "@test --coverage-html=build/coverage-html"
     },
     "scripts-descriptions": {
-        "ci": "<fg=blue;options=bold>Alias for \"cs\", \"stan\", \"test:ci\" and \"infect:ci\"</>",
+        "ci": "<fg=blue;options=bold>Alias for \"cs\", \"stan\" and \"test:ci\"</>",
         "cs": "<fg=blue;options=bold>Checks coding styles</>",
         "cs:fix": "<fg=blue;options=bold>Fixes coding styles, when possible</>",
         "stan": "<fg=blue;options=bold>Inspects code with phpstan</>",
         "test": "<fg=blue;options=bold>Runs unit tests with no coverage reports</>",
         "test:ci": "<fg=blue;options=bold>Runs unit tests generating coverage reports and logs</>",
-        "test:pretty": "<fg=blue;options=bold>Runs unit tests generating coverage reports in html</>",
-        "infect": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing</>",
-        "infect:ci": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing with existing reports and logs</>",
-        "infect:show": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing and shows applied mutators</>"
+        "test:pretty": "<fg=blue;options=bold>Runs unit tests generating coverage reports in html</>"
     },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "infection/extension-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }

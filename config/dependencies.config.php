@@ -15,6 +15,8 @@ return [
 
     'dependencies' => [
         'factories' => [
+            Filesystem::class => InvokableFactory::class,
+
             Resolver\GeoLite2LocationResolver::class => ConfigAbstractFactory::class,
             Resolver\EmptyIpLocationResolver::class => InvokableFactory::class,
             Resolver\ChainIpLocationResolver::class => ConfigAbstractFactory::class,

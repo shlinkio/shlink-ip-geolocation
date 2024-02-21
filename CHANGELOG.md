@@ -10,12 +10,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ### Changed
 * Update dependencies
+* Update to PHPUnit 11
 
 ### Deprecated
 * *Nothing*
 
 ### Removed
-* *Nothing*
+* Remove dependency on infection and mutation tests
 
 ### Fixed
 * *Nothing*

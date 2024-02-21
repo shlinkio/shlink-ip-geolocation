@@ -8,7 +8,6 @@ docker-compose.override.yml.dist export-ignore
 docker-compose.yml export-ignore
 Dockerfile export-ignore
 indocker export-ignore
-infection.json export-ignore
 phpcs.xml export-ignore
 phpstan.neon export-ignore
 phpunit.xml.dist export-ignore
