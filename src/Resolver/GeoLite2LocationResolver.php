@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\IpGeolocation\Resolver;
 
+use Closure;
 use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\City;
@@ -13,8 +14,15 @@ use Shlinkio\Shlink\IpGeolocation\Model;
 
 class GeoLite2LocationResolver implements IpLocationResolverInterface
 {
-    public function __construct(private readonly Reader $geoLiteDbReader)
+    /** @var Closure(): Reader */
+    private readonly Closure $geoLiteDbReaderFactory;
+
+    /**
+     * @param callable(): Reader $geoLiteDbReaderFactory
+     */
+    public function __construct(callable $geoLiteDbReaderFactory)
     {
+        $this->geoLiteDbReaderFactory = $geoLiteDbReaderFactory(...);
     }
 
     /**
@@ -23,7 +31,7 @@ class GeoLite2LocationResolver implements IpLocationResolverInterface
     public function resolveIpLocation(string $ipAddress): Model\Location
     {
         try {
-            $city = $this->geoLiteDbReader->city($ipAddress);
+            $city = ($this->geoLiteDbReaderFactory)()->city($ipAddress);
             return $this->mapFields($city);
         } catch (AddressNotFoundException $e) {
             throw WrongIpException::fromIpAddress($ipAddress, $e);
