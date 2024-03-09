@@ -20,12 +20,12 @@ use Throwable;
 class GeoLite2LocationResolverTest extends TestCase
 {
     private GeoLite2LocationResolver $resolver;
-    private MockObject $reader;
+    private MockObject & Reader $reader;
 
     public function setUp(): void
     {
         $this->reader = $this->createMock(Reader::class);
-        $this->resolver = new GeoLite2LocationResolver($this->reader);
+        $this->resolver = new GeoLite2LocationResolver(fn () => $this->reader);
     }
 
     #[Test, DataProvider('provideReaderExceptions')]

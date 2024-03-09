@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [4.0.0] - 2024-03-09
+### Added
+* [#37](https://github.com/shlinkio/shlink-ip-geolocation/issues/37) Create a new `Shlinkio\Shlink\IpGeolocation\GeoLite2\GeoLite2ReaderFactory` service which can be used to generate `GeoIp2\Database\Reader` instances on the fly.
+
+### Changed
+* *Nothing*
+
+### Deprecated
+* *Nothing*
+
+### Removed
+* This library no longer registers a `GeoIp2\Database\Reader` service in the dependency injection container. Use `Shlinkio\Shlink\IpGeolocation\GeoLite2\GeoLite2ReaderFactory` instead.
+
+### Fixed
+* *Nothing*
+
+
 ## [3.5.0] - 2024-03-03
 ### Added
 * *Nothing*
