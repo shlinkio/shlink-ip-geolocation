@@ -1,6 +1,11 @@
 includes:
-	- vendor/phpstan/phpstan-phpunit/extension.neon
-	- vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
 parameters:
-	ignoreErrors:
-		- identifier: missingType.iterableValue
+    level: 9
+    paths:
+        - config
+        - src
+        - test
+    ignoreErrors:
+        - identifier: missingType.iterableValue
