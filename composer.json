@@ -48,8 +48,14 @@
         "cs:fix": "phpcbf",
         "stan": "phpstan analyse",
         "test": "phpunit --order-by=random --testdox --testdox-summary",
-        "test:ci": "@test --coverage-clover=build/clover.xml",
-        "test:pretty": "@test --coverage-html=build/coverage-html"
+        "test:ci": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@test --coverage-clover=build/clover.xml"
+        ],
+        "test:pretty": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@test --coverage-html=build/coverage-html"
+        ]
     },
     "scripts-descriptions": {
         "ci": "<fg=blue;options=bold>Alias for \"cs\", \"stan\" and \"test:ci\"</>",
