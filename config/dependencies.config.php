@@ -7,7 +7,7 @@ namespace Shlinkio\Shlink\IpGeolocation;
 use GuzzleHttp\Client as GuzzleClient;
 use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 use Laminas\ServiceManager\Factory\InvokableFactory;
-use Shlinkio\Shlink\Config\Factory\ValinorConfigFactory;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 return [
@@ -20,7 +20,15 @@ return [
             Resolver\EmptyIpLocationResolver::class => InvokableFactory::class,
             Resolver\ChainIpLocationResolver::class => ConfigAbstractFactory::class,
 
-            GeoLite2\GeoLite2Options::class => [ValinorConfigFactory::class, 'config.geolite2'],
+            GeoLite2\GeoLite2Options::class => static function (ContainerInterface $c): GeoLite2\GeoLite2Options {
+                /** @var array $config */
+                $config = $c->get('config.geolite2');
+                return new GeoLite2\GeoLite2Options(
+                    licenseKey: $config['db_location'] ?? null,
+                    dbLocation: $config['temp_dir'] ?? '',
+                    tempDir: $config['license_key'] ?? '',
+                );
+            },
             GeoLite2\DbUpdater::class => ConfigAbstractFactory::class,
             GeoLite2\GeoLite2ReaderFactory::class => ConfigAbstractFactory::class,
         ],

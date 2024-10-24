@@ -9,5 +9,3 @@ on:
 jobs:
   ci:
     uses: shlinkio/github-actions/.github/workflows/php-lib-ci.yml@main
-    with:
-      coverage-driver: 'xdebug'
