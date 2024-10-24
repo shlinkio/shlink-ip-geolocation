@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 ### Changed
 * Update to PHPStan 1.11
 * Switch to xdebug for code coverage reports, as pcov is not marking functions as covered
+* Stop using `ValinorConfigFactory` from `shlinkio/shlink-config`
 
 ### Deprecated
 * *Nothing*
