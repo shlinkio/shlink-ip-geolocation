@@ -24,9 +24,9 @@ return [
                 /** @var array $config */
                 $config = $c->get('config.geolite2');
                 return new GeoLite2\GeoLite2Options(
-                    licenseKey: $config['db_location'] ?? null,
-                    dbLocation: $config['temp_dir'] ?? '',
-                    tempDir: $config['license_key'] ?? '',
+                    licenseKey: $config['license_key'] ?? null,
+                    dbLocation: $config['db_location'] ?? '',
+                    tempDir: $config['temp_dir'] ?? '',
                 );
             },
             GeoLite2\DbUpdater::class => ConfigAbstractFactory::class,
