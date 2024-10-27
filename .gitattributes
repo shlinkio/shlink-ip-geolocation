@@ -4,7 +4,6 @@ test-resources export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
 CHANGELOG.md export-ignore
-docker-compose.override.yml.dist export-ignore
 docker-compose.yml export-ignore
 Dockerfile export-ignore
 indocker export-ignore

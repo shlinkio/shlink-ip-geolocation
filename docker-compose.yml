@@ -1,6 +1,7 @@
 services:
   shlink_ip_geolocation_php:
     container_name: shlink_ip_geolocation_php
+    user: 1000:1000
     build:
       context: .
     volumes:
