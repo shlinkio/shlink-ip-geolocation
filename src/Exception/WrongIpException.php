@@ -10,7 +10,7 @@ use function sprintf;
 
 class WrongIpException extends RuntimeException
 {
-    public static function fromIpAddress(string $ipAddress, ?Throwable $prev = null): self
+    public static function fromIpAddress(string $ipAddress, Throwable|null $prev = null): self
     {
         return new self(sprintf('Provided IP "%s" is invalid', $ipAddress), 0, $prev);
     }

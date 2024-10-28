@@ -33,7 +33,7 @@ class DbUpdater implements DbUpdaterInterface
      * @throws DbUpdateException
      * @throws MissingLicenseException
      */
-    public function downloadFreshCopy(?callable $handleProgress = null): void
+    public function downloadFreshCopy(callable|null $handleProgress = null): void
     {
         if (! $this->options->hasLicenseKey()) {
             throw MissingLicenseException::forMissingLicense();
@@ -51,7 +51,7 @@ class DbUpdater implements DbUpdaterInterface
     /**
      * @param (callable(int $total, int $downloaded): void) | null $handleProgress
      */
-    private function downloadDbFile(string $dest, ?callable $handleProgress = null): void
+    private function downloadDbFile(string $dest, callable|null $handleProgress = null): void
     {
         try {
             $this->httpClient->request(RequestMethod::METHOD_GET, $this->options->downloadFrom, [

@@ -14,7 +14,7 @@ class GeoLite2Options
     public readonly string $downloadFrom;
 
     public function __construct(
-        private readonly ?string $licenseKey = null,
+        private readonly string|null $licenseKey = null,
         public readonly string $dbLocation = '',
         public readonly string $tempDir = '',
         public readonly float $connectionTimeout = 15.0,
