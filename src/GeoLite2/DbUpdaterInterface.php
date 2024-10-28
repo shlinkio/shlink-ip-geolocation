@@ -16,5 +16,5 @@ interface DbUpdaterInterface
      * @throws DbUpdateException
      * @throws MissingLicenseException
      */
-    public function downloadFreshCopy(?callable $handleProgress = null): void;
+    public function downloadFreshCopy(callable|null $handleProgress = null): void;
 }

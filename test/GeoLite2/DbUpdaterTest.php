@@ -130,7 +130,7 @@ class DbUpdaterTest extends TestCase
     }
 
     #[Test, DataProvider('provideInvalidLicenses')]
-    public function anExceptionIsThrownIfNoLicenseKeyIsProvided(?string $license): void
+    public function anExceptionIsThrownIfNoLicenseKeyIsProvided(string|null $license): void
     {
         $this->expectException(MissingLicenseException::class);
         $this->expectExceptionMessage('Impossible to download GeoLite2 db file. A license key was not provided.');
@@ -144,7 +144,7 @@ class DbUpdaterTest extends TestCase
         yield 'empty license' => [''];
     }
 
-    private function dbUpdater(?string $tempDir = null, ?string $licenseKey = 'foobar'): DbUpdater
+    private function dbUpdater(string|null $tempDir = null, string|null $licenseKey = 'foobar'): DbUpdater
     {
         $options = new GeoLite2Options(
             licenseKey: $licenseKey,
