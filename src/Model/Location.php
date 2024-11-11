@@ -4,21 +4,27 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\IpGeolocation\Model;
 
-final class Location
+final readonly class Location
 {
     public function __construct(
-        public readonly string $countryCode,
-        public readonly string $countryName,
-        public readonly string $regionName,
-        public readonly string $city,
-        public readonly float $latitude,
-        public readonly float $longitude,
-        public readonly string $timeZone,
+        public string $countryCode = '',
+        public string $countryName = '',
+        public string $regionName = '',
+        public string $city = '',
+        public float $latitude = 0.0,
+        public float $longitude = 0.0,
+        public string $timeZone = '',
     ) {
     }
 
+    /** @deprecated Use self:.empty() instead */
     public static function emptyInstance(): self
     {
-        return new self('', '', '', '', 0.0, 0.0, '');
+        return self::empty();
+    }
+
+    public static function empty(): self
+    {
+        return new self();
     }
 }

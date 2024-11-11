@@ -56,7 +56,7 @@ class ChainIpLocationResolverTest extends TestCase
             ->expects($this->once())
             ->method('resolveIpLocation')
             ->with($this->equalTo($ipAddress))
-            ->willReturn(Location::emptyInstance());
+            ->willReturn(Location::empty());
         $this->secondInnerResolver->expects($this->never())->method('resolveIpLocation');
 
         $this->resolver->resolveIpLocation($ipAddress);
@@ -76,7 +76,7 @@ class ChainIpLocationResolverTest extends TestCase
             ->expects($this->once())
             ->method('resolveIpLocation')
             ->with($this->equalTo($ipAddress))
-            ->willReturn(Location::emptyInstance());
+            ->willReturn(Location::empty());
 
         $this->resolver->resolveIpLocation($ipAddress);
     }

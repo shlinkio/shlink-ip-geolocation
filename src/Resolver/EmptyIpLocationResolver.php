@@ -14,6 +14,6 @@ class EmptyIpLocationResolver implements IpLocationResolverInterface
      */
     public function resolveIpLocation(string $ipAddress): Model\Location
     {
-        return Model\Location::emptyInstance();
+        return Model\Location::empty();
     }
 }
