@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ### Changed
 * Update shlinkio coding standard to v2.4
+* Add default values to `Location` constructor params, making it easier to handle with named parameters.
 
 ### Deprecated
 * *Nothing*
