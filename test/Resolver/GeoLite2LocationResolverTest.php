@@ -62,6 +62,6 @@ class GeoLite2LocationResolverTest extends TestCase
 
         $result = $this->resolver->resolveIpLocation($ipAddress);
 
-        self::assertEquals(Location::emptyInstance(), $result);
+        self::assertEquals(Location::empty(), $result);
     }
 }
