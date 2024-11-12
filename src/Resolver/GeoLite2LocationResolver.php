@@ -45,7 +45,7 @@ class GeoLite2LocationResolver implements IpLocationResolverInterface
         return new Model\Location(
             $city->country->isoCode ?? '',
             $city->country->name ?? '',
-            $city->subdivisions[0]?->name ?? '',
+            $city->subdivisions[0]->name ?? '',
             $city->city->name ?? '',
             (float) ($city->location->latitude ?? 0.0),
             (float) ($city->location->longitude ?? 0.0),
