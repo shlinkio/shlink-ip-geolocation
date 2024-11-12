@@ -21,8 +21,8 @@
     },
     "require-dev": {
         "devster/ubench": "^2.1",
-        "phpstan/phpstan": "^1.12",
-        "phpstan/phpstan-phpunit": "^1.4",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
         "phpunit/phpunit": "^11.4",
         "roave/security-advisories": "dev-master",
         "shlinkio/php-coding-standard": "~2.4.0",
