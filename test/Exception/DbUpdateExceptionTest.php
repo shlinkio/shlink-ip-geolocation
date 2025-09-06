@@ -32,20 +32,15 @@ class DbUpdateExceptionTest extends TestCase
             $e->getMessage(),
         );
         self::assertEquals($this->prev, $e->getPrevious());
-        self::assertEquals(0, $e->getCode());
     }
 
     #[Test]
     public function forFailedExtractionReturnsExpectedException(): void
     {
-        $e = DbUpdateException::forFailedExtraction($this->theFile, $this->prev);
+        $e = DbUpdateException::forFailedExtraction();
 
-        self::assertEquals(
-            sprintf('An error occurred while trying to extract the GeoLite2 database from %s', $this->theFile),
-            $e->getMessage(),
-        );
-        self::assertEquals($this->prev, $e->getPrevious());
-        self::assertEquals(0, $e->getCode());
+        self::assertEquals('It was not possible to extract GeoLite2 database', $e->getMessage());
+        self::assertNull($e->getPrevious());
     }
 
     #[Test]
@@ -58,6 +53,5 @@ class DbUpdateExceptionTest extends TestCase
             $e->getMessage(),
         );
         self::assertEquals($this->prev, $e->getPrevious());
-        self::assertEquals(0, $e->getCode());
     }
 }

@@ -12,27 +12,25 @@ class DbUpdateException extends RuntimeException
 {
     public static function forFailedDownload(Throwable $prev): self
     {
-        return self::build('An error occurred while trying to download a fresh copy of the GeoLite2 database', $prev);
+        return new self(
+            'An error occurred while trying to download a fresh copy of the GeoLite2 database',
+            previous: $prev,
+        );
     }
 
     public static function forFailedExtraction(string $compressedFile, Throwable $prev): self
     {
-        return self::build(
+        return new self(
             sprintf('An error occurred while trying to extract the GeoLite2 database from %s', $compressedFile),
-            $prev,
+            previous: $prev,
         );
     }
 
     public static function forFailedCopyToDestination(string $destination, Throwable $prev): self
     {
-        return self::build(
+        return new self(
             sprintf('An error occurred while trying to copy GeoLite2 db file to %s folder', $destination),
-            $prev,
+            previous: $prev,
         );
-    }
-
-    private static function build(string $message, Throwable $prev): self
-    {
-        return new self($message, 0, $prev);
     }
 }

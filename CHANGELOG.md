@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ### Changed
 * Update to PHPUnit 12
+* [#71](https://github.com/shlinkio/shlink-ip-geolocation/issues/71) Decompress GeoLite2 db files in a memory-efficient way.
 
 ### Deprecated
 * *Nothing*
