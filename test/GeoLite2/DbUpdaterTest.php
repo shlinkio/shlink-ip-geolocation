@@ -14,13 +14,17 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
+use Shlinkio\Shlink\IpGeolocation\Exception\ExtractException;
 use Shlinkio\Shlink\IpGeolocation\Exception\MissingLicenseException;
-use Shlinkio\Shlink\IpGeolocation\Exception\RuntimeException;
+use Shlinkio\Shlink\IpGeolocation\File\FileExtractorInterface;
 use Shlinkio\Shlink\IpGeolocation\GeoLite2\DbUpdater;
 use Shlinkio\Shlink\IpGeolocation\GeoLite2\GeoLite2Options;
 use Symfony\Component\Filesystem\Exception as FilesystemException;
 use Symfony\Component\Filesystem\Filesystem;
 use Throwable;
+
+use function sys_get_temp_dir;
 
 class DbUpdaterTest extends TestCase
 {
@@ -44,8 +48,7 @@ class DbUpdaterTest extends TestCase
             ->withAnyParameters()
             ->willThrowException(new ClientException('', new Request('GET', ''), $this->response));
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionCode(0);
+        $this->expectException(DbUpdateException::class);
         $this->expectExceptionMessage(
             'An error occurred while trying to download a fresh copy of the GeoLite2 database',
         );
@@ -58,13 +61,10 @@ class DbUpdaterTest extends TestCase
     {
         $this->setUpHttpClient();
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionCode(0);
-        $this->expectExceptionMessage(
-            'An error occurred while trying to extract the GeoLite2 database from __invalid__/GeoLite2-City.tar.gz',
-        );
+        $this->expectException(DbUpdateException::class);
+        $this->expectExceptionMessageMatches('/^An error occurred while trying to extract the GeoLite2 database/');
 
-        $this->dbUpdater('__invalid__')->downloadFreshCopy();
+        $this->dbUpdater(throwOnExtract: true)->downloadFreshCopy();
     }
 
     #[Test, DataProvider('provideFilesystemExceptions')]
@@ -73,8 +73,7 @@ class DbUpdaterTest extends TestCase
         $this->setUpHttpClient();
         $prepareFs($this->filesystem);
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionCode(0);
+        $this->expectException(DbUpdateException::class);
         $this->expectExceptionMessage('An error occurred while trying to copy GeoLite2 db file to db_location folder');
 
         $this->dbUpdater()->downloadFreshCopy();
@@ -135,7 +134,7 @@ class DbUpdaterTest extends TestCase
         $this->expectException(MissingLicenseException::class);
         $this->expectExceptionMessage('Impossible to download GeoLite2 db file. A license key was not provided.');
 
-        $this->dbUpdater(null, $license)->downloadFreshCopy();
+        $this->dbUpdater(licenseKey: $license)->downloadFreshCopy();
     }
 
     public static function provideInvalidLicenses(): iterable
@@ -144,14 +143,16 @@ class DbUpdaterTest extends TestCase
         yield 'empty license' => [''];
     }
 
-    private function dbUpdater(string|null $tempDir = null, string|null $licenseKey = 'foobar'): DbUpdater
+    private function dbUpdater(bool $throwOnExtract = false, string|null $licenseKey = 'foobar'): DbUpdater
     {
-        $options = new GeoLite2Options(
-            licenseKey: $licenseKey,
-            dbLocation: 'db_location',
-            tempDir: $tempDir ?? __DIR__ . '/../../test-resources',
-        );
-        return new DbUpdater($this->httpClient, $this->filesystem, $options);
+        $options = new GeoLite2Options($licenseKey, 'db_location', tempDir: sys_get_temp_dir());
+        $fileExtractor = $this->createMock(FileExtractorInterface::class);
+
+        if ($throwOnExtract) {
+            $fileExtractor->method('extractFile')->willThrowException(ExtractException::forInvalidCompressedFile(''));
+        }
+
+        return new DbUpdater($this->httpClient, $this->filesystem, $fileExtractor, $options);
     }
 
     private function setUpHttpClient(): void

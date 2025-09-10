@@ -7,24 +7,25 @@ namespace Shlinkio\Shlink\IpGeolocation\GeoLite2;
 use Fig\Http\Message\RequestMethodInterface as RequestMethod;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
-use PharData;
 use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
 use Shlinkio\Shlink\IpGeolocation\Exception\MissingLicenseException;
+use Shlinkio\Shlink\IpGeolocation\File\FileExtractorInterface;
 use Symfony\Component\Filesystem\Exception as FilesystemException;
 use Symfony\Component\Filesystem\Filesystem;
 use Throwable;
 
 use function sprintf;
 
-class DbUpdater implements DbUpdaterInterface
+readonly class DbUpdater implements DbUpdaterInterface
 {
     private const DB_COMPRESSED_FILE = 'GeoLite2-City.tar.gz';
     private const DB_DECOMPRESSED_FILE = 'GeoLite2-City.mmdb';
 
     public function __construct(
-        private readonly ClientInterface $httpClient,
-        private readonly Filesystem $filesystem,
-        private readonly GeoLite2Options $options,
+        private ClientInterface $httpClient,
+        private Filesystem $filesystem,
+        private FileExtractorInterface $fileExtractor,
+        private GeoLite2Options $options,
     ) {
     }
 
@@ -64,14 +65,13 @@ class DbUpdater implements DbUpdaterInterface
         }
     }
 
+    /**
+     * Decompress provided GZ file into a temp location, and return the path to that location
+     */
     private function extractDbFile(string $compressedFile, string $tempDir): string
     {
         try {
-            $phar = new PharData($compressedFile);
-            $internalPathToDb = sprintf('%s/%s', $phar->getBasename(), self::DB_DECOMPRESSED_FILE);
-            $phar->extractTo($tempDir, $internalPathToDb, true);
-
-            return sprintf('%s/%s', $tempDir, $internalPathToDb);
+            return $this->fileExtractor->extractFile($compressedFile, self::DB_DECOMPRESSED_FILE, $tempDir);
         } catch (Throwable $e) {
             throw DbUpdateException::forFailedExtraction($compressedFile, $e);
         }
@@ -82,7 +82,7 @@ class DbUpdater implements DbUpdaterInterface
         $destination = $this->options->dbLocation;
 
         try {
-            $this->filesystem->copy($from, $destination, true);
+            $this->filesystem->copy($from, $destination, overwriteNewerFiles: true);
             $this->filesystem->chmod([$destination], 0666);
         } catch (FilesystemException\FileNotFoundException | FilesystemException\IOException $e) {
             throw DbUpdateException::forFailedCopyToDestination($destination, $e);
