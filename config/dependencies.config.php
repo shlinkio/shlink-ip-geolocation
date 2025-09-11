@@ -15,6 +15,7 @@ return [
     'dependencies' => [
         'factories' => [
             Filesystem::class => InvokableFactory::class,
+            File\MemoryEfficientFileExtractor::class => InvokableFactory::class,
 
             Resolver\GeoLite2LocationResolver::class => ConfigAbstractFactory::class,
             Resolver\EmptyIpLocationResolver::class => InvokableFactory::class,
@@ -47,6 +48,7 @@ return [
         GeoLite2\DbUpdater::class => [
             GuzzleClient::class,
             Filesystem::class,
+            File\MemoryEfficientFileExtractor::class,
             GeoLite2\GeoLite2Options::class,
         ],
         GeoLite2\GeoLite2ReaderFactory::class => [GeoLite2\GeoLite2Options::class],
