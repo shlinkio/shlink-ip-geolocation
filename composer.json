@@ -18,13 +18,13 @@
         "geoip2/geoip2": "^3.3",
         "guzzlehttp/guzzle": "^7.10",
         "shlinkio/shlink-config": "^4.0",
-        "symfony/filesystem": "^8.0 || ^7.4"
+        "symfony/filesystem": "^8.0"
     },
     "require-dev": {
         "devster/ubench": "^2.1",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-phpunit": "^2.0",
-        "phpunit/phpunit": "^12.5",
+        "phpunit/phpunit": "^13.0",
         "shlinkio/php-coding-standard": "~2.5.0",
         "symfony/var-dumper": "^8.0"
     },
