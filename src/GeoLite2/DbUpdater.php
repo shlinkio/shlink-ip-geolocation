@@ -26,8 +26,7 @@ readonly class DbUpdater implements DbUpdaterInterface
         private Filesystem $filesystem,
         private FileExtractorInterface $fileExtractor,
         private GeoLite2Options $options,
-    ) {
-    }
+    ) {}
 
     /**
      * @param (callable(int $total, int $downloaded): void) | null $handleProgress
@@ -36,7 +35,7 @@ readonly class DbUpdater implements DbUpdaterInterface
      */
     public function downloadFreshCopy(callable|null $handleProgress = null): void
     {
-        if (! $this->options->hasLicenseKey()) {
+        if (!$this->options->hasLicenseKey()) {
             throw MissingLicenseException::forMissingLicense();
         }
 
@@ -83,8 +82,8 @@ readonly class DbUpdater implements DbUpdaterInterface
 
         try {
             $this->filesystem->copy($from, $destination, overwriteNewerFiles: true);
-            $this->filesystem->chmod([$destination], 0666);
-        } catch (FilesystemException\FileNotFoundException | FilesystemException\IOException $e) {
+            $this->filesystem->chmod([$destination], 0o666);
+        } catch (FilesystemException\FileNotFoundException|FilesystemException\IOException $e) {
             throw DbUpdateException::forFailedCopyToDestination($destination, $e);
         }
     }

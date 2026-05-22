@@ -14,8 +14,7 @@ final readonly class Location
         public float $latitude = 0.0,
         public float $longitude = 0.0,
         public string $timeZone = '',
-    ) {
-    }
+    ) {}
 
     public static function empty(): self
     {

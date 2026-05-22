@@ -7,6 +7,6 @@ CHANGELOG.md export-ignore
 docker-compose.yml export-ignore
 Dockerfile export-ignore
 indocker export-ignore
-phpcs.xml export-ignore
+mago.toml export-ignore
 phpstan.neon export-ignore
 phpunit.xml.dist export-ignore

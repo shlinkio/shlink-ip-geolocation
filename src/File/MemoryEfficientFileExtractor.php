@@ -45,12 +45,12 @@ final readonly class MemoryEfficientFileExtractor implements FileExtractorInterf
         // Decompress temporary tar package
         $tempTarPath = $outputPath . '.tmp';
         $gz = @gzopen($compressedFilePath, 'rb');
-        if (! $gz) {
+        if (!$gz) {
             throw ExtractException::forInvalidCompressedFile($compressedFilePath);
         }
 
         $tar = @fopen($tempTarPath, 'wb');
-        if (! $tar) {
+        if (!$tar) {
             gzclose($gz);
             throw ExtractException::forInvalidDestinationDir($destinationDir);
         }
@@ -63,9 +63,9 @@ final readonly class MemoryEfficientFileExtractor implements FileExtractorInterf
         // Process tar file sequentially, looking for the db file
         /** @var resource $tar - We have already opened this file a few lines above, so it's safe to cast type here */
         $tar = fopen($tempTarPath, 'rb');
-        while (! feof($tar)) {
+        while (!feof($tar)) {
             $header = fread($tar, 512);
-            if (! $header || strlen($header) < 512) {
+            if (!$header || strlen($header) < 512) {
                 break;
             }
 
@@ -77,13 +77,13 @@ final readonly class MemoryEfficientFileExtractor implements FileExtractorInterf
             $size = octdec(trim(substr($header, offset: 124, length: 12)));
 
             // Once we find the file, read it sequentially and return
-            if (str_ends_with($filename, $fileToExtract) && $out = fopen($outputPath, 'wb')) {
+            if (str_ends_with($filename, $fileToExtract) && ($out = fopen($outputPath, 'wb'))) {
                 $remaining = $size;
                 while ($remaining > 0) {
                     /** @var positive-int $readLen */
                     $readLen = min(4096, $remaining);
                     $data = fread($tar, $readLen);
-                    if (! $data) {
+                    if (!$data) {
                         break;
                     }
                     fwrite($out, $data);
@@ -97,7 +97,7 @@ final readonly class MemoryEfficientFileExtractor implements FileExtractorInterf
             }
 
             // Skip this file
-            $skip = $size + (512 - ($size % 512)) % 512;
+            $skip = $size + ((512 - ($size % 512)) % 512);
             fseek($tar, offset: (int) $skip, whence: SEEK_CUR);
         }
 

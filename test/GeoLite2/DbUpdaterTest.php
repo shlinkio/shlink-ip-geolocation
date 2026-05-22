@@ -30,8 +30,8 @@ use function sys_get_temp_dir;
 #[AllowMockObjectsWithoutExpectations]
 class DbUpdaterTest extends TestCase
 {
-    private MockObject & ClientInterface $httpClient;
-    private MockObject & Filesystem $filesystem;
+    private MockObject&ClientInterface $httpClient;
+    private MockObject&Filesystem $filesystem;
     private ResponseInterface $response;
 
     public function setUp(): void
@@ -83,21 +83,23 @@ class DbUpdaterTest extends TestCase
 
     public static function provideFilesystemExceptions(): iterable
     {
-        $onCopy = function (MockObject $fs, Throwable $e): void {
+        $onCopy = static function (MockObject $fs, Throwable $e): void {
             $fs->expects(new InvokedCount(1))->method('copy')->withAnyParameters()->willThrowException($e);
             $fs->expects(new InvokedCount(0))->method('chmod');
         };
-        $onChmod = function (MockObject $fs, Throwable $e): void {
+        $onChmod = static function (MockObject $fs, Throwable $e): void {
             $fs->expects(new InvokedCount(1))->method('copy')->withAnyParameters();
             $fs->expects(new InvokedCount(1))->method('chmod')->withAnyParameters()->willThrowException($e);
         };
 
-        yield 'file not found on copy' => [fn ($fs) => $onCopy($fs, new FilesystemException\FileNotFoundException())];
-        yield 'IO error on copy' => [fn ($fs) => $onCopy($fs, new FilesystemException\IOException(''))];
-        yield 'file not found on chmod' => [
-            fn ($fs) => $onChmod($fs, new FilesystemException\FileNotFoundException()),
+        yield 'file not found on copy' => [
+            static fn ($fs) => $onCopy($fs, new FilesystemException\FileNotFoundException()),
         ];
-        yield 'IO error on chmod' => [fn ($fs) => $onChmod($fs, new FilesystemException\IOException(''))];
+        yield 'IO error on copy' => [static fn ($fs) => $onCopy($fs, new FilesystemException\IOException(''))];
+        yield 'file not found on chmod' => [
+            static fn ($fs) => $onChmod($fs, new FilesystemException\FileNotFoundException()),
+        ];
+        yield 'IO error on chmod' => [static fn ($fs) => $onChmod($fs, new FilesystemException\IOException(''))];
     }
 
     #[Test]

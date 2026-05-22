@@ -21,11 +21,12 @@
         "symfony/filesystem": "^8.0"
     },
     "require-dev": {
+        "carthage-software/mago": "^1.28",
         "devster/ubench": "^2.1",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpunit/phpunit": "^13.0",
-        "shlinkio/php-coding-standard": "~2.5.0",
+        "shlinkio/shlink-mago-config": "^1.0",
         "symfony/var-dumper": "^8.0"
     },
     "autoload": {
@@ -44,8 +45,12 @@
             "@stan",
             "@test:ci"
         ],
-        "cs": "phpcs",
-        "cs:fix": "phpcbf",
+        "lint": "mago lint",
+        "lint:fix": "mago lint --fix",
+        "format": "mago format",
+        "format:check": "mago format --check",
+        "cs": ["@lint", "@format:check"],
+        "cs:fix": ["@lint:fix", "@format"],
         "stan": "phpstan analyse",
         "test": "phpunit --order-by=random --testdox --testdox-summary",
         "test:ci": [

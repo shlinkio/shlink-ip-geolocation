@@ -1,0 +1,20 @@
+#:schema https://mago.carthage.software/1.27.1/schema.json
+# Welcome to Mago!
+# For full documentation, see https://mago.carthage.software/tools/overview
+version = "1"
+php-version = "8.4.0"
+extends = "vendor/shlinkio/shlink-mago-config/mago.toml"
+
+[source]
+workspace = "."
+paths = ["config", "src", "test"]
+excludes = ["vendor"]
+
+[source.glob]
+literal-separator = true
+
+[linter.rules]
+no-error-control-operator = { exclude = ["src/File/MemoryEfficientFileExtractor.php"] }
+no-literal-password = { exclude = ["test"] }
+no-empty-catch-clause = { exclude = ["test", "src/GeoLite2/DbUpdater.php"] }
+no-empty-loop = { exclude = ["test"] }
