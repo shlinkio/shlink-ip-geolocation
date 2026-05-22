@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Unreleased]
+### Added
+* *Nothing*
+
+### Changed
+* Migrate form PHP_CodeSniffer to Mago for code linting and formatting.
+
+### Deprecated
+* *Nothing*
+
+### Removed
+* *Nothing*
+
+### Fixed
+* *Nothing*
+
+
 ## [5.0.0]
 ### Added
 * Add support for Symfony 8.0

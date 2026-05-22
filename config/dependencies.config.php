@@ -11,7 +11,6 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 return [
-
     'dependencies' => [
         'factories' => [
             Filesystem::class => InvokableFactory::class,
@@ -53,5 +52,4 @@ return [
         ],
         GeoLite2\GeoLite2ReaderFactory::class => [GeoLite2\GeoLite2Options::class],
     ],
-
 ];

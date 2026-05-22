@@ -20,7 +20,7 @@ use Throwable;
 class GeoLite2LocationResolverTest extends TestCase
 {
     private GeoLite2LocationResolver $resolver;
-    private MockObject & Reader $reader;
+    private MockObject&Reader $reader;
 
     public function setUp(): void
     {

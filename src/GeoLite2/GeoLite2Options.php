@@ -8,8 +8,9 @@ use function str_replace;
 
 class GeoLite2Options
 {
-    private const DOWNLOAD_FROM_PATTERN = 'https://download.maxmind.com/app/geoip_download'
-        . '?edition_id=GeoLite2-City&license_key={license_key}&suffix=tar.gz';
+    private const DOWNLOAD_FROM_PATTERN =
+        'https://download.maxmind.com/app/geoip_download'
+            . '?edition_id=GeoLite2-City&license_key={license_key}&suffix=tar.gz';
 
     public readonly string $downloadFrom;
 
@@ -24,6 +25,6 @@ class GeoLite2Options
 
     public function hasLicenseKey(): bool
     {
-        return ! empty($this->licenseKey);
+        return !empty($this->licenseKey);
     }
 }

@@ -30,6 +30,6 @@ class EmptyIpLocationResolverTest extends TestCase
 
     public static function provideEmptyResponses(): array
     {
-        return array_map(fn () => ['foobar'], range(0, 5));
+        return array_map(static fn () => ['foobar'], range(0, 5));
     }
 }
