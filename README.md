@@ -20,7 +20,7 @@ Install this library using composer:
 
 ## Resolving IP locations
 
-This module provides a few different ways to resolve the location of an IP address, all of them implementing `Shlinkio\Shlink\IpGeolocation\Resolver\IpLocationResolverInterface`.
+This module provides strategies to resolve the location of an IP address, all of them implementing `Shlinkio\Shlink\IpGeolocation\Resolver\IpLocationResolverInterface`.
 
 This interface basically exposes this method:
 

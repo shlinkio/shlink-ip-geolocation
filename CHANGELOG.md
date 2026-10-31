@@ -22,7 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 * *Nothing*
 
 
-## [5.0.0]
+## [5.0.0] - 2026-02-08
 ### Added
 * Add support for Symfony 8.0
 
