@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ### Changed
 * Replace `LocationResolverInterface::resolveIpLocation` method by `LocationResolverInterface::resolveRequestLocation`.
+* Rename `IpLocationResolverInterface` to `LocationResolverInterface`.
 * Rename `ChainIpLocationResolver` to `ChainLocationResolver`.
 * Rename `EmptyIpLocationResolver` to `EmptyLocationResolver`.
 * Migrate form PHP_CodeSniffer to Mago for code linting and formatting.
