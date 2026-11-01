@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace ShlinkioTest\Shlink\IpGeolocation\Resolver;
+namespace ShlinkioTest\Shlink\Geolocation\Resolver;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Shlinkio\Shlink\IpGeolocation\Model\Location;
-use Shlinkio\Shlink\IpGeolocation\Resolver\EmptyLocationResolver;
+use Shlinkio\Shlink\Geolocation\Model\Location;
+use Shlinkio\Shlink\Geolocation\Resolver\EmptyLocationResolver;
 
 use function array_map;
 use function range;
-use function ShlinkioTest\Shlink\IpGeolocation\requestWithIp;
+use function ShlinkioTest\Shlink\Geolocation\requestWithIp;
 
 class EmptyLocationResolverTest extends TestCase
 {

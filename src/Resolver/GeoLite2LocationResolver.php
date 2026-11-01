@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\IpGeolocation\Resolver;
+namespace Shlinkio\Shlink\Geolocation\Resolver;
 
 use Closure;
 use GeoIp2\Database\Reader;
@@ -10,10 +10,10 @@ use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\City;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use Psr\Http\Message\ServerRequestInterface;
-use Shlinkio\Shlink\IpGeolocation\Exception\LocationResolutionException;
-use Shlinkio\Shlink\IpGeolocation\Model;
+use Shlinkio\Shlink\Geolocation\Exception\LocationResolutionException;
+use Shlinkio\Shlink\Geolocation\Model;
 
-use function Shlinkio\Shlink\IpGeolocation\ipAddressFromRequest;
+use function Shlinkio\Shlink\Geolocation\ipAddressFromRequest;
 
 class GeoLite2LocationResolver implements LocationResolverInterface
 {

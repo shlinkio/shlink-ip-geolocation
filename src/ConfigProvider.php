@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\IpGeolocation;
+namespace Shlinkio\Shlink\Geolocation;
 
 use function Shlinkio\Shlink\Config\loadConfigFromGlob;
 

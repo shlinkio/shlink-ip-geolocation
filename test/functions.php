@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace ShlinkioTest\Shlink\IpGeolocation;
+namespace ShlinkioTest\Shlink\Geolocation;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 
-use const Shlinkio\Shlink\IpGeolocation\IP_ADDRESS_REQUEST_ATTRIBUTE;
+use const Shlinkio\Shlink\Geolocation\IP_ADDRESS_REQUEST_ATTRIBUTE;
 
 function requestWithIp(string $ipAddress): ServerRequestInterface
 {

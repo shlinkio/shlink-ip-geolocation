@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace ShlinkioTest\Shlink\IpGeolocation\File;
+namespace ShlinkioTest\Shlink\Geolocation\File;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Shlinkio\Shlink\IpGeolocation\Exception\ExtractException;
-use Shlinkio\Shlink\IpGeolocation\File\MemoryEfficientFileExtractor;
+use Shlinkio\Shlink\Geolocation\Exception\ExtractException;
+use Shlinkio\Shlink\Geolocation\File\MemoryEfficientFileExtractor;
 
 use function sprintf;
 

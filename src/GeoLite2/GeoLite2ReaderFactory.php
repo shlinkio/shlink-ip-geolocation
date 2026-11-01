@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\IpGeolocation\GeoLite2;
+namespace Shlinkio\Shlink\Geolocation\GeoLite2;
 
 use GeoIp2\Database\Reader;
 use MaxMind\Db\Reader\InvalidDatabaseException;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace ShlinkioTest\Shlink\IpGeolocation\Exception;
+namespace ShlinkioTest\Shlink\Geolocation\Exception;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
+use Shlinkio\Shlink\Geolocation\Exception\DbUpdateException;
 use Throwable;
 
 use function sprintf;

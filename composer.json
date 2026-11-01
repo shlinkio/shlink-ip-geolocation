@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Shlinkio\\Shlink\\IpGeolocation\\": "src"
+            "Shlinkio\\Shlink\\Geolocation\\": "src"
         },
         "files": [
             "src/functions.php"
@@ -38,7 +38,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "ShlinkioTest\\Shlink\\IpGeolocation\\": "test"
+            "ShlinkioTest\\Shlink\\Geolocation\\": "test"
         },
         "files": [
             "test/functions.php"

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\IpGeolocation\GeoLite2;
+namespace Shlinkio\Shlink\Geolocation\GeoLite2;
 
-use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
-use Shlinkio\Shlink\IpGeolocation\Exception\MissingLicenseException;
+use Shlinkio\Shlink\Geolocation\Exception\DbUpdateException;
+use Shlinkio\Shlink\Geolocation\Exception\MissingLicenseException;
 
 interface DbUpdaterInterface
 {

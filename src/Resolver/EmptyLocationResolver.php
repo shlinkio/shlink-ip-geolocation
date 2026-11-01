@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\IpGeolocation\Resolver;
+namespace Shlinkio\Shlink\Geolocation\Resolver;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Shlinkio\Shlink\IpGeolocation\Model;
+use Shlinkio\Shlink\Geolocation\Model;
 
 class EmptyLocationResolver implements LocationResolverInterface
 {

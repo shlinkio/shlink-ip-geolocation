@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace ShlinkioTest\Shlink\IpGeolocation\Resolver;
+namespace ShlinkioTest\Shlink\Geolocation\Resolver;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Shlinkio\Shlink\IpGeolocation\Exception\LocationResolutionException;
-use Shlinkio\Shlink\IpGeolocation\Model\Location;
-use Shlinkio\Shlink\IpGeolocation\Resolver\ChainLocationResolver;
-use Shlinkio\Shlink\IpGeolocation\Resolver\LocationResolverInterface;
+use Shlinkio\Shlink\Geolocation\Exception\LocationResolutionException;
+use Shlinkio\Shlink\Geolocation\Model\Location;
+use Shlinkio\Shlink\Geolocation\Resolver\ChainLocationResolver;
+use Shlinkio\Shlink\Geolocation\Resolver\LocationResolverInterface;
 
-use function ShlinkioTest\Shlink\IpGeolocation\requestWithIp;
+use function ShlinkioTest\Shlink\Geolocation\requestWithIp;
 
 class ChainLocationResolverTest extends TestCase
 {

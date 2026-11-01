@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ShlinkioTest\Shlink\IpGeolocation\GeoLite2;
+namespace ShlinkioTest\Shlink\Geolocation\GeoLite2;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
@@ -15,12 +15,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
-use Shlinkio\Shlink\IpGeolocation\Exception\ExtractException;
-use Shlinkio\Shlink\IpGeolocation\Exception\MissingLicenseException;
-use Shlinkio\Shlink\IpGeolocation\File\FileExtractorInterface;
-use Shlinkio\Shlink\IpGeolocation\GeoLite2\DbUpdater;
-use Shlinkio\Shlink\IpGeolocation\GeoLite2\GeoLite2Options;
+use Shlinkio\Shlink\Geolocation\Exception\DbUpdateException;
+use Shlinkio\Shlink\Geolocation\Exception\ExtractException;
+use Shlinkio\Shlink\Geolocation\Exception\MissingLicenseException;
+use Shlinkio\Shlink\Geolocation\File\FileExtractorInterface;
+use Shlinkio\Shlink\Geolocation\GeoLite2\DbUpdater;
+use Shlinkio\Shlink\Geolocation\GeoLite2\GeoLite2Options;
 use Symfony\Component\Filesystem\Exception as FilesystemException;
 use Symfony\Component\Filesystem\Filesystem;
 use Throwable;

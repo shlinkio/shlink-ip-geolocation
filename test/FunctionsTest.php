@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ShlinkioTest\Shlink\IpGeolocation;
+namespace ShlinkioTest\Shlink\Geolocation;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use stdClass;
 
-use function Shlinkio\Shlink\IpGeolocation\ipAddressFromRequest;
+use function Shlinkio\Shlink\Geolocation\ipAddressFromRequest;
 
-use const Shlinkio\Shlink\IpGeolocation\IP_ADDRESS_REQUEST_ATTRIBUTE;
+use const Shlinkio\Shlink\Geolocation\IP_ADDRESS_REQUEST_ATTRIBUTE;
 
 class FunctionsTest extends TestCase
 {

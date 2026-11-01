@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\IpGeolocation;
+namespace Shlinkio\Shlink\Geolocation;
 
 use GuzzleHttp\Client as GuzzleClient;
 use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;

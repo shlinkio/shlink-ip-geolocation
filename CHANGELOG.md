@@ -9,10 +9,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 * *Nothing*
 
 ### Changed
-* Replace `LocationResolverInterface::resolveIpLocation` method by `LocationResolverInterface::resolveRequestLocation`.
+* Rename `Shlinkio\Shlink\IpGeolocation` namespace to `Shlinkio\Shlink\Geolocation`.
 * Rename `IpLocationResolverInterface` to `LocationResolverInterface`.
 * Rename `ChainIpLocationResolver` to `ChainLocationResolver`.
 * Rename `EmptyIpLocationResolver` to `EmptyLocationResolver`.
+* Replace `LocationResolverInterface::resolveIpLocation` method by `LocationResolverInterface::resolveRequestLocation`.
 * Migrate form PHP_CodeSniffer to Mago for code linting and formatting.
 * Migrate form PHPStan to Mago for code analysis.
 
