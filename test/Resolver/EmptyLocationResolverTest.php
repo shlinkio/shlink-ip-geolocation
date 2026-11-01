@@ -2,30 +2,31 @@
 
 declare(strict_types=1);
 
-namespace ShlinkioTest\Shlink\IpGeolocation\Resolver;
+namespace ShlinkioTest\Shlink\Geolocation\Resolver;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Shlinkio\Shlink\IpGeolocation\Model\Location;
-use Shlinkio\Shlink\IpGeolocation\Resolver\EmptyIpLocationResolver;
+use Shlinkio\Shlink\Geolocation\Model\Location;
+use Shlinkio\Shlink\Geolocation\Resolver\EmptyLocationResolver;
 
 use function array_map;
 use function range;
+use function ShlinkioTest\Shlink\Geolocation\requestWithIp;
 
-class EmptyIpLocationResolverTest extends TestCase
+class EmptyLocationResolverTest extends TestCase
 {
-    private EmptyIpLocationResolver $resolver;
+    private EmptyLocationResolver $resolver;
 
     public function setUp(): void
     {
-        $this->resolver = new EmptyIpLocationResolver();
+        $this->resolver = new EmptyLocationResolver();
     }
 
     #[Test, DataProvider('provideEmptyResponses')]
     public function alwaysReturnsAnEmptyLocation(string $ipAddress): void
     {
-        self::assertEquals(Location::empty(), $this->resolver->resolveIpLocation($ipAddress));
+        self::assertEquals(Location::empty(), $this->resolver->resolveRequestLocation(requestWithIp($ipAddress)));
     }
 
     public static function provideEmptyResponses(): array

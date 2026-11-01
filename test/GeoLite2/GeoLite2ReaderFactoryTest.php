@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace ShlinkioTest\Shlink\IpGeolocation\GeoLite2;
+namespace ShlinkioTest\Shlink\Geolocation\GeoLite2;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Shlinkio\Shlink\IpGeolocation\GeoLite2\GeoLite2Options;
-use Shlinkio\Shlink\IpGeolocation\GeoLite2\GeoLite2ReaderFactory;
+use Shlinkio\Shlink\Geolocation\GeoLite2\GeoLite2Options;
+use Shlinkio\Shlink\Geolocation\GeoLite2\GeoLite2ReaderFactory;
 
 class GeoLite2ReaderFactoryTest extends TestCase
 {

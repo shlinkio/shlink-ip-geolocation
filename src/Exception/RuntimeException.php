@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\IpGeolocation\Exception;
+namespace Shlinkio\Shlink\Geolocation\Exception;
 
 use RuntimeException as SplRuntimeException;
 

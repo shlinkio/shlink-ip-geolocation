@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+namespace ShlinkioTest\Shlink\Geolocation;
+
+use GuzzleHttp\Psr7\ServerRequest;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ServerRequestInterface;
+use stdClass;
+
+use function Shlinkio\Shlink\Geolocation\ipAddressFromRequest;
+
+use const Shlinkio\Shlink\Geolocation\IP_ADDRESS_REQUEST_ATTRIBUTE;
+
+class FunctionsTest extends TestCase
+{
+    #[Test, DataProvider('provideRequests')]
+    public function ipAddressCanBeExtractedFromRequest(
+        ServerRequestInterface $request,
+        string|null $expectedIpAddress,
+    ): void {
+        self::assertEquals($expectedIpAddress, ipAddressFromRequest($request));
+    }
+
+    public static function provideRequests(): iterable
+    {
+        $baseRequest = new ServerRequest('GET', '/');
+
+        yield 'no attribute' => [$baseRequest, null];
+        yield 'no string attribute' => [
+            $baseRequest->withAttribute(IP_ADDRESS_REQUEST_ATTRIBUTE, new stdClass()),
+            null,
+        ];
+        yield 'string attribute' => [$baseRequest->withAttribute(IP_ADDRESS_REQUEST_ATTRIBUTE, '1.2.3.4'), '1.2.3.4'];
+    }
+}

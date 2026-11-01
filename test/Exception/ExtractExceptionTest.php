@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace ShlinkioTest\Shlink\IpGeolocation\Exception;
+namespace ShlinkioTest\Shlink\Geolocation\Exception;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Shlinkio\Shlink\IpGeolocation\Exception\ExtractException;
+use Shlinkio\Shlink\Geolocation\Exception\ExtractException;
 
 class ExtractExceptionTest extends TestCase
 {

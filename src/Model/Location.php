@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\IpGeolocation\Model;
+namespace Shlinkio\Shlink\Geolocation\Model;
 
 final readonly class Location
 {

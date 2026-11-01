@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\IpGeolocation\File;
+namespace Shlinkio\Shlink\Geolocation\File;
 
-use Shlinkio\Shlink\IpGeolocation\Exception\ExtractException;
+use Shlinkio\Shlink\Geolocation\Exception\ExtractException;
 
 use function fclose;
 use function feof;

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\IpGeolocation\GeoLite2;
+namespace Shlinkio\Shlink\Geolocation\GeoLite2;
 
 use Fig\Http\Message\RequestMethodInterface as RequestMethod;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
-use Shlinkio\Shlink\IpGeolocation\Exception\DbUpdateException;
-use Shlinkio\Shlink\IpGeolocation\Exception\MissingLicenseException;
-use Shlinkio\Shlink\IpGeolocation\File\FileExtractorInterface;
+use Shlinkio\Shlink\Geolocation\Exception\DbUpdateException;
+use Shlinkio\Shlink\Geolocation\Exception\MissingLicenseException;
+use Shlinkio\Shlink\Geolocation\File\FileExtractorInterface;
 use Symfony\Component\Filesystem\Exception as FilesystemException;
 use Symfony\Component\Filesystem\Filesystem;
 use Throwable;

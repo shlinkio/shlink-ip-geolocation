@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\IpGeolocation;
+namespace Shlinkio\Shlink\Geolocation;
 
 use GuzzleHttp\Client as GuzzleClient;
 use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
@@ -17,8 +17,8 @@ return [
             File\MemoryEfficientFileExtractor::class => InvokableFactory::class,
 
             Resolver\GeoLite2LocationResolver::class => ConfigAbstractFactory::class,
-            Resolver\EmptyIpLocationResolver::class => InvokableFactory::class,
-            Resolver\ChainIpLocationResolver::class => ConfigAbstractFactory::class,
+            Resolver\EmptyLocationResolver::class => InvokableFactory::class,
+            Resolver\ChainLocationResolver::class => ConfigAbstractFactory::class,
 
             GeoLite2\GeoLite2Options::class => static function (ContainerInterface $c): GeoLite2\GeoLite2Options {
                 /** @var array{license_key?: string, db_location?: string, temp_dir?: string} $config */
@@ -33,15 +33,15 @@ return [
             GeoLite2\GeoLite2ReaderFactory::class => ConfigAbstractFactory::class,
         ],
         'aliases' => [
-            Resolver\IpLocationResolverInterface::class => Resolver\ChainIpLocationResolver::class,
+            Resolver\LocationResolverInterface::class => Resolver\ChainLocationResolver::class,
         ],
     ],
 
     ConfigAbstractFactory::class => [
         Resolver\GeoLite2LocationResolver::class => [GeoLite2\GeoLite2ReaderFactory::class],
-        Resolver\ChainIpLocationResolver::class => [
+        Resolver\ChainLocationResolver::class => [
             Resolver\GeoLite2LocationResolver::class,
-            Resolver\EmptyIpLocationResolver::class,
+            Resolver\EmptyLocationResolver::class,
         ],
 
         GeoLite2\DbUpdater::class => [

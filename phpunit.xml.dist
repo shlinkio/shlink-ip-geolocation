@@ -11,7 +11,7 @@
     displayDetailsOnTestsThatTriggerNotices="true"
 >
     <testsuites>
-        <testsuite name="IpGeolocation">
+        <testsuite name="Geolocation">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
