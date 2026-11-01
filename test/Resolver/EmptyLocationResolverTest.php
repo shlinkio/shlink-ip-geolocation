@@ -8,24 +8,25 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\IpGeolocation\Model\Location;
-use Shlinkio\Shlink\IpGeolocation\Resolver\EmptyIpLocationResolver;
+use Shlinkio\Shlink\IpGeolocation\Resolver\EmptyLocationResolver;
 
 use function array_map;
 use function range;
+use function ShlinkioTest\Shlink\IpGeolocation\requestWithIp;
 
-class EmptyIpLocationResolverTest extends TestCase
+class EmptyLocationResolverTest extends TestCase
 {
-    private EmptyIpLocationResolver $resolver;
+    private EmptyLocationResolver $resolver;
 
     public function setUp(): void
     {
-        $this->resolver = new EmptyIpLocationResolver();
+        $this->resolver = new EmptyLocationResolver();
     }
 
     #[Test, DataProvider('provideEmptyResponses')]
     public function alwaysReturnsAnEmptyLocation(string $ipAddress): void
     {
-        self::assertEquals(Location::empty(), $this->resolver->resolveIpLocation($ipAddress));
+        self::assertEquals(Location::empty(), $this->resolver->resolveRequestLocation(requestWithIp($ipAddress)));
     }
 
     public static function provideEmptyResponses(): array

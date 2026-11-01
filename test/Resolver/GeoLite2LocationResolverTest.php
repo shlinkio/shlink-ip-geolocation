@@ -12,10 +12,12 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Shlinkio\Shlink\IpGeolocation\Exception\WrongIpException;
+use Shlinkio\Shlink\IpGeolocation\Exception\LocationResolutionException;
 use Shlinkio\Shlink\IpGeolocation\Model\Location;
 use Shlinkio\Shlink\IpGeolocation\Resolver\GeoLite2LocationResolver;
 use Throwable;
+
+use function ShlinkioTest\Shlink\IpGeolocation\requestWithIp;
 
 class GeoLite2LocationResolverTest extends TestCase
 {
@@ -39,16 +41,18 @@ class GeoLite2LocationResolverTest extends TestCase
             ->with($this->equalTo($ipAddress))
             ->willThrowException($e);
 
-        $this->expectException(WrongIpException::class);
+        $this->expectException(LocationResolutionException::class);
         $this->expectExceptionMessageIs($message);
-        $this->expectExceptionCode(0);
 
-        $this->resolver->resolveIpLocation($ipAddress);
+        $this->resolver->resolveRequestLocation(requestWithIp($ipAddress));
     }
 
     public static function provideReaderExceptions(): iterable
     {
-        yield 'invalid IP address' => [new AddressNotFoundException(), 'Provided IP "1.2.3.4" is invalid'];
+        yield 'invalid IP address' => [
+            new AddressNotFoundException(),
+            'Could not resolve location for IP address 1.2.3.4',
+        ];
         yield 'invalid geolite DB' => [new InvalidDatabaseException(), 'Provided GeoLite2 db file is invalid'];
     }
 
@@ -60,7 +64,7 @@ class GeoLite2LocationResolverTest extends TestCase
 
         $this->reader->expects($this->once())->method('city')->with($this->equalTo($ipAddress))->willReturn($city);
 
-        $result = $this->resolver->resolveIpLocation($ipAddress);
+        $result = $this->resolver->resolveRequestLocation(requestWithIp($ipAddress));
 
         self::assertEquals(Location::empty(), $result);
     }

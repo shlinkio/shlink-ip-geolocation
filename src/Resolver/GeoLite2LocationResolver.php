@@ -9,10 +9,13 @@ use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\City;
 use MaxMind\Db\Reader\InvalidDatabaseException;
-use Shlinkio\Shlink\IpGeolocation\Exception\WrongIpException;
+use Psr\Http\Message\ServerRequestInterface;
+use Shlinkio\Shlink\IpGeolocation\Exception\LocationResolutionException;
 use Shlinkio\Shlink\IpGeolocation\Model;
 
-class GeoLite2LocationResolver implements IpLocationResolverInterface
+use function Shlinkio\Shlink\IpGeolocation\ipAddressFromRequest;
+
+class GeoLite2LocationResolver implements LocationResolverInterface
 {
     /** @var Closure(): Reader */
     private readonly Closure $geoLiteDbReaderFactory;
@@ -25,18 +28,21 @@ class GeoLite2LocationResolver implements IpLocationResolverInterface
         $this->geoLiteDbReaderFactory = $geoLiteDbReaderFactory(...);
     }
 
-    /**
-     * @throws WrongIpException
-     */
-    public function resolveIpLocation(string $ipAddress): Model\Location
+    /** @inheritDoc */
+    public function resolveRequestLocation(ServerRequestInterface $request): Model\Location
     {
+        $ipAddress = ipAddressFromRequest($request);
+        if ($ipAddress === null) {
+            throw new LocationResolutionException('Provided request does not contain an IP address');
+        }
+
         try {
             $city = ($this->geoLiteDbReaderFactory)()->city($ipAddress);
             return $this->mapFields($city);
         } catch (AddressNotFoundException $e) {
-            throw WrongIpException::fromIpAddress($ipAddress, $e);
+            throw LocationResolutionException::fromIpAddress($ipAddress, $e);
         } catch (InvalidDatabaseException $e) {
-            throw new WrongIpException('Provided GeoLite2 db file is invalid', 0, $e);
+            throw new LocationResolutionException('Provided GeoLite2 db file is invalid', previous: $e);
         }
     }
 
