@@ -17,8 +17,18 @@ return [
             File\MemoryEfficientFileExtractor::class => InvokableFactory::class,
 
             Resolver\GeoLite2LocationResolver::class => ConfigAbstractFactory::class,
+            Resolver\CloudflareLocationResolver::class => InvokableFactory::class,
             Resolver\EmptyLocationResolver::class => InvokableFactory::class,
-            Resolver\ChainLocationResolver::class => ConfigAbstractFactory::class,
+
+            Resolver\ChainLocationResolver::class =>
+                static function (ContainerInterface $c): Resolver\ChainLocationResolver {
+                    // TODO Dynamically set GeoLite2 and/or Cloudflare resolvers in the right order based on config
+                    return new Resolver\ChainLocationResolver(
+                        //                    $c->get(Resolver\CloudflareLocationResolver::class),
+                        $c->get(Resolver\GeoLite2LocationResolver::class),
+                        $c->get(Resolver\EmptyLocationResolver::class),
+                    );
+                },
 
             GeoLite2\GeoLite2Options::class => static function (ContainerInterface $c): GeoLite2\GeoLite2Options {
                 /** @var array{license_key?: string, db_location?: string, temp_dir?: string} $config */
@@ -39,10 +49,6 @@ return [
 
     ConfigAbstractFactory::class => [
         Resolver\GeoLite2LocationResolver::class => [GeoLite2\GeoLite2ReaderFactory::class],
-        Resolver\ChainLocationResolver::class => [
-            Resolver\GeoLite2LocationResolver::class,
-            Resolver\EmptyLocationResolver::class,
-        ],
 
         GeoLite2\DbUpdater::class => [
             GuzzleClient::class,
