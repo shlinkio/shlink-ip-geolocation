@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\Geolocation;
 
-use GuzzleHttp\Psr7\ServerRequest;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +26,7 @@ class FunctionsTest extends TestCase
 
     public static function provideRequests(): iterable
     {
-        $baseRequest = new ServerRequest('GET', '/');
+        $baseRequest = dummyRequest();
 
         yield 'no attribute' => [$baseRequest, null];
         yield 'no string attribute' => [

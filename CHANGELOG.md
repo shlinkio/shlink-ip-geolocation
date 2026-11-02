@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ## [Unreleased]
 ### Added
-* *Nothing*
+* [#82](https://github.com/shlinkio/shlink-ip-geolocation/issues/82) Add a `CloudflareLocationResolver` that uses Cloudflare headers to resolve the visitor location.
+
+  Additionally, allow resolution strategies injected to the `ChainLocationResolver` to be configured (only GeoLite2, only Cloudflare, GeoLite2+Cloudflare or Cloudflare+GeoLite2).
 
 ### Changed
 * Rename `Shlinkio\Shlink\IpGeolocation` namespace to `Shlinkio\Shlink\Geolocation`.

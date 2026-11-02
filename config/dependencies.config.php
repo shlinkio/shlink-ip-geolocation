@@ -17,12 +17,15 @@ return [
             File\MemoryEfficientFileExtractor::class => InvokableFactory::class,
 
             Resolver\GeoLite2LocationResolver::class => ConfigAbstractFactory::class,
+            Resolver\CloudflareLocationResolver::class => InvokableFactory::class,
             Resolver\EmptyLocationResolver::class => InvokableFactory::class,
-            Resolver\ChainLocationResolver::class => ConfigAbstractFactory::class,
+            Resolver\ChainLocationResolver::class => Resolver\Factory\ChainLocationResolverFactory::class,
 
             GeoLite2\GeoLite2Options::class => static function (ContainerInterface $c): GeoLite2\GeoLite2Options {
+                /** @var array $config */
+                $config = $c->get('config');
                 /** @var array{license_key?: string, db_location?: string, temp_dir?: string} $config */
-                $config = $c->get('config.geolite2');
+                $config = $config['geolite2'] ?? [];
                 return new GeoLite2\GeoLite2Options(
                     licenseKey: $config['license_key'] ?? null,
                     dbLocation: $config['db_location'] ?? '',
@@ -39,10 +42,6 @@ return [
 
     ConfigAbstractFactory::class => [
         Resolver\GeoLite2LocationResolver::class => [GeoLite2\GeoLite2ReaderFactory::class],
-        Resolver\ChainLocationResolver::class => [
-            Resolver\GeoLite2LocationResolver::class,
-            Resolver\EmptyLocationResolver::class,
-        ],
 
         GeoLite2\DbUpdater::class => [
             GuzzleClient::class,

@@ -9,7 +9,12 @@ use Psr\Http\Message\ServerRequestInterface;
 
 use const Shlinkio\Shlink\Geolocation\IP_ADDRESS_REQUEST_ATTRIBUTE;
 
+function dummyRequest(): ServerRequestInterface
+{
+    return new ServerRequest('GET', '/');
+}
+
 function requestWithIp(string $ipAddress): ServerRequestInterface
 {
-    return new ServerRequest('GET', '/')->withAttribute(IP_ADDRESS_REQUEST_ATTRIBUTE, $ipAddress);
+    return dummyRequest()->withAttribute(IP_ADDRESS_REQUEST_ATTRIBUTE, $ipAddress);
 }
