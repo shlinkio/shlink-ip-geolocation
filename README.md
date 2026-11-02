@@ -34,14 +34,31 @@ public function resolveRequestLocation(ServerRequestInterface $request): Model\L
 These are the strategies provided implementing this interface:
 
 * `GeoLite2LocationResolver`: It makes use of a [GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/) database to resolve the request's IP address location.
+* `CloudflareLocationResolver`: It makes use of [headers provided by Claudflare](https://developers.cloudflare.com/rules/transform/managed-transforms/reference/#add-visitor-location-headers) when set in front of your service.
 * `EmptyLocationResolver`: This one is a dummy resolver which always returns an empty location as if it was not capable of resolving the location.
 * `ChainLocationResolver`: It wraps a list of resolvers and calls them sequentially until one of them is capable of resolving the location.
 
-The first one is the most reliable, but requires an up-to-date GeoLite2 database (which handling is explained in next section).
+## Configure geolocation strategies
 
-However, the chain resolver encapsulates the other two in the order they are listed here, and is the one recommended to use.
+The chain resolver encapsulates others in the order you configure, and is the one recommended to use. It always includes an `EmptyLocationResolver` at the end of the chain.
 
 It is aliased to the service with name `Shlinkio\Shlink\IpGeolocation\Resolver\IpLocationResolverInterface`.
+
+To configure which resolver strategies to use and their order, you need to define a configuration like this:
+
+```php
+<?php
+declare(strict_types=1);
+
+use Shlinkio\Shlink\Geolocation\Resolver\GeolocationStrategy;
+
+return [
+
+    // The corresponding resolvers will be called in order, so you can define which one should go first
+    'geolocation_resolvers' => [GeolocationStrategy::CLOUDFLARE, GeolocationStrategy::GEOLITE2],
+
+];
+```
 
 ## GeoLite2
 

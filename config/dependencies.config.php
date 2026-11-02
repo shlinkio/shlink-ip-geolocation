@@ -19,21 +19,13 @@ return [
             Resolver\GeoLite2LocationResolver::class => ConfigAbstractFactory::class,
             Resolver\CloudflareLocationResolver::class => InvokableFactory::class,
             Resolver\EmptyLocationResolver::class => InvokableFactory::class,
-
-            Resolver\ChainLocationResolver::class =>
-                static function (ContainerInterface $c): Resolver\ChainLocationResolver {
-                    $config = $c->get('config');
-                    // TODO Dynamically set GeoLite2 and/or Cloudflare resolvers in the right order based on config
-                    return new Resolver\ChainLocationResolver(
-                        //                    $c->get(Resolver\CloudflareLocationResolver::class),
-                        $c->get(Resolver\GeoLite2LocationResolver::class),
-                        $c->get(Resolver\EmptyLocationResolver::class),
-                    );
-                },
+            Resolver\ChainLocationResolver::class => Resolver\Factory\ChainLocationResolverFactory::class,
 
             GeoLite2\GeoLite2Options::class => static function (ContainerInterface $c): GeoLite2\GeoLite2Options {
+                /** @var array $config */
+                $config = $c->get('config');
                 /** @var array{license_key?: string, db_location?: string, temp_dir?: string} $config */
-                $config = $c->get('config.geolite2');
+                $config = $config['geolite2'] ?? [];
                 return new GeoLite2\GeoLite2Options(
                     licenseKey: $config['license_key'] ?? null,
                     dbLocation: $config['db_location'] ?? '',
