@@ -22,6 +22,7 @@ return [
 
             Resolver\ChainLocationResolver::class =>
                 static function (ContainerInterface $c): Resolver\ChainLocationResolver {
+                    $config = $c->get('config');
                     // TODO Dynamically set GeoLite2 and/or Cloudflare resolvers in the right order based on config
                     return new Resolver\ChainLocationResolver(
                         //                    $c->get(Resolver\CloudflareLocationResolver::class),

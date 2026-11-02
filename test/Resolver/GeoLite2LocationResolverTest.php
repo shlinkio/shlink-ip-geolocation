@@ -7,7 +7,6 @@ namespace ShlinkioTest\Shlink\Geolocation\Resolver;
 use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\City;
-use GuzzleHttp\Psr7\ServerRequest;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -19,6 +18,7 @@ use Shlinkio\Shlink\Geolocation\Model\Location;
 use Shlinkio\Shlink\Geolocation\Resolver\GeoLite2LocationResolver;
 use Throwable;
 
+use function ShlinkioTest\Shlink\Geolocation\dummyRequest;
 use function ShlinkioTest\Shlink\Geolocation\requestWithIp;
 
 class GeoLite2LocationResolverTest extends TestCase
@@ -38,7 +38,7 @@ class GeoLite2LocationResolverTest extends TestCase
         $this->expectException(LocationResolutionException::class);
         $this->expectExceptionMessageIs('Provided request does not contain an IP address');
 
-        $this->resolver->resolveRequestLocation(new ServerRequest('GET', '/'));
+        $this->resolver->resolveRequestLocation(dummyRequest());
     }
 
     #[Test, DataProvider('provideReaderExceptions')]
