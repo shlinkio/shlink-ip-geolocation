@@ -41,6 +41,15 @@ class GeoLite2LocationResolverTest extends TestCase
         $this->resolver->resolveRequestLocation(dummyRequest());
     }
 
+    #[Test, AllowMockObjectsWithoutExpectations]
+    public function exceptionIsThrowsIfIpAddressIsLocalhost(): void
+    {
+        $this->expectException(LocationResolutionException::class);
+        $this->expectExceptionMessageIs('Could not resolve location for IP address 127.0.0.1');
+
+        $this->resolver->resolveRequestLocation(requestWithIp('127.0.0.1'));
+    }
+
     #[Test, DataProvider('provideReaderExceptions')]
     public function exceptionIsThrownIfReaderThrowsException(Throwable $e, string $message): void
     {
