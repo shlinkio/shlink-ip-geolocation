@@ -12,8 +12,10 @@ use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\Geolocation\Exception\LocationResolutionException;
+use Shlinkio\Shlink\Geolocation\GeoLite2\DbUpdaterInterface;
 use Shlinkio\Shlink\Geolocation\Model\Location;
 use Shlinkio\Shlink\Geolocation\Resolver\GeoLite2LocationResolver;
 use Throwable;
@@ -25,11 +27,14 @@ class GeoLite2LocationResolverTest extends TestCase
 {
     private GeoLite2LocationResolver $resolver;
     private MockObject&Reader $reader;
+    private Stub&DbUpdaterInterface $dbUpdater;
 
     public function setUp(): void
     {
         $this->reader = $this->createMock(Reader::class);
-        $this->resolver = new GeoLite2LocationResolver(fn () => $this->reader);
+        $this->dbUpdater = $this->createStub(DbUpdaterInterface::class);
+
+        $this->resolver = new GeoLite2LocationResolver(fn () => $this->reader, $this->dbUpdater);
     }
 
     #[Test, AllowMockObjectsWithoutExpectations]
@@ -50,6 +55,17 @@ class GeoLite2LocationResolverTest extends TestCase
         $this->resolver->resolveRequestLocation(requestWithIp('127.0.0.1'));
     }
 
+    #[Test, AllowMockObjectsWithoutExpectations]
+    public function exceptionIsThrowsIfDatabaseFileDoesNotExist(): void
+    {
+        $this->dbUpdater->method('databaseFileExists')->willReturn(false);
+
+        $this->expectException(LocationResolutionException::class);
+        $this->expectExceptionMessageIs('Tried to geolocate IP address, but a GeoLite2 db was not found');
+
+        $this->resolver->resolveRequestLocation(requestWithIp('1.2.3.4'));
+    }
+
     #[Test, DataProvider('provideReaderExceptions')]
     public function exceptionIsThrownIfReaderThrowsException(Throwable $e, string $message): void
     {
@@ -60,6 +76,7 @@ class GeoLite2LocationResolverTest extends TestCase
             ->method('city')
             ->with($this->equalTo($ipAddress))
             ->willThrowException($e);
+        $this->dbUpdater->method('databaseFileExists')->willReturn(true);
 
         $this->expectException(LocationResolutionException::class);
         $this->expectExceptionMessageIs($message);
@@ -83,6 +100,7 @@ class GeoLite2LocationResolverTest extends TestCase
         $city = new City([]);
 
         $this->reader->expects($this->once())->method('city')->with($this->equalTo($ipAddress))->willReturn($city);
+        $this->dbUpdater->method('databaseFileExists')->willReturn(true);
 
         $result = $this->resolver->resolveRequestLocation(requestWithIp($ipAddress));
 

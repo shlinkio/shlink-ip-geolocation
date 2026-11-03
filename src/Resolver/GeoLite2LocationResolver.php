@@ -11,21 +11,22 @@ use GeoIp2\Model\City;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use Psr\Http\Message\ServerRequestInterface;
 use Shlinkio\Shlink\Geolocation\Exception\LocationResolutionException;
+use Shlinkio\Shlink\Geolocation\GeoLite2\DbUpdaterInterface;
 use Shlinkio\Shlink\Geolocation\Model;
 
 use function Shlinkio\Shlink\Geolocation\ipAddressFromRequest;
 
-class GeoLite2LocationResolver implements LocationResolverInterface
+readonly class GeoLite2LocationResolver implements LocationResolverInterface
 {
     private const string LOCALHOST = '127.0.0.1';
 
     /** @var Closure(): Reader */
-    private readonly Closure $geoLiteDbReaderFactory;
+    private Closure $geoLiteDbReaderFactory;
 
     /**
      * @param callable(): Reader $geoLiteDbReaderFactory
      */
-    public function __construct(callable $geoLiteDbReaderFactory)
+    public function __construct(callable $geoLiteDbReaderFactory, private DbUpdaterInterface $dbUpdater)
     {
         $this->geoLiteDbReaderFactory = $geoLiteDbReaderFactory(...);
     }
@@ -40,6 +41,10 @@ class GeoLite2LocationResolver implements LocationResolverInterface
 
         if ($ipAddress === self::LOCALHOST) {
             throw LocationResolutionException::fromIpAddress(self::LOCALHOST);
+        }
+
+        if (!$this->dbUpdater->databaseFileExists()) {
+            throw new LocationResolutionException('Tried to geolocate IP address, but a GeoLite2 db was not found');
         }
 
         try {

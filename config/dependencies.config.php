@@ -41,7 +41,7 @@ return [
     ],
 
     ConfigAbstractFactory::class => [
-        Resolver\GeoLite2LocationResolver::class => [GeoLite2\GeoLite2ReaderFactory::class],
+        Resolver\GeoLite2LocationResolver::class => [GeoLite2\GeoLite2ReaderFactory::class, GeoLite2\DbUpdater::class],
 
         GeoLite2\DbUpdater::class => [
             GuzzleClient::class,
