@@ -17,6 +17,8 @@ use function Shlinkio\Shlink\Geolocation\ipAddressFromRequest;
 
 class GeoLite2LocationResolver implements LocationResolverInterface
 {
+    private const string LOCALHOST = '127.0.0.1';
+
     /** @var Closure(): Reader */
     private readonly Closure $geoLiteDbReaderFactory;
 
@@ -34,6 +36,10 @@ class GeoLite2LocationResolver implements LocationResolverInterface
         $ipAddress = ipAddressFromRequest($request);
         if ($ipAddress === null) {
             throw new LocationResolutionException('Provided request does not contain an IP address');
+        }
+
+        if ($ipAddress === self::LOCALHOST) {
+            throw LocationResolutionException::fromIpAddress(self::LOCALHOST);
         }
 
         try {
