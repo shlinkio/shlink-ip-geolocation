@@ -11,6 +11,7 @@ use Shlinkio\Shlink\Geolocation\Model;
 
 use function in_array;
 use function preg_match;
+use function Shlinkio\Shlink\Geolocation\isoSubdivisionCode;
 
 class CloudflareLocationResolver implements LocationResolverInterface
 {
@@ -45,6 +46,7 @@ class CloudflareLocationResolver implements LocationResolverInterface
             latitude: $request->getHeaderLine('cf-iplatitude'),
             longitude: $request->getHeaderLine('cf-iplongitude'),
             timeZone: $request->getHeaderLine('cf-timezone'),
+            regionCode: isoSubdivisionCode($countryCode, $request->getHeaderLine('cf-region-code')),
         );
     }
 }

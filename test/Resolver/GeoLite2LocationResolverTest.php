@@ -79,4 +79,27 @@ class GeoLite2LocationResolverTest extends TestCase
 
         self::assertEquals(Location::empty(), $result);
     }
+
+    #[Test]
+    public function regionCodeIsBuiltFromCountryAndFirstSubdivision(): void
+    {
+        $ipAddress = '1.2.3.4';
+        $city = new City([
+            'country' => ['iso_code' => 'US', 'names' => ['en' => 'United States']],
+            'subdivisions' => [
+                ['iso_code' => 'CA', 'names' => ['en' => 'California']],
+                ['iso_code' => 'XYZ', 'names' => ['en' => 'Second level']],
+            ],
+            'city' => ['names' => ['en' => 'Los Angeles']],
+        ]);
+
+        $this->reader->expects($this->once())->method('city')->with($this->equalTo($ipAddress))->willReturn($city);
+
+        $result = $this->resolver->resolveRequestLocation(requestWithIp($ipAddress));
+
+        self::assertEquals('US', $result->countryCode);
+        self::assertEquals('California', $result->regionName);
+        self::assertEquals('US-CA', $result->regionCode);
+        self::assertEquals('Los Angeles', $result->city);
+    }
 }

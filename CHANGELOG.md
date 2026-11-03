@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
   Additionally, allow resolution strategies injected to the `ChainLocationResolver` to be configured (only GeoLite2, only Cloudflare, GeoLite2+Cloudflare or Cloudflare+GeoLite2).
 
+* Add `Location::$regionCode`, with the full ISO 3166-2 code of the first-level subdivision (e.g. `US-CA`), resolved by both `GeoLite2LocationResolver` and `CloudflareLocationResolver`.
+
 ### Changed
 * Rename `Shlinkio\Shlink\IpGeolocation` namespace to `Shlinkio\Shlink\Geolocation`.
 * Rename `IpLocationResolverInterface` to `LocationResolverInterface`.

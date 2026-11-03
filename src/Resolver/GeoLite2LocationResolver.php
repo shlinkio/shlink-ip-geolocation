@@ -14,6 +14,7 @@ use Shlinkio\Shlink\Geolocation\Exception\LocationResolutionException;
 use Shlinkio\Shlink\Geolocation\Model;
 
 use function Shlinkio\Shlink\Geolocation\ipAddressFromRequest;
+use function Shlinkio\Shlink\Geolocation\isoSubdivisionCode;
 
 class GeoLite2LocationResolver implements LocationResolverInterface
 {
@@ -56,6 +57,7 @@ class GeoLite2LocationResolver implements LocationResolverInterface
             $city->location->latitude ?? 0.0,
             $city->location->longitude ?? 0.0,
             $city->location->timeZone ?? '',
+            isoSubdivisionCode($city->country->isoCode ?? '', $city->subdivisions[0]->isoCode ?? ''),
         );
     }
 }

@@ -21,6 +21,8 @@ final readonly class Location
         float|string $latitude = 0.0,
         float|string $longitude = 0.0,
         public string $timeZone = '',
+        /** Full ISO 3166-2 code of the first-level subdivision (e.g. US-CA), or empty string if unknown */
+        public string $regionCode = '',
     ) {
         $this->latitude = $this->cleanupCoordinateValue($latitude, minMax: 90.0);
         $this->longitude = $this->cleanupCoordinateValue($longitude, minMax: 180.0);
