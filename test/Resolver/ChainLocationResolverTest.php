@@ -12,7 +12,7 @@ use Shlinkio\Shlink\Geolocation\Model\Location;
 use Shlinkio\Shlink\Geolocation\Resolver\ChainLocationResolver;
 use Shlinkio\Shlink\Geolocation\Resolver\LocationResolverInterface;
 
-use function ShlinkioTest\Shlink\Geolocation\requestWithIp;
+use function ShlinkioTest\Shlink\Geolocation\dummyRequestWithIp;
 
 class ChainLocationResolverTest extends TestCase
 {
@@ -31,7 +31,7 @@ class ChainLocationResolverTest extends TestCase
     #[Test]
     public function throwsExceptionWhenNoInnerResolverCanHandleTheResolution(): void
     {
-        $request = requestWithIp('1.2.3.4');
+        $request = dummyRequestWithIp('1.2.3.4');
 
         $this->firstInnerResolver
             ->expects($this->once())
@@ -52,7 +52,7 @@ class ChainLocationResolverTest extends TestCase
     #[Test]
     public function returnsResultOfFirstInnerResolver(): void
     {
-        $request = requestWithIp('1.2.3.4');
+        $request = dummyRequestWithIp('1.2.3.4');
 
         $this->firstInnerResolver
             ->expects($this->once())
@@ -67,7 +67,7 @@ class ChainLocationResolverTest extends TestCase
     #[Test]
     public function returnsResultOfSecondInnerResolver(): void
     {
-        $request = requestWithIp('1.2.3.4');
+        $request = dummyRequestWithIp('1.2.3.4');
 
         $this->firstInnerResolver
             ->expects($this->once())

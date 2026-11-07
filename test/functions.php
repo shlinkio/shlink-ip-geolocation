@@ -7,14 +7,14 @@ namespace ShlinkioTest\Shlink\Geolocation;
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 
-use const Shlinkio\Shlink\Geolocation\IP_ADDRESS_REQUEST_ATTRIBUTE;
+use function Shlinkio\Shlink\Geolocation\requestWithIpAddress;
 
 function dummyRequest(): ServerRequestInterface
 {
     return new ServerRequest('GET', '/');
 }
 
-function requestWithIp(string $ipAddress): ServerRequestInterface
+function dummyRequestWithIp(string $ipAddress): ServerRequestInterface
 {
-    return dummyRequest()->withAttribute(IP_ADDRESS_REQUEST_ATTRIBUTE, $ipAddress);
+    return requestWithIpAddress(dummyRequest(), $ipAddress);
 }

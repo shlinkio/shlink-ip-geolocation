@@ -19,7 +19,7 @@ use Shlinkio\Shlink\Geolocation\Resolver\GeoLite2LocationResolver;
 use Throwable;
 
 use function ShlinkioTest\Shlink\Geolocation\dummyRequest;
-use function ShlinkioTest\Shlink\Geolocation\requestWithIp;
+use function ShlinkioTest\Shlink\Geolocation\dummyRequestWithIp;
 
 class GeoLite2LocationResolverTest extends TestCase
 {
@@ -55,7 +55,7 @@ class GeoLite2LocationResolverTest extends TestCase
         $this->expectException(LocationResolutionException::class);
         $this->expectExceptionMessageIs($message);
 
-        $this->resolver->resolveRequestLocation(requestWithIp($ipAddress));
+        $this->resolver->resolveRequestLocation(dummyRequestWithIp($ipAddress));
     }
 
     public static function provideReaderExceptions(): iterable
@@ -75,7 +75,7 @@ class GeoLite2LocationResolverTest extends TestCase
 
         $this->reader->expects($this->once())->method('city')->with($this->equalTo($ipAddress))->willReturn($city);
 
-        $result = $this->resolver->resolveRequestLocation(requestWithIp($ipAddress));
+        $result = $this->resolver->resolveRequestLocation(dummyRequestWithIp($ipAddress));
 
         self::assertEquals(Location::empty(), $result);
     }

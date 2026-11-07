@@ -12,7 +12,7 @@ use Shlinkio\Shlink\Geolocation\Resolver\EmptyLocationResolver;
 
 use function array_map;
 use function range;
-use function ShlinkioTest\Shlink\Geolocation\requestWithIp;
+use function ShlinkioTest\Shlink\Geolocation\dummyRequestWithIp;
 
 class EmptyLocationResolverTest extends TestCase
 {
@@ -26,7 +26,7 @@ class EmptyLocationResolverTest extends TestCase
     #[Test, DataProvider('provideEmptyResponses')]
     public function alwaysReturnsAnEmptyLocation(string $ipAddress): void
     {
-        self::assertEquals(Location::empty(), $this->resolver->resolveRequestLocation(requestWithIp($ipAddress)));
+        self::assertEquals(Location::empty(), $this->resolver->resolveRequestLocation(dummyRequestWithIp($ipAddress)));
     }
 
     public static function provideEmptyResponses(): array

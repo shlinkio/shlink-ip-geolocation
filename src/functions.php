@@ -15,3 +15,8 @@ function ipAddressFromRequest(ServerRequestInterface $request): string|null
     $ipAddress = $request->getAttribute(IP_ADDRESS_REQUEST_ATTRIBUTE);
     return is_string($ipAddress) ? $ipAddress : null;
 }
+
+function requestWithIpAddress(ServerRequestInterface $request, string $ipAddress): ServerRequestInterface
+{
+    return $request->withAttribute(IP_ADDRESS_REQUEST_ATTRIBUTE, $ipAddress);
+}
