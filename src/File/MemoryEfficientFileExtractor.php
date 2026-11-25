@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\Geolocation\File;
 
+use Override;
 use Shlinkio\Shlink\Geolocation\Exception\ExtractException;
 
 use function fclose;
@@ -34,6 +35,7 @@ final readonly class MemoryEfficientFileExtractor implements FileExtractorInterf
     /**
      * @inheritDoc
      */
+    #[Override]
     public function extractFile(
         string $compressedFilePath,
         string $fileToExtract,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\Geolocation\Resolver;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
@@ -18,6 +19,7 @@ class CloudflareLocationResolverTest extends TestCase
 {
     private CloudflareLocationResolver $resolver;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->resolver = new CloudflareLocationResolver();

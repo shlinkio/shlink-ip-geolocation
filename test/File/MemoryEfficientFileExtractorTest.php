@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\Geolocation\File;
 
+use Override;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\Geolocation\Exception\ExtractException;
@@ -18,6 +19,7 @@ class MemoryEfficientFileExtractorTest extends TestCase
 
     private MemoryEfficientFileExtractor $extractor;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->extractor = new MemoryEfficientFileExtractor();

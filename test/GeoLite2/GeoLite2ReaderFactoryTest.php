@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\Geolocation\GeoLite2;
 
+use Override;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\Geolocation\GeoLite2\GeoLite2Options;
@@ -13,6 +14,7 @@ class GeoLite2ReaderFactoryTest extends TestCase
 {
     private GeoLite2ReaderFactory $factory;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->factory = new GeoLite2ReaderFactory(new GeoLite2Options(

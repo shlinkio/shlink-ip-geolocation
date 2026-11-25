@@ -9,6 +9,7 @@ use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\City;
 use MaxMind\Db\Reader\InvalidDatabaseException;
+use Override;
 use Psr\Http\Message\ServerRequestInterface;
 use Shlinkio\Shlink\Geolocation\Exception\LocationResolutionException;
 use Shlinkio\Shlink\Geolocation\GeoLite2\DbUpdaterInterface;
@@ -32,6 +33,7 @@ readonly class GeoLite2LocationResolver implements LocationResolverInterface
     }
 
     /** @inheritDoc */
+    #[Override]
     public function resolveRequestLocation(ServerRequestInterface $request): Model\Location
     {
         $ipAddress = ipAddressFromRequest($request);

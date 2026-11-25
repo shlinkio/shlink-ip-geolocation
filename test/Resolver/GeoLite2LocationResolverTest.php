@@ -8,6 +8,7 @@ use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\City;
 use MaxMind\Db\Reader\InvalidDatabaseException;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -27,6 +28,7 @@ class GeoLite2LocationResolverTest extends TestCase
     private MockObject&Reader $reader;
     private MockObject&DbUpdaterInterface $dbUpdater;
 
+    #[Override]
     public function setUp(): void
     {
         $this->reader = $this->createMock(Reader::class);

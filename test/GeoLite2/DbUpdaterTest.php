@@ -8,6 +8,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use Override;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -34,6 +35,7 @@ class DbUpdaterTest extends TestCase
     private MockObject&Filesystem $filesystem;
     private ResponseInterface $response;
 
+    #[Override]
     public function setUp(): void
     {
         $this->httpClient = $this->createMock(ClientInterface::class);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\Geolocation\Resolver;
 
 use Locale;
+use Override;
 use Psr\Http\Message\ServerRequestInterface;
 use Shlinkio\Shlink\Geolocation\Exception\LocationResolutionException;
 use Shlinkio\Shlink\Geolocation\Model;
@@ -22,6 +23,7 @@ class CloudflareLocationResolver implements LocationResolverInterface
     private const array SPECIAL_COUNTRY_CODES = ['XX', 'T1'];
 
     /** @inheritDoc */
+    #[Override]
     public function resolveRequestLocation(ServerRequestInterface $request): Model\Location
     {
         // Cloudflare headers are documented here:

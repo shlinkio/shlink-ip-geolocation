@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ShlinkioTest\Shlink\Geolocation;
 
 use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
+use Override;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\Geolocation\ConfigProvider;
@@ -13,6 +14,7 @@ class ConfigProviderTest extends TestCase
 {
     private ConfigProvider $configProvider;
 
+    #[Override]
     public function setUp(): void
     {
         $this->configProvider = new ConfigProvider();
