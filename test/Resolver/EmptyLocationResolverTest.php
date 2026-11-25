@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\Geolocation\Resolver;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -18,6 +19,7 @@ class EmptyLocationResolverTest extends TestCase
 {
     private EmptyLocationResolver $resolver;
 
+    #[Override]
     public function setUp(): void
     {
         $this->resolver = new EmptyLocationResolver();

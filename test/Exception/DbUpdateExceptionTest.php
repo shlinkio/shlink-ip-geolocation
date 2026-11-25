@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\Geolocation\Exception;
 
+use Override;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -17,6 +18,7 @@ class DbUpdateExceptionTest extends TestCase
     private Throwable $prev;
     private string $theFile = '/the/file';
 
+    #[Override]
     protected function setUp(): void
     {
         $this->prev = new RuntimeException('Error');

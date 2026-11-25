@@ -7,6 +7,7 @@ namespace Shlinkio\Shlink\Geolocation\GeoLite2;
 use Fig\Http\Message\RequestMethodInterface as RequestMethod;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
+use Override;
 use Shlinkio\Shlink\Geolocation\Exception\DbUpdateException;
 use Shlinkio\Shlink\Geolocation\Exception\MissingLicenseException;
 use Shlinkio\Shlink\Geolocation\File\FileExtractorInterface;
@@ -33,6 +34,7 @@ readonly class DbUpdater implements DbUpdaterInterface
      * @throws DbUpdateException
      * @throws MissingLicenseException
      */
+    #[Override]
     public function downloadFreshCopy(callable|null $handleProgress = null): void
     {
         if (!$this->options->hasLicenseKey()) {
@@ -97,6 +99,7 @@ readonly class DbUpdater implements DbUpdaterInterface
         }
     }
 
+    #[Override]
     public function databaseFileExists(): bool
     {
         return $this->filesystem->exists($this->options->dbLocation);

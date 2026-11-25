@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\Geolocation\Resolver;
 
+use Override;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -20,6 +21,7 @@ class ChainLocationResolverTest extends TestCase
     private MockObject $firstInnerResolver;
     private MockObject $secondInnerResolver;
 
+    #[Override]
     public function setUp(): void
     {
         $this->firstInnerResolver = $this->createMock(LocationResolverInterface::class);

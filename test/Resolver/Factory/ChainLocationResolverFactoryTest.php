@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\Geolocation\Resolver\Factory;
 
+use Override;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\MockObject\Stub;
@@ -27,6 +28,7 @@ class ChainLocationResolverFactoryTest extends TestCase
     private ChainLocationResolverFactory $factory;
     private ContainerInterface&Stub $container;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->container = $this->createStub(ContainerInterface::class);
